@@ -1,10 +1,10 @@
-import {clothingScope,readClothes,garmentImages} from './clothing-store.js?v=20261030-fast-v1';
-import {getAccountUser} from './auth.js?v=20261030-fast-v1';
-import {activeMemberId,contextVersion} from './family-context.js?v=20261030-fast-v1';
-import {currentMember} from './family.js?v=20261030-fast-v1';
-import {modelCall} from './model-studio.js?v=20261030-fast-v1';
-import {looks} from './data.js?v=20261030-fast-v1';
-import {tryOnPage,tryOnView} from './tryon-view.js?v=20261030-fast-v1';
+import {clothingScope,readClothes,garmentImages} from './clothing-store.js?v=20261030-menu-v1';
+import {getAccountUser} from './auth.js?v=20261030-menu-v1';
+import {activeMemberId,contextVersion} from './family-context.js?v=20261030-menu-v1';
+import {currentMember} from './family.js?v=20261030-menu-v1';
+import {modelCall} from './model-studio.js?v=20261030-menu-v1';
+import {looks} from './data.js?v=20261030-menu-v1';
+import {tryOnPage,tryOnView} from './tryon-view.js?v=20261030-menu-v1';
 export {tryOnPage};
 let ownedClothes=[];let state=null,busy=false,epoch=0,upload=null,units='cm';
 const host=()=>document.querySelector('#tryon-content');
