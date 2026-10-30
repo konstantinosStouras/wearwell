@@ -1,5 +1,5 @@
-import {getAccountUser} from './auth.js?v=20261030-rack-v2';
-import {activeMemberId,contextVersion} from './family-context.js?v=20261030-rack-v2';
+import {getAccountUser} from './auth.js?v=20261030-garments-v1';
+import {activeMemberId,contextVersion} from './family-context.js?v=20261030-garments-v1';
 
 export const clothingLimit=60;
 export function clothingScope(){const uid=getAccountUser()?.uid;return uid?{uid,member:activeMemberId(),epoch:contextVersion()}:null;}
@@ -54,3 +54,18 @@ export async function prepareClothing(file){
  }finally{bitmap.close()}
 }
 export const validClothingImage=image=>typeof image==='string'&&image.length<=600000&&/^data:image\/(webp|png);base64,[A-Za-z0-9+/=]+$/.test(image);
+
+// A garment owns multiple reference views; legacy single-photo records remain readable.
+export const garmentPhotoLimit=6;
+export function garmentImages(item){return (Array.isArray(item.images)?item.images:[item.image]).filter(validClothingImage);}
+export async function saveGarment(scope,item){
+ requireScope(scope);const images=garmentImages(item);if(!images.length||images.length>garmentPhotoLimit)throw Error('photo-limit');
+ const db=await database();requireScope(scope);
+ await new Promise((resolve,reject)=>{const tx=db.transaction(['clothes','racks'],'readwrite'),store=tx.objectStore('clothes');let reason;
+ const old=store.get([scope.uid,scope.member,item.id]);old.onsuccess=()=>{const count=store.index('scope').count([scope.uid,scope.member]);count.onsuccess=()=>{
+  if(!sameClothingScope(scope)||(!old.result&&count.result>=clothingLimit)){reason=Error('limit-or-account');tx.abort();return}
+  if(old.result&&old.result.revision!==(item.previousRevision||undefined)){reason=Error('garment-changed');tx.abort();return}
+  const record={id:item.id,name:String(item.name||'Clothing').slice(0,80),notes:String(item.notes||'').slice(0,1200),image:images[0],images,createdAt:old.result?.createdAt||Date.now(),revision:crypto.randomUUID(),uid:scope.uid,member:scope.member};
+  store.put(record);tx.objectStore('racks').put({uid:scope.uid,member:scope.member,initialized:true});
+ }};tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(reason||tx.error);});requireScope(scope);
+}
