@@ -1,24 +1,26 @@
-import feedbackCopy from './style-feedback-languages.js?v=20261030-garments-v1';
+import feedbackCopy from './style-feedback-languages.js?v=20261030-fast-v1';
 import es from './translations-es.js';
 import fr from './translations-fr.js';
 import pt from './translations-pt.js';
 import ar from './translations-ar.js';
 import zh from './translations-zh-Hans.js';
 import yue from './translations-yue.js';
-import de from './translations-de.js?v=20261030-garments-v1';
-import ru from './translations-ru.js?v=20261030-garments-v1';
+import de from './translations-de.js?v=20261030-fast-v1';
+import ru from './translations-ru.js?v=20261030-fast-v1';
 export const translations={de,ru,es,fr,pt,ar,'zh-Hans':zh,yue};
 for(const [code,copy] of Object.entries(feedbackCopy))Object.assign(translations[code],copy);
 const escape=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const maps={};
-for(const [code,copy] of Object.entries(translations)){
+function translationMap(code){
+ if(maps[code])return maps[code];
+ const copy=translations[code];if(!copy)return null;
  const map=new Map(Object.entries(copy));
  for(const [source,value] of Object.entries(copy)){
   if(!map.has(source.toLowerCase()))map.set(source.toLowerCase(),value);
   if(!map.has(source.toUpperCase()))map.set(source.toUpperCase(),value);
  }
  const pattern=new RegExp('(?<![A-Za-z])(?:'+[...map.keys()].filter(k=>!k.includes('{')).sort((a,b)=>b.length-a.length).map(escape).join('|')+')(?![A-Za-z])','g');
- maps[code]={map,pattern};
+ return maps[code]={map,pattern};
 }
 const protectedTemplates=[
  [/^Your account: (.*)$/s,'Your account: {name}'],[/^Welcome, (.*)\.$/s,'Welcome, {name}.'],
@@ -28,7 +30,7 @@ const protectedTemplates=[
  [/^Appearance and fit notes: (.*)$/s,'Appearance and fit notes: {name}'],[/^Size (.*)$/s,'Size {name}']
 ];
 export function translateOther(value,target){
- const text=String(value??''),data=maps[target];if(!data||!text.trim())return text;
+ const text=String(value??''),data=translationMap(target);if(!data||!text.trim())return text;
  const core=text.trim(),leading=text.slice(0,text.indexOf(core)),trailing=text.slice(text.indexOf(core)+core.length),{map,pattern}=data;
  if(map.has(core))return leading+map.get(core)+trailing;
  const format=(key,values)=>Object.entries(values).reduce((out,[name,v])=>out.replaceAll('{'+name+'}',String(v)),map.get(key)||key);

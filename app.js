@@ -1,31 +1,31 @@
-import './wardrobe-rack.js?v=20261030-touch-v1';
-import {tryOnPage,loadTryOn} from './tryon.js?v=20261030-garments-v1';
-import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261030-garments-v1';
-import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261030-garments-v1';
-import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261030-garments-v1';
-import {studioAdminPage,loadStudioAdmin} from './model-studio.js?v=20261030-garments-v1';
-import {installWeatherRefresh} from './weather-refresh.js?v=20261030-garments-v1';
-import {usersPage,loadUsers} from './admin-users.js?v=20261030-garments-v1';
-import {updatesPage,loadUpdates} from './updates.js?v=20261030-garments-v1';
-import {welcomePage} from './welcome.js?v=20261030-garments-v1';
-import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261030-garments-v1';
-import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261030-garments-v1';
-import {lookFeedbackControls} from './style-feedback.js?v=20261030-garments-v1';
-import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261030-garments-v1';
-import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261030-garments-v1';
-import {photosSection,refreshPhotos} from './profile-photos.js?v=20261030-garments-v1';
-import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261030-garments-v1';
-import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261030-garments-v1';
-import {installMeasurementGuides} from './measurement-guides.js?v=20261030-garments-v1';
-import {createPrivateCatalog} from './private-models.js?v=20261030-garments-v1';
-import {feedbackPage,resetFeedback} from './feedback.js?v=20261030-garments-v1';
-import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261030-garments-v1';
-import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261030-garments-v1';
-import {profileFields,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261030-garments-v1';
-import {accountStorageKey} from './auth-policy.js?v=20261030-garments-v1';
-import {profile,pieces,looks,pieceById,lookById,seasons,label} from './data.js?v=20261030-garments-v1';
-import {fetchWeather,recommend,condition} from './weather.js?v=20261030-garments-v1';
-import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261030-garments-v1';
+import './wardrobe-rack.js?v=20261030-fast-v1';
+import {tryOnPage,loadTryOn} from './tryon.js?v=20261030-fast-v1';
+import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261030-fast-v1';
+import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261030-fast-v1';
+import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261030-fast-v1';
+import {studioAdminPage,loadStudioAdmin} from './model-studio.js?v=20261030-fast-v1';
+import {installWeatherRefresh} from './weather-refresh.js?v=20261030-fast-v1';
+import {usersPage,loadUsers} from './admin-users.js?v=20261030-fast-v1';
+import {updatesPage,loadUpdates} from './updates.js?v=20261030-fast-v1';
+import {welcomePage} from './welcome.js?v=20261030-fast-v1';
+import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261030-fast-v1';
+import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261030-fast-v1';
+import {lookFeedbackControls} from './style-feedback.js?v=20261030-fast-v1';
+import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261030-fast-v1';
+import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261030-fast-v1';
+import {photosSection,refreshPhotos} from './profile-photos.js?v=20261030-fast-v1';
+import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261030-fast-v1';
+import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261030-fast-v1';
+import {installMeasurementGuides} from './measurement-guides.js?v=20261030-fast-v1';
+import {createPrivateCatalog} from './private-models.js?v=20261030-fast-v1';
+import {feedbackPage,resetFeedback} from './feedback.js?v=20261030-fast-v1';
+import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261030-fast-v1';
+import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261030-fast-v1';
+import {profileFields,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261030-fast-v1';
+import {accountStorageKey} from './auth-policy.js?v=20261030-fast-v1';
+import {profile,pieces,looks,pieceById,lookById,seasons,label} from './data.js?v=20261030-fast-v1';
+import {fetchWeather,recommend,condition} from './weather.js?v=20261030-fast-v1';
+import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261030-fast-v1';
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let key=accountStorageKey(null),accountUid=null,cloudStatus='idle',profileSaving=false;
 async function syncProfile(){const uid=accountUid,member=activeMemberId(),scope=contextVersion();if(!uid)return;cloudStatus='loading';if(route().split('/')[0]==='profile')renderedRoute='';render();try{const cloud=await loadCloudProfile(uid,member);if(accountUid!==uid||scope!==contextVersion())return;if(!cloud&&member!=='self')throw Error('Profile removed');if(cloud){state.name=cloud.name;state.sizes=JSON.parse(cloud.sizes);persist();notifyProfile();}cloudStatus='ready';}catch{if(accountUid!==uid||scope!==contextVersion())return;cloudStatus='error';}if(route().split('/')[0]==='profile')renderedRoute='';render();}
@@ -72,7 +72,7 @@ function rotation(){const start=new Date(currentDate()+'T12:00:00');start.setDat
 }
 function shopping(){const ranked=pieces.filter(p=>status(p.id)==='buy').map(p=>({...p,uses:looks.filter(l=>l.pieces.includes(p.id)).length})).sort((a,b)=>b.uses-a.uses||a.id.localeCompare(b.id));return '<div class="callout purchase-invitation"><div><p class="eyebrow">A MORE THOUGHTFUL PURCHASE</p><h2>Does it earn a place?</h2><p>Compare a clothing photo with the pieces you already own.</p></div><a class="button primary" href="#consider">Before you buy ↗</a></div>'+head('ONLY WHAT EARNS ITS PLACE','The shopping list',`<span class="muted">${ranked.length} confirmed gaps</span>`)+`<p class="intro muted">Ranked by how often each piece appears in the collection. Confirm what you already own in Pieces, then mark genuine gaps as Buy. Size, budget and product matches are yours to confirm.</p>`+(ranked.length?ranked.map((p,i)=>`<div class="shopping-row"><span class="rank">${String(i+1).padStart(2,'0')}</span>${image(looks.find(l=>l.pieces.includes(p.id)))}<div><h3>${p.name}</h3><p class="muted">Works in ${p.uses} looks · ${esc(fit(p))}</p><a class="caption" href="https://www.google.com/search?q=${encodeURIComponent('mens '+p.name+' tall broad chest')}" target="_blank" rel="noopener noreferrer">Search this piece ↗</a><p class="caption">Search link; availability and exact products unverified.</p></div>${ownershipSelect(p)}</div>`).join(''):`<div class="empty"><h2>Start with your own wardrobe.</h2><p>No purchases are assumed. Review the suggested pieces first.</p><a class="button primary" href="#pieces">Review your pieces</a></div>`);}
 function purge(){return head('MAKE ROOM, THOUGHTFULLY','The edit',`<span class="muted">${state.purge.length} pieces under review</span>`)+`<p class="intro muted">Add items you already own that do not belong in your everyday wardrobe. Decide whether to sell, donate, recycle or keep reviewing. This list is a plan; it never disposes of anything.</p><form class="purge-form" id="purge-form"><input name="item" aria-label="Item to review" placeholder="e.g. The jacket I never reach for" required maxlength="100"><button class="primary">Add to review</button></form><ul class="purge-list">${state.purge.map(p=>`<li><span data-i18n-skip>${esc(p.name)}</span><select data-purge="${esc(p.id)}" aria-label="Decision for ${esc(p.name)}">${['Review','Sell','Donate','Recycle','Trash'].map(d=>`<option value="${d}" ${p.decision===d?'selected':''}>${d}</option>`).join('')}</select><button data-remove="${esc(p.id)}" aria-label="Remove ${esc(p.name)}">×</button></li>`).join('')}</ul>${!state.purge.length?'<div class="empty"><p>Your review list is empty. Keep what fits, works and earns its place.</p><p class="caption">No closet photos were provided, so nothing has been assigned for removal.</p></div>':''}`;}
-let renderedRoute='',renderedAccount;
+let renderedRoute='',renderedAccount,renderedContentKey='';
 function wardrobeToolbar(r){
  const pieceView=['pieces','purge'].includes(r);
  return `<div class="wardrobe-toolbar"><div class="wardrobe-tabs" aria-label="Wardrobe sections"><a href="#wardrobe" ${!pieceView?'aria-current="page"':''}>Looks</a><a href="#pieces" ${pieceView?'aria-current="page"':''}>Pieces</a></div>${pieceView?`<a class="caption" href="#${r==='purge'?'pieces':'purge'}">${r==='purge'?'← Back to pieces':'Review unused clothes ↗'}</a>`:`<label class="collection-picker">Collection<select id="collection-select">${[['wardrobe','All outfits'],...seasons.map(s=>[s,label(s)]),['gym','Gym'],['lounge','Lounge']].map(([value,text])=>`<option value="${value}" ${r===value?'selected':''}>${text}</option>`).join('')}</select></label>`}</div>`;
@@ -83,6 +83,11 @@ document.addEventListener('wardrobe:language',()=>{const title=document.querySel
 function wardrobe(){const styles=wardrobeStylesTitle();return head('MORE WAYS TO WEAR WHAT YOU OWN','Your wardrobe')+'<wardrobe-rack data-i18n-skip></wardrobe-rack>'+`<section class="wardrobe-styles" aria-labelledby="wardrobe-styles-title"><h2 id="wardrobe-styles-title" data-i18n-skip>${styles}</h2><p class="intro muted">Find a look for the season, or review the pieces you own.</p>`+collectionInvitation()+`<div class="grid">${looks.map(card).join('')}</div></section>`;}
 function render(){
  const r=route().split('/')[0];
+ // Weather/auth refreshes must not recreate unchanged catalog DOM or its rack.
+ const stablePage=['home','wardrobe','pieces','shopping','purge','look',...seasons,'gym','lounge'].includes(r);
+ const contentKey=stablePage?JSON.stringify([route(),accountUid,contextVersion(),modelState,modelError,state.name,state.sizes,state.ownership,state.checks,state.purge,state.ratings,state.pieceFeedback,state.filter,state.search,state.season,state.offset]):'';
+ const keepContent=stablePage&&renderedRoute===r&&renderedContentKey===contentKey&&$('#main').children.length;
+ renderedContentKey=contentKey;
  const feedbackView=$('#main').dataset.feedbackRoute===route()&&renderedAccount===accountUid?captureFeedbackView():null;
  const keepAccount=['try-on','admin','family','model-studio','profile','feedback','review','users','whats-new','updates-admin'].includes(r)&&r===renderedRoute&&renderedAccount===accountUid&&$('#main').children.length;
  if(renderedRoute==='feedback'&&r!=='feedback')resetFeedback();
@@ -96,7 +101,7 @@ function render(){
  $('#family-bar').innerHTML=familyBar();
  $('#header-weather').innerHTML=headerWeather(state);
  $('#nav').innerHTML=[[accountUid?'today':'home',accountUid?'Today':'Discover'],['wardrobe','Wardrobe'],['rotation','Calendar'],['shopping','Shopping'],['whats-new',"What's new"]].map(([id,text])=>`<a href="#${id}" ${active===id?'class="active" aria-current="page"':''}>${text}</a>`).join('');
- if(keepPurchase||keepAccount)return;
+ if(keepPurchase||keepAccount||keepContent)return;
  if(adminRoutes.includes(r)&&!isAccountAdmin()){$('#main').innerHTML='<section class="personal-card"><p class="eyebrow">ADMINISTRATION</p><h1>Admin area</h1><p>Administrator access is required. Sign in with your administrator account.</p><button data-open-signin>Manage sign-in</button></section>';return;}
  const page=r==='try-on'?tryOnPage():r==='admin'?adminArea():r==='family'?familyPage():r==='model-studio'?studioAdminPage():r==='users'?usersPage():r==='whats-new'?updatesPage():r==='updates-admin'?updatesPage(true):r==='profile'?profilePage():r==='feedback'?feedbackPage():r==='review'?adminPage():r==='home'?welcomePage():r==='consider'?'<a class="section-back" href="#shopping">← Back to shopping</a>'+purchasePage(accountUid):r==='wardrobe'?wardrobe():r==='pieces'?piecePage():r==='rotation'?rotation():r==='shopping'?shopping():r==='purge'?purge():[...seasons,'gym','lounge'].includes(r)?collection(r):r==='look'?lookPage(route().split('/')[1]):today();
  $('#main').classList.toggle('welcome-page',r==='home');

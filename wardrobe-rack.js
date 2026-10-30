@@ -1,7 +1,7 @@
-import {rackStyles} from './rack-styles.js?v=20261030-swing-v1';
-import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-garments-v1';
-import {installRackUploads} from './rack-uploads.js?v=20261030-garments-v1';
-import {getLanguage,translateText} from './i18n.js?v=20261030-garments-v1';
+import {rackStyles} from './rack-styles.js?v=20261030-fast-v1';
+import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-fast-v1';
+import {installRackUploads} from './rack-uploads.js?v=20261030-fast-v1';
+import {getLanguage,translateText} from './i18n.js?v=20261030-fast-v1';
 
 // Isolated rack view with account-scoped local photo storage.
 class WardrobeRack extends HTMLElement {

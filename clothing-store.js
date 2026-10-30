@@ -1,5 +1,5 @@
-import {getAccountUser} from './auth.js?v=20261030-garments-v1';
-import {activeMemberId,contextVersion} from './family-context.js?v=20261030-garments-v1';
+import {getAccountUser} from './auth.js?v=20261030-fast-v1';
+import {activeMemberId,contextVersion} from './family-context.js?v=20261030-fast-v1';
 
 export const clothingLimit=60;
 export function clothingScope(){const uid=getAccountUser()?.uid;return uid?{uid,member:activeMemberId(),epoch:contextVersion()}:null;}
