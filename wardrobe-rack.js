@@ -115,6 +115,29 @@ function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(
 function step(d){hoverEnabled=false;focused=false;move(current+d);render()}
 function inspect(){hoverEnabled=false;focused=true;move(current);render();$('.studio').scrollIntoView({block:'start',behavior:reduced.matches?'auto':'smooth'});$('#close').focus({preventScroll:true})}
 function close(restoreFocus=true){focused=false;lastTap=null;hoverEnabled=false;move(current);render();if(restoreFocus)garments[current]?.focus({preventScroll:true})}
+// Hit-test the photo silhouette, not its rectangular transparent image box.
+// Cache a small alpha mask; keep the hit plane stable while the photo flips.
+const photoMasks=new WeakMap();
+function onGarment(e){
+ if(e.detail===0&&e.type==='click')return true; // Keyboard activation.
+ const b=garments[current],p=pieces[current];
+ const img=b?.querySelector(p?.reversed?'.back-face':'.front-face')||b?.querySelector('img');
+ if(!b||!img||!img.complete||!img.naturalWidth)return false;
+ const r=b.getBoundingClientRect();
+ const scale=Math.min(r.width/img.naturalWidth,r.height/img.naturalHeight);
+ const width=img.naturalWidth*scale,height=img.naturalHeight*scale;
+ const u=(e.clientX-r.left-(r.width-width)/2)/width;
+ const v=(e.clientY-r.top-(r.height-height)/2)/height;
+ if(u<0||u>=1||v<0||v>=1)return false;
+ let mask=photoMasks.get(img);
+ if(!mask||mask.src!==img.currentSrc){
+  const canvas=document.createElement('canvas');canvas.width=96;canvas.height=144;
+  const context=canvas.getContext('2d',{willReadFrequently:true});
+  try{context.drawImage(img,0,0,96,144);mask={src:img.currentSrc,data:context.getImageData(0,0,96,144).data};photoMasks.set(img,mask)}
+  catch{return u>.18&&u<.82&&v>.15&&v<.95}
+ }
+ return mask.data[(Math.floor(v*144)*96+Math.floor(u*96))*4+3]>32;
+}
 // Transparent corners of overlapping photos must not steal taps from a nearby shirt.
 function pickAt(e){
  const hit=e.target.closest('[data-i]');if(!hit)return null;
@@ -183,6 +206,7 @@ on(rack,'wheel',e=>{
 },{passive:false});
 on(rack,'click',e=>{
  if(dragged){dragged=false;activationIndex=null;return}
+ if(focused&&!onGarment(e)){activationIndex=null;close(false);return}
  const b=e.target.closest('[data-i]'),i=activationIndex??(b?Number(b.dataset.i):null);activationIndex=null;
  if(i===null){if(focused)close(false);return;}
  hoverEnabled=false;
@@ -194,7 +218,7 @@ on(rack,'click',e=>{
  }else{lastTap=null;move(i);inspect()}
 });
 on(rack,'dblclick',e=>{
- if(lastPointerType!=='mouse'||!focused||!e.target.closest('[data-i]'))return;
+ if(lastPointerType!=='mouse'||!focused||!e.target.closest('[data-i]')||!onGarment(e))return;
  e.preventDefault();showSide(!pieces[current].reversed);
 });
 $('#previous').onclick=()=>step(-1);$('#next').onclick=()=>step(1);$('#inspect').onclick=inspect;$('#close').onclick=()=>close();$('#return-link').onclick=()=>close();
