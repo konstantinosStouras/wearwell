@@ -17,7 +17,7 @@ class WardrobeRack extends HTMLElement {
 const examples=rackExamples;
 let pieces=examples.map(p=>({...p,canonical:p.name,en:p.name,el:p.el,enSub:p.category,elSub:p.elSub}));
 const copy={en:{preview:'LOCAL PREVIEW',eyebrow:'THE CAPSULE / AN INTERACTIVE STUDY',title:'A little room for discovery.',hint:'Hover, swipe or drag to browse. Tap any piece to open.<br>Double-tap to flip; tap beside it to return.',studio:'FIVE PIECES. MANY POSSIBILITIES.',back:'← Back to the rail',inspect:'Take a closer look ↗',footer:'DayWear Rack — interaction prototype',note:'Illustrated capsule pieces · Drag, tap, or use ← → · Esc to return',previous:'Previous piece',next:'Next piece'},el:{preview:'ΤΟΠΙΚΗ ΠΡΟΕΠΙΣΚΟΠΗΣΗ',eyebrow:'Η ΓΚΑΡΝΤΑΡΟΜΠΑ / ΜΙΑ ΔΙΑΔΡΑΣΤΙΚΗ ΜΕΛΕΤΗ',title:'Λίγος χώρος για ανακάλυψη.',hint:'Κινήστε τον δείκτη ή σύρετε για να δείτε τα ρούχα. Πατήστε ένα για λεπτομέρειες.<br>Διπλό πάτημα για περιστροφή· πάτημα δίπλα του για επιστροφή.',studio:'ΠΕΝΤΕ ΡΟΥΧΑ. ΠΟΛΛΕΣ ΔΥΝΑΤΟΤΗΤΕΣ.',back:'← Πίσω στην κρεμάστρα',inspect:'Δείτε το από κοντά ↗',footer:'DayWear Rack — διαδραστικό πρωτότυπο',note:'Εικονογραφημένα ρούχα · Σύρετε, πατήστε ή χρησιμοποιήστε ← → · Esc για επιστροφή',previous:'Προηγούμενο ρούχο',next:'Επόμενο ρούχο'}};
-let current=4,focused=false,lang=getLanguage()==='el'?'el':'en';
+let current=4,focused=false,previewing=true,lang=getLanguage()==='el'?'el':'en';
 const $=s=>root.querySelector(s),rack=$('#rack');
 
 function garment(p,i){return p.image?'<img class="owned-photo" src="'+p.image+'" alt="" draggable="false">':rackArt(p,i);}
@@ -27,7 +27,7 @@ $('#dots').innerHTML='<input id="piece-range" type="range" min="0" max="'+(piece
 let garments=[...root.querySelectorAll('.garment')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let position=4,target=4,velocity=0,frame=0,lastTime=0,zoom=0;
-let reveals=pieces.map((_,i)=>Number(i===current));
+let reveals=pieces.map((_,i)=>Number(previewing&&i===current));
 let swings=pieces.map(()=>({angle:0,speed:0,kick:0,delay:0}));
 let down=null,dragged=false,hoverEnabled=true,wheelTimer,activationIndex=null,lastTap=null,lastPointerType='mouse',lastHoverX=null;
 const clamp=n=>Math.max(0,Math.min(pieces.length-1,n));
@@ -42,7 +42,7 @@ function render(){
  garments.forEach((b,i)=>{
   b.tabIndex=focused&&i!==current?-1:0;
   b.setAttribute('aria-hidden',focused&&i!==current?'true':'false');
-  b.setAttribute('aria-label',pieces[i][lang]);b.setAttribute('aria-pressed',i===current);
+  b.setAttribute('aria-label',pieces[i][lang]);b.setAttribute('aria-pressed',previewing&&i===current);
  });
  $('#piece-range').max=Math.max(0,pieces.length-1);$('#piece-range').value=current;$('#piece-range').ariaLabel=lang==='el'?'Επιλέξτε ρούχο':'Choose a piece';const p=pieces[current];if(!p){$('#colour-tags').replaceChildren();$('#view-switch').hidden=true;return;}$('#counter').textContent=`${String(current+1).padStart(2,"0")} / ${pieces.length}`;
  $('#name').textContent=p[lang];$('#description').textContent=p[lang+'Sub'];
@@ -90,7 +90,7 @@ function paint(){
 }
 function animate(time){
  const dt=Math.min((time-lastTime)/1000||1/60,1/30);lastTime=time;
- if(reduced.matches){swings.forEach(s=>{s.angle=0;s.speed=0;s.kick=0;s.delay=0});position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(i===current))}
+ if(reduced.matches){swings.forEach(s=>{s.angle=0;s.speed=0;s.kick=0;s.delay=0});position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(previewing&&i===current))}
  else{
   velocity+=(target-position)*(down?.locked?220:95)*dt;velocity*=Math.exp(-(down?.locked?28:18)*dt);position+=velocity*dt;
   swings.forEach((s,i)=>{
@@ -101,14 +101,14 @@ function animate(time){
    s.angle=Math.max(-2.1,Math.min(2.1,s.angle+s.speed*dt));
   });
   zoom+=(Number(focused)-zoom)*(1-Math.exp(-10*dt));
-  reveals=reveals.map((v,i)=>v+(Number(i===current)-v)*(1-Math.exp(-12*dt)));
+  reveals=reveals.map((v,i)=>v+(Number(previewing&&i===current)-v)*(1-Math.exp(-12*dt)));
  }
  paint();
- if(swings.some(s=>s.kick||Math.abs(s.angle)>.005||Math.abs(s.speed)>.02)||Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(i===current))>.001))frame=requestAnimationFrame(animate);
- else{position=target;zoom=Number(focused);velocity=0;reveals=pieces.map((_,i)=>Number(i===current));paint();frame=0;lastTime=0;}
+ if(swings.some(s=>s.kick||Math.abs(s.angle)>.005||Math.abs(s.speed)>.02)||Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(previewing&&i===current))>.001))frame=requestAnimationFrame(animate);
+ else{position=target;zoom=Number(focused);velocity=0;reveals=pieces.map((_,i)=>Number(previewing&&i===current));paint();frame=0;lastTime=0;}
 }
 function wake(){if(!frame)frame=requestAnimationFrame(animate)}
-function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(target);if(next!==current){
+function move(n){if(!pieces.length)return;const wasPacked=!previewing;previewing=true;target=clamp(n);const next=Math.round(target);if(next!==current){
  const direction=Math.sign(next-current);
  if(!reduced.matches){
   // The opened piece leads; neighbouring hangers respond more softly,
@@ -120,7 +120,13 @@ function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(
    s.delay=primary?0:Math.min(.18,distance*.035);
   });
  }
- current=next;render();root.dispatchEvent(new Event('rack:selection'))}wake()}
+ current=next;render();root.dispatchEvent(new Event('rack:selection'))}else if(wasPacked)render();wake()}
+function packRail(){
+ if(focused||!previewing)return;
+ previewing=false;lastTap=null;
+ if(!reduced.matches)swings.forEach((s,i)=>{s.kick=(Math.sign(i-current)||-1)*4*Math.exp(-Math.abs(i-current)*.45);s.delay=Math.min(.18,Math.abs(i-current)*.035)});
+ render();
+}
 function step(d){hoverEnabled=false;focused=false;move(current+d);render()}
 function inspect(){hoverEnabled=false;focused=true;move(current);render();$('.studio').scrollIntoView({block:'start',behavior:reduced.matches?'auto':'smooth'});$('#close').focus({preventScroll:true})}
 function close(restoreFocus=true){focused=false;lastTap=null;hoverEnabled=false;move(current);render();if(restoreFocus)garments[current]?.focus({preventScroll:true})}
@@ -169,7 +175,12 @@ function hover(e){
  if(e.pointerType!=='mouse'||thisHost.clientWidth<=650||focused)return;
  if(lastHoverX!==null&&Math.abs(e.clientX-lastHoverX)<3)return;
  lastHoverX=e.clientX;
- const i=pickAt(e);if(i!==null&&i!==current)move(i);
+ const i=pickAt(e);
+ if(i!==null&&(!previewing||i!==current))move(i);
+ else if(i===null&&previewing){
+  const edge=garments[current].getBoundingClientRect();
+  if((current===0&&e.clientX<edge.left)||(current===pieces.length-1&&e.clientX>edge.right))packRail();
+ }
 }
 on(rack,'pointerdown',e=>{
  if(e.button!==0||!e.isPrimary)return;
@@ -207,7 +218,7 @@ on(rack,'pointercancel',e=>release(e,true));
 // the rail emits a bubbling lostpointercapture from that button; this is a
 // hand-off, not a cancelled swipe. Only a loss from the rail ends our drag.
 on(rack,'lostpointercapture',e=>{if(e.target===rack)release(e,true)});
-on(rack,'pointerleave',()=>{lastHoverX=null;if(!down){hoverEnabled=true;move(Math.round(target))}});
+on(rack,'pointerleave',()=>{lastHoverX=null;if(!down){hoverEnabled=true;if(previewing)move(Math.round(target))}});
 on(rack,'wheel',e=>{
  if(e.ctrlKey)return;
  if(focused)close(false);
@@ -220,7 +231,7 @@ on(rack,'click',e=>{
  if(dragged){dragged=false;activationIndex=null;return}
  if(focused&&!onGarment(e)){activationIndex=null;close(false);return}
  const b=e.target.closest('[data-i]'),i=activationIndex??(b?Number(b.dataset.i):null);activationIndex=null;
- if(i===null){if(focused)close(false);return;}
+ if(i===null){if(focused)close(false);else packRail();return;}
  hoverEnabled=false;
  if(i===current&&focused){
   if(lastPointerType==='mouse')return;
@@ -260,8 +271,8 @@ on(reduced,'change',wake);on(window,'resize',wake);render();
 
   const stopUploads=installRackUploads(root,examples,next=>{
    pieces=next.map(p=>({...p,canonical:p.name,en:p.name,el:p.image?p.name:p.el,enSub:p.image?'':p.category,elSub:p.image?'':p.elSub}));
-   current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;
-   reveals=next.map((_,i)=>Number(i===current));
+   current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;previewing=true;
+   reveals=next.map((_,i)=>Number(previewing&&i===current));
    swings=next.map(()=>({angle:0,speed:0,kick:0,delay:0}));
    rack.innerHTML=pieces.map((p,i)=>'<button class="garment" data-i="'+i+'">'+garment(p,i)+'</button>').join('');
    garments=[...rack.children];render();
