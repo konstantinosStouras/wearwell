@@ -1,6 +1,6 @@
-import {rackStyles} from './rack-styles.js?v=20261030-rack-v4';
-import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-rack-v4';
-import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v4';
+import {rackStyles} from './rack-styles.js?v=20261030-rack-v5';
+import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-rack-v5';
+import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v5';
 import {getLanguage,translateText} from './i18n.js?v=20261030-rack-v2';
 
 // Isolated rack view with account-scoped local photo storage.

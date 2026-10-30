@@ -1,4 +1,4 @@
-import './wardrobe-rack.js?v=20261030-rack-v4';
+import './wardrobe-rack.js?v=20261030-rack-v5';
 import {tryOnPage,loadTryOn} from './tryon.js?v=20261030-rack-v2';
 import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261030-rack-v2';
 import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261030-rack-v2';
