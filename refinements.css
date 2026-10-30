@@ -66,3 +66,6 @@ html[lang=zh-Hans] :is(h1,h2,h3),html[lang=yue] :is(h1,h2,h3){letter-spacing:0;l
 @media(max-width:760px){.wordmark small{font-size:11px;max-width:17em;margin-top:5px;text-wrap:balance}}
 
 .like-heart{color:var(--muted);font-size:1.2em;line-height:1}button[aria-pressed="true"][data-value="1"] .like-heart{color:#c62828}
+
+/* Inventory cards have additional fit/caption/select rows, unlike outfit subgrids. */
+.piece-card{display:flex;flex-direction:column;min-width:0;gap:8px}.piece-card>a{display:block;flex:none;min-width:0}.piece-card h3{margin:0;overflow-wrap:anywhere}.piece-card>p{flex:none;margin:0;line-height:1.65;overflow-wrap:anywhere}.piece-card>select{flex:none;margin-top:auto;min-height:38px}

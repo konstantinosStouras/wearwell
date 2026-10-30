@@ -1,31 +1,31 @@
-import './wardrobe-rack.js?v=20261030-rack-v1';
-import {tryOnPage,loadTryOn} from './tryon.js?v=20261022-tryon-v2';
-import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261022-tryon-v2';
-import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261022-tryon-v2';
-import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261022-tryon-v2';
-import {studioAdminPage,loadStudioAdmin} from './model-studio.js?v=20261022-tryon-v2';
-import {installWeatherRefresh} from './weather-refresh.js?v=20261022-tryon-v2';
-import {usersPage,loadUsers} from './admin-users.js?v=20261022-tryon-v2';
-import {updatesPage,loadUpdates} from './updates.js?v=20261022-tryon-v2';
-import {welcomePage} from './welcome.js?v=20261022-tryon-v2';
-import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261022-tryon-v2';
-import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261022-tryon-v2';
-import {lookFeedbackControls} from './style-feedback.js?v=20261022-tryon-v2';
-import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261022-tryon-v2';
-import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261022-tryon-v2';
-import {photosSection,refreshPhotos} from './profile-photos.js?v=20261022-tryon-v2';
-import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261022-tryon-v2';
-import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261022-tryon-v2';
-import {installMeasurementGuides} from './measurement-guides.js?v=20261022-tryon-v2';
-import {createPrivateCatalog} from './private-models.js?v=20261022-tryon-v2';
-import {feedbackPage,resetFeedback} from './feedback.js?v=20261022-tryon-v2';
-import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261022-tryon-v2';
-import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261022-tryon-v2';
-import {profileFields,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261022-tryon-v2';
-import {accountStorageKey} from './auth-policy.js?v=20261022-tryon-v2';
-import {profile,pieces,looks,pieceById,lookById,seasons,label} from './data.js?v=20261022-tryon-v2';
-import {fetchWeather,recommend,condition} from './weather.js?v=20261022-tryon-v2';
-import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261022-tryon-v2';
+import './wardrobe-rack.js?v=20261030-rack-v2';
+import {tryOnPage,loadTryOn} from './tryon.js?v=20261030-rack-v2';
+import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261030-rack-v2';
+import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261030-rack-v2';
+import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261030-rack-v2';
+import {studioAdminPage,loadStudioAdmin} from './model-studio.js?v=20261030-rack-v2';
+import {installWeatherRefresh} from './weather-refresh.js?v=20261030-rack-v2';
+import {usersPage,loadUsers} from './admin-users.js?v=20261030-rack-v2';
+import {updatesPage,loadUpdates} from './updates.js?v=20261030-rack-v2';
+import {welcomePage} from './welcome.js?v=20261030-rack-v2';
+import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261030-rack-v2';
+import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261030-rack-v2';
+import {lookFeedbackControls} from './style-feedback.js?v=20261030-rack-v2';
+import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261030-rack-v2';
+import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261030-rack-v2';
+import {photosSection,refreshPhotos} from './profile-photos.js?v=20261030-rack-v2';
+import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261030-rack-v2';
+import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261030-rack-v2';
+import {installMeasurementGuides} from './measurement-guides.js?v=20261030-rack-v2';
+import {createPrivateCatalog} from './private-models.js?v=20261030-rack-v2';
+import {feedbackPage,resetFeedback} from './feedback.js?v=20261030-rack-v2';
+import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261030-rack-v2';
+import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261030-rack-v2';
+import {profileFields,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261030-rack-v2';
+import {accountStorageKey} from './auth-policy.js?v=20261030-rack-v2';
+import {profile,pieces,looks,pieceById,lookById,seasons,label} from './data.js?v=20261030-rack-v2';
+import {fetchWeather,recommend,condition} from './weather.js?v=20261030-rack-v2';
+import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261030-rack-v2';
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let key=accountStorageKey(null),accountUid=null,cloudStatus='idle',profileSaving=false;
 async function syncProfile(){const uid=accountUid,member=activeMemberId(),scope=contextVersion();if(!uid)return;cloudStatus='loading';if(route().split('/')[0]==='profile')renderedRoute='';render();try{const cloud=await loadCloudProfile(uid,member);if(accountUid!==uid||scope!==contextVersion())return;if(!cloud&&member!=='self')throw Error('Profile removed');if(cloud){state.name=cloud.name;state.sizes=JSON.parse(cloud.sizes);persist();notifyProfile();}cloudStatus='ready';}catch{if(accountUid!==uid||scope!==contextVersion())return;cloudStatus='error';}if(route().split('/')[0]==='profile')renderedRoute='';render();}
@@ -66,7 +66,7 @@ function today(){const title=state.location?`Today in ${esc(state.location.name)
 }
 function collection(season){const pool=looks.filter(l=>l.season===season),count=new Set(pool.flatMap(l=>l.pieces)).size;return head(`THE ${season.toUpperCase()} COLLECTION`,label(season),`<span class="muted">${String(pool.length).padStart(2,'0')} looks · ${count} shared pieces</span>`)+(pool.length===1?`<p class="intro muted">One uniform. One less decision. ${season==='gym'?'Freedom through the shoulders, a comfortable rise and stable training shoes.':'Soft cotton, a generous fit and a quiet start to the day.'}</p>`:'')+`${collectionInvitation()}<div class="grid">${pool.map(card).join('')}</div><p class="caption" style="margin-top:28px">${modelCaption(isFamily()?null:accountUid)} Clothing and sizes remain proposals until confirmed.</p>`;}
 function ownershipSelect(p){return `<select aria-label="Ownership of ${p.name}" data-own="${p.id}">${['review','owned','buy'].map(v=>`<option value="${v}" ${status(p.id)===v?'selected':''}>${{review:'To confirm',owned:'Owned',buy:'Buy'}[v]}</option>`).join('')}</select>`;}
-function piecePage(){const filtered=pieces.filter(p=>(state.filter==='All'||state.filter===p.category||state.filter.toLowerCase()===status(p.id))&&(searchKey(p.name).includes(searchKey(state.search))||searchKey(translateText(p.name)).includes(searchKey(state.search))));return head('THE COMPLETE INVENTORY','The pieces',`<span class="muted">40 pieces · ${pieces.filter(p=>status(p.id)==='owned').length} owned · ${pieces.filter(p=>status(p.id)==='review').length} to confirm</span>`)+`<div class="filter-bar">${['All','Owned','Buy','Review','Tops','Bottoms','Layers','Shoes','Extras'].map(f=>`<button data-filter="${f}" class="${state.filter===f?'active-button':''}">${f==='Review'?'To confirm':f}</button>`).join('')}<input class="search" id="piece-search" placeholder="Find a piece…" aria-label="Find a piece" value="${esc(state.search)}"></div><div class="grid">${filtered.map(p=>{const ll=looks.filter(l=>l.pieces.includes(p.id)),l=ll[0];return `<article class="card outfit-card"><a href="#look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${p.id} · ${p.category}</span><span>${statusLabel(p.id)}</span></div><h3>${p.name}</h3></a><p class="muted">${esc(fit(p))}</p><p class="caption">Shown in a full look · reused in ${ll.length} look${ll.length>1?'s':''}</p>${ownershipSelect(p)}</article>`;}).join('')}</div>${!filtered.length?'<div class="empty">No matching pieces. Try another filter or search.</div>':''}`;}
+function piecePage(){const filtered=pieces.filter(p=>(state.filter==='All'||state.filter===p.category||state.filter.toLowerCase()===status(p.id))&&(searchKey(p.name).includes(searchKey(state.search))||searchKey(translateText(p.name)).includes(searchKey(state.search))));return head('THE COMPLETE INVENTORY','The pieces',`<span class="muted">40 pieces · ${pieces.filter(p=>status(p.id)==='owned').length} owned · ${pieces.filter(p=>status(p.id)==='review').length} to confirm</span>`)+`<div class="filter-bar">${['All','Owned','Buy','Review','Tops','Bottoms','Layers','Shoes','Extras'].map(f=>`<button data-filter="${f}" class="${state.filter===f?'active-button':''}">${f==='Review'?'To confirm':f}</button>`).join('')}<input class="search" id="piece-search" placeholder="Find a piece…" aria-label="Find a piece" value="${esc(state.search)}"></div><div class="grid">${filtered.map(p=>{const ll=looks.filter(l=>l.pieces.includes(p.id)),l=ll[0];return `<article class="card piece-card"><a href="#look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${p.id} · ${p.category}</span><span>${statusLabel(p.id)}</span></div><h3>${p.name}</h3></a><p class="muted">${esc(fit(p))}</p><p class="caption">Shown in a full look · reused in ${ll.length} look${ll.length>1?'s':''}</p>${ownershipSelect(p)}</article>`;}).join('')}</div>${!filtered.length?'<div class="empty">No matching pieces. Try another filter or search.</div>':''}`;}
 function rotation(){const start=new Date(currentDate()+'T12:00:00');start.setDate(start.getDate()-((start.getDay()+6)%7)+state.offset*28);const pool=looks.filter(l=>l.season===state.season);const now=currentDate();const fmt=d=>`<time data-local-date="${d.getTime()}" data-date-format="short" data-i18n-skip>${new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short'}).format(d)}</time>`;let cells='';for(let i=0;i<28;i++){const d=new Date(start);d.setDate(start.getDate()+i);const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`,isToday=iso===now;let l=pool[(i+Math.floor(i/7))%7];if(isToday&&state.weather)l=recommend(state.weather,options({mode:'everyday',season:state.season})).look;cells+=`<div class="calendar-day ${isToday?'today':''}"><div class="row-between"><span>${fmt(d)}</span>${isToday?'<span>Today</span>':''}</div><a href="#look/${l.id}">${image(l)}<span>${label(l.season)} 0${l.number}</span><strong>${l.name}</strong></a></div>`;}
  return head('A LITTLE PLANNING. EASIER MORNINGS.','The rotation',`<label>Season &nbsp; <select class="search" id="rotation-season">${seasons.map(s=>`<option ${state.season===s?'selected':''} value="${s}">${label(s)}</option>`).join('')}</select></label>`)+`<div class="calendar-controls"><button class="text-button" data-offset="-1">← Previous 4 weeks</button><span>${fmt(start)} ${start.getFullYear()}</span><button class="text-button" data-offset="1">Next 4 weeks →</button></div><div class="callout"><p>Good outfits, worth wearing again.</p><p class="caption">${state.weather?'Today’s weather may change the planned look within this selected season.':'Set your city for today’s live weather override.'} Future days are a rotation plan, not a weather forecast.</p></div><div class="calendar-scroll"><div class="calendar">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(d=>`<div class="weekday">${d}</div>`).join('')}${cells}</div></div>`;
 }
