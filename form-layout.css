@@ -1,0 +1,36 @@
+/* Shared form rhythm and touch-friendly controls. Loaded after page styles. */
+.field { min-width: 0; line-height: 1.5; margin-block: 20px; }
+.field input, .field select, .field textarea { max-width: 100%; box-sizing: border-box; margin-top: 8px; }
+.field small { margin-top: 8px; line-height: 1.6; }
+.studio-fields, .tryon-page .studio-fields, .form-grid { gap: 26px 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.studio-fields > .field, .form-grid > .field { margin: 0; }
+.studio-fields + .studio-fields, .form-grid + .form-grid { margin-top: 28px; }
+.tryon-upload > *, .tryon-review > *, .tryon-approved > * { min-width: 0; }
+.tryon-upload { margin-block: 26px 32px; }
+.field input:not([type=checkbox]):not([type=radio]), .field select, .measurement-field input { min-height: 46px; }
+.field input[type=file] { white-space: normal; overflow-wrap: anywhere; }
+.field input[type=file]::file-selector-button { min-height: 40px; margin-right: 12px; }
+.skin-tones { border: 1px solid #dce2d8; border-radius: 12px; padding: 18px; margin-block: 28px; min-width: 0; }
+.skin-tones > div { display: flex; flex-wrap: wrap; gap: 12px; }
+.skin-tones label { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 6px 10px; border: 1px solid #dce2d8; border-radius: 8px; cursor: pointer; }
+.skin-tones label:has(input:checked) { outline: 2px solid #365642; outline-offset: 1px; }
+.skin-swatch { width: 22px; height: 22px; border-radius: 50%; background: var(--tone); border: 1px solid #0003; flex: none; }
+#tryon-headshot-preview { display: grid; grid-template-columns: repeat(auto-fit,minmax(100px,1fr)); gap: 12px; }
+#tryon-headshot-preview figure { margin: 0; }
+#tryon-headshot-preview img { max-height: 240px; }
+#tryon-draft-status { font-size: 13px; line-height: 1.6; color: #365642; padding-block: 10px; }
+@media (max-width: 650px) {
+  .studio-fields, .tryon-page .studio-fields, .form-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .field input, .field select, .field textarea, .measurement-field input,
+  input[type=search], #owned-garment-name, #owned-garment-notes { font-size: 16px; }
+  .field { font-size: 14px; }
+  .field small { font-size: 12px; }
+  .tryon-step { padding: 20px 16px; }
+  .tryon-page .actions, .provider-actions { align-items: stretch; }
+  .tryon-page .actions > button, .provider-actions > button { flex: 1 1 180px; }
+  .tryon-page button, .provider-actions button, .family-card button, .personal-card form button { min-height: 44px; max-width: 100%; white-space: normal; }
+  .tryon-outfit-picker .field { min-width: 0; flex-basis: 100%; }
+  .tryon-gallery { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
+  .tryon-page .remember { padding-block: 8px; }
+  .studio-global, .provider-body { padding: 18px 14px; }
+}

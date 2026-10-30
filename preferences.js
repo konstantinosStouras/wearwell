@@ -1,4 +1,4 @@
-import {looks} from './data.js?v=20261030-menu-v1';
+import {looks} from './data.js?v=20261030-profile-v2';
 
 export const dislikeReasons = [
   ['colour', 'Wrong colour for me'],
