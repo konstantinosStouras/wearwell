@@ -28,7 +28,7 @@ let garments=[...root.querySelectorAll('.garment')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let position=4,target=4,velocity=0,frame=0,lastTime=0,zoom=0;
 let reveals=pieces.map((_,i)=>Number(i===current));
-let swings=pieces.map(()=>({angle:0,speed:0}));
+let swings=pieces.map(()=>({angle:0,speed:0,kick:0,delay:0}));
 let down=null,dragged=false,hoverEnabled=true,wheelTimer,activationIndex=null,lastTap=null,lastPointerType='mouse',lastHoverX=null;
 const clamp=n=>Math.max(0,Math.min(pieces.length-1,n));
 const spacing=()=>thisHost.clientWidth<=650?52:Math.min(64,Math.max(38,(thisHost.clientWidth-340)/8));
@@ -90,26 +90,35 @@ function paint(){
 }
 function animate(time){
  const dt=Math.min((time-lastTime)/1000||1/60,1/30);lastTime=time;
- if(reduced.matches){swings.forEach(s=>{s.angle=0;s.speed=0});position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(i===current))}
+ if(reduced.matches){swings.forEach(s=>{s.angle=0;s.speed=0;s.kick=0;s.delay=0});position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(i===current))}
  else{
   velocity+=(target-position)*(down?.locked?220:95)*dt;velocity*=Math.exp(-(down?.locked?28:18)*dt);position+=velocity*dt;
-  swings.forEach(s=>{
-   s.speed+=(-65*s.angle-7.5*s.speed)*dt;
-   s.angle+=s.speed*dt;
+  swings.forEach((s,i)=>{
+   // The small nudge travels out along the rail, rather than moving all
+   // hangers in sync. Keep existing momentum when browsing quickly.
+   if(s.kick){s.delay-=dt;if(s.delay<=0){s.speed=Math.max(-18,Math.min(18,s.speed+s.kick));s.kick=0}}
+   s.speed+=(-(60+(i%3)*4)*s.angle-7*s.speed)*dt;
+   s.angle=Math.max(-2.1,Math.min(2.1,s.angle+s.speed*dt));
   });
   zoom+=(Number(focused)-zoom)*(1-Math.exp(-10*dt));
   reveals=reveals.map((v,i)=>v+(Number(i===current)-v)*(1-Math.exp(-12*dt)));
  }
  paint();
- if(swings.some(s=>Math.abs(s.angle)>.005||Math.abs(s.speed)>.02)||Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(i===current))>.001))frame=requestAnimationFrame(animate);
+ if(swings.some(s=>s.kick||Math.abs(s.angle)>.005||Math.abs(s.speed)>.02)||Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(i===current))>.001))frame=requestAnimationFrame(animate);
  else{position=target;zoom=Number(focused);velocity=0;reveals=pieces.map((_,i)=>Number(i===current));paint();frame=0;lastTime=0;}
 }
 function wake(){if(!frame)frame=requestAnimationFrame(animate)}
 function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(target);if(next!==current){
  const direction=Math.sign(next-current);
  if(!reduced.matches){
-  // A small, bounded impulse at the hook; interrupted swipes retain momentum.
-  [current,next].forEach(i=>{swings[i].speed=Math.max(-18,Math.min(18,swings[i].speed+direction*14))});
+  // The opened piece leads; neighbouring hangers respond more softly,
+  // then settle. No perpetual wobble while the pointer remains still.
+  swings.forEach((s,i)=>{
+   const distance=Math.min(Math.abs(i-next),Math.abs(i-current));
+   const primary=i===next||i===current;
+   s.kick=(primary?direction:Math.sign(i-next))*(i===next?17:i===current?12:8*Math.exp(-distance*.48));
+   s.delay=primary?0:Math.min(.18,distance*.035);
+  });
  }
  current=next;render();root.dispatchEvent(new Event('rack:selection'))}wake()}
 function step(d){hoverEnabled=false;focused=false;move(current+d);render()}
@@ -253,7 +262,7 @@ on(reduced,'change',wake);on(window,'resize',wake);render();
    pieces=next.map(p=>({...p,canonical:p.name,en:p.name,el:p.image?p.name:p.el,enSub:p.image?'':p.category,elSub:p.image?'':p.elSub}));
    current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;
    reveals=next.map((_,i)=>Number(i===current));
-   swings=next.map(()=>({angle:0,speed:0}));
+   swings=next.map(()=>({angle:0,speed:0,kick:0,delay:0}));
    rack.innerHTML=pieces.map((p,i)=>'<button class="garment" data-i="'+i+'">'+garment(p,i)+'</button>').join('');
    garments=[...rack.children];render();
   },()=>pieces[current]);
