@@ -1,3 +1,4 @@
+import './wardrobe-rack.js?v=20261030-rack-v1';
 import {tryOnPage,loadTryOn} from './tryon.js?v=20261022-tryon-v2';
 import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261022-tryon-v2';
 import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261022-tryon-v2';
@@ -77,7 +78,9 @@ function wardrobeToolbar(r){
  return `<div class="wardrobe-toolbar"><div class="wardrobe-tabs" aria-label="Wardrobe sections"><a href="#wardrobe" ${!pieceView?'aria-current="page"':''}>Looks</a><a href="#pieces" ${pieceView?'aria-current="page"':''}>Pieces</a></div>${pieceView?`<a class="caption" href="#${r==='purge'?'pieces':'purge'}">${r==='purge'?'← Back to pieces':'Review unused clothes ↗'}</a>`:`<label class="collection-picker">Collection<select id="collection-select">${[['wardrobe','All outfits'],...seasons.map(s=>[s,label(s)]),['gym','Gym'],['lounge','Lounge']].map(([value,text])=>`<option value="${value}" ${r===value?'selected':''}>${text}</option>`).join('')}</select></label>`}</div>`;
 }
 function collectionInvitation(){return accountUid?'':`<aside class="collection-invitation"><div><h2>Make these ideas your own.</h2><p>Sign in to save your likes and refine your recommendations.</p></div><button class="button primary" data-style-signin>Sign in</button></aside>`;}
-function wardrobe(){return head('MORE WAYS TO WEAR WHAT YOU OWN','Your wardrobe')+'<p class="intro muted">Find a look for the season, or review the pieces you own.</p>'+collectionInvitation()+`<div class="grid">${looks.map(card).join('')}</div>`;}
+function wardrobeStylesTitle(){return {el:'Στυλ',de:'Styles',ru:'Образы',es:'Estilos',fr:'Styles',pt:'Estilos',ar:'الإطلالات','zh-Hans':'穿搭风格',yue:'穿搭風格'}[getLanguage()]||'Styles';}
+document.addEventListener('wardrobe:language',()=>{const title=document.querySelector('#wardrobe-styles-title');if(title)title.textContent=wardrobeStylesTitle();});
+function wardrobe(){const styles=wardrobeStylesTitle();return head('MORE WAYS TO WEAR WHAT YOU OWN','Your wardrobe')+'<wardrobe-rack data-i18n-skip></wardrobe-rack>'+`<section class="wardrobe-styles" aria-labelledby="wardrobe-styles-title"><h2 id="wardrobe-styles-title" data-i18n-skip>${styles}</h2><p class="intro muted">Find a look for the season, or review the pieces you own.</p>`+collectionInvitation()+`<div class="grid">${looks.map(card).join('')}</div></section>`;}
 function render(){
  const r=route().split('/')[0];
  const feedbackView=$('#main').dataset.feedbackRoute===route()&&renderedAccount===accountUid?captureFeedbackView():null;
