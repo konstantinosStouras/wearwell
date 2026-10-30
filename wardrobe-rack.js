@@ -1,20 +1,21 @@
-import {rackArt} from './rack-art.js?v=20261030-rack-v2';
-import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v2';
+import {rackStyles} from './rack-styles.js?v=20261030-rack-v3';
+import {rackArt,rackExamples} from './rack-art.js?v=20261030-rack-v3';
+import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v3';
 import {getLanguage,translateText} from './i18n.js?v=20261030-rack-v2';
-import {pieces as capsule,looks} from './data.js?v=20261030-rack-v2';
+
 // Isolated rack view with account-scoped local photo storage.
 class WardrobeRack extends HTMLElement {
  connectedCallback(){
   this.cleanup?.();
   const thisHost=this,root=this.shadowRoot||this.attachShadow({mode:'open'});
-  root.innerHTML='<link rel="stylesheet" href="'+new URL('./wardrobe-rack.css?v=20261030-rack-v2',import.meta.url).href+'">'+"<p class=\"hint\" data-t=\"hint\"></p><section class=\"studio\" aria-label=\"Interactive clothing rack\"><div class=\"rail\"></div><div class=\"rail-end left\"></div><div class=\"rail-end right\"></div><div id=\"rack\" class=\"rack\"></div><span class=\"studio-label\" data-t=\"studio\">FIVE PIECES. MANY POSSIBILITIES.</span><button class=\"close\" id=\"close\" hidden data-t=\"back\">← Back to the rail</button></section>\n<section class=\"details\"><button id=\"previous\" class=\"arrow\" aria-label=\"Previous piece\">←</button><div class=\"piece-info\" aria-live=\"polite\"><p class=\"eyebrow\" id=\"counter\"></p><h2 id=\"name\"></h2><p id=\"description\"></p><button class=\"inspect\" id=\"inspect\" data-t=\"inspect\">Take a closer look ↗</button></div><button id=\"next\" class=\"arrow\" aria-label=\"Next piece\">→</button></section>\n<div id=\"dots\" class=\"dots\" aria-label=\"Choose a piece\"></div>";
+  root.innerHTML='<style>'+rackStyles+'</style>'+"<p class=\"hint\" data-t=\"hint\"></p><section class=\"studio\" aria-label=\"Interactive clothing rack\"><div class=\"rail\"></div><div class=\"rail-end left\"></div><div class=\"rail-end right\"></div><div id=\"rack\" class=\"rack\"></div><span class=\"studio-label\" data-t=\"studio\">FIVE PIECES. MANY POSSIBILITIES.</span><button class=\"close\" id=\"close\" hidden data-t=\"back\">← Back to the rail</button></section>\n<section class=\"details\"><button id=\"previous\" class=\"arrow\" aria-label=\"Previous piece\">←</button><div class=\"piece-info\" aria-live=\"polite\"><p class=\"eyebrow\" id=\"counter\"></p><h2 id=\"name\"></h2><p id=\"description\"></p><button class=\"inspect\" id=\"inspect\" data-t=\"inspect\">Take a closer look ↗</button></div><button id=\"next\" class=\"arrow\" aria-label=\"Next piece\">→</button></section>\n<div id=\"dots\" class=\"dots\" aria-label=\"Choose a piece\"></div>";
   const controller=new AbortController();
   const on=(node,type,handler,options={})=>node.addEventListener(type,handler,{...options,signal:controller.signal});
-// Interaction study using five IDs from the existing 40-piece capsule.
-const examples=capsule.filter(p=>looks.some(l=>l.pieces.includes(p.id)));
-let pieces=examples.map(p=>({...p,canonical:p.name,en:p.name,el:translateText(p.name,'el'),enSub:p.category,elSub:translateText(p.category,'el')}));
+// The demo collection is separate from the 40-piece capsule and personal uploads.
+const examples=rackExamples;
+let pieces=examples.map(p=>({...p,canonical:p.name,en:p.name,el:p.el,enSub:p.category,elSub:p.elSub}));
 const copy={en:{preview:'LOCAL PREVIEW',eyebrow:'THE CAPSULE / AN INTERACTIVE STUDY',title:'A little room for discovery.',hint:'Move across the clothes, or drag the rail.<br>Click a piece to take a closer look.',studio:'FIVE PIECES. MANY POSSIBILITIES.',back:'← Back to the rail',inspect:'Take a closer look ↗',footer:'DayWear Rack — interaction prototype',note:'Illustrated capsule pieces · Drag, tap, or use ← → · Esc to return',previous:'Previous piece',next:'Next piece'},el:{preview:'ΤΟΠΙΚΗ ΠΡΟΕΠΙΣΚΟΠΗΣΗ',eyebrow:'Η ΓΚΑΡΝΤΑΡΟΜΠΑ / ΜΙΑ ΔΙΑΔΡΑΣΤΙΚΗ ΜΕΛΕΤΗ',title:'Λίγος χώρος για ανακάλυψη.',hint:'Κινήστε τον δείκτη πάνω στα ρούχα ή σύρετε.<br>Πατήστε ένα ρούχο για να το δείτε από κοντά.',studio:'ΠΕΝΤΕ ΡΟΥΧΑ. ΠΟΛΛΕΣ ΔΥΝΑΤΟΤΗΤΕΣ.',back:'← Πίσω στην κρεμάστρα',inspect:'Δείτε το από κοντά ↗',footer:'DayWear Rack — διαδραστικό πρωτότυπο',note:'Εικονογραφημένα ρούχα · Σύρετε, πατήστε ή χρησιμοποιήστε ← → · Esc για επιστροφή',previous:'Προηγούμενο ρούχο',next:'Επόμενο ρούχο'}};
-let current=0,focused=false,lang=getLanguage()==='el'?'el':'en';
+let current=4,focused=false,lang=getLanguage()==='el'?'el':'en';
 const $=s=>root.querySelector(s),rack=$('#rack');
 
 function garment(p,i){return p.image?'<img class="owned-photo" src="'+p.image+'" alt="" draggable="false">':rackArt(p,i);}
@@ -23,14 +24,14 @@ $('#dots').innerHTML='<input id="piece-range" type="range" min="0" max="'+(piece
 // Animate a continuous rail position independently of the selected piece.
 let garments=[...root.querySelectorAll('.garment')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let position=0,target=0,velocity=0,frame=0,lastTime=0,zoom=0;
+let position=4,target=4,velocity=0,frame=0,lastTime=0,zoom=0;
 let down=null,dragged=false,hoverEnabled=true,wheelTimer,hoverAnchor=0,hoverX=0;
 const clamp=n=>Math.max(0,Math.min(pieces.length-1,n));
-const spacing=()=>thisHost.clientWidth<=650?108:180;
+const spacing=()=>thisHost.clientWidth<=650?76:Math.min(148,(thisHost.clientWidth-210)/6);
 function render(){
  pieces.forEach(p=>p.en=p.image?p.name:translateText(p.canonical,getLanguage()));
  thisHost.lang=lang;
- root.querySelectorAll('[data-t]').forEach(el=>el.innerHTML=el.dataset.t==='studio'?(pieces.some(p=>p.image)?(lang==='el'?'ΤΑ ΔΙΚΑ ΣΑΣ ΡΟΥΧΑ':'YOUR OWN CLOTHES'):(lang==='el'?'ΡΟΥΧΑ ΑΠΟ ΤΗ ΣΥΛΛΟΓΗ ΣΤΥΛ':'PIECES FROM THE STYLES COLLECTION')):copy[lang][el.dataset.t]);
+ root.querySelectorAll('[data-t]').forEach(el=>el.innerHTML=el.dataset.t==='studio'?(pieces.some(p=>p.image)?(lang==='el'?'ΤΑ ΔΙΚΑ ΣΑΣ ΡΟΥΧΑ':'YOUR OWN CLOTHES'):(lang==='el'?'ΔΟΚΙΜΑΣΤΙΚΗ ΣΥΛΛΟΓΗ STREETWEAR':'THE STREETWEAR EDIT · DEMO COLLECTION')):copy[lang][el.dataset.t]);
  $('.studio').ariaLabel=lang==='el'?'Διαδραστική κρεμάστρα ρούχων':'Interactive clothing rack';
  $('#dots').ariaLabel=lang==='el'?'Επιλέξτε ρούχο':'Choose a piece';
  root.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
@@ -39,7 +40,7 @@ function render(){
   b.setAttribute('aria-hidden',focused&&i!==current?'true':'false');
   b.setAttribute('aria-label',pieces[i][lang]);b.setAttribute('aria-pressed',i===current);
  });
- $('#piece-range').max=Math.max(0,pieces.length-1);$('#piece-range').value=current;$('#piece-range').ariaLabel=lang==='el'?'Επιλέξτε ρούχο':'Choose a piece';const p=pieces[current];if(!p)return;$('#counter').textContent=`${String(current+1).padStart(2,"0")} / ${pieces.length}${p.image?'':' — '+p.id}`;
+ $('#piece-range').max=Math.max(0,pieces.length-1);$('#piece-range').value=current;$('#piece-range').ariaLabel=lang==='el'?'Επιλέξτε ρούχο':'Choose a piece';const p=pieces[current];if(!p)return;$('#counter').textContent=`${String(current+1).padStart(2,"0")} / ${pieces.length}`;
  $('#name').textContent=p[lang];$('#description').textContent=p[lang+'Sub'];
  $('#inspect').hidden=focused;$('#close').hidden=!focused;
  $('#previous').ariaLabel=copy[lang].previous;$('#next').ariaLabel=copy[lang].next;
@@ -49,10 +50,10 @@ function render(){
 }
 function paint(){
  garments.forEach((b,i)=>{
-  const d=i-position,proximity=Math.exp(-d*d*2),side=Math.tanh(d*1.5);
-  const spread=side*25*(1-zoom);
-  const swing=reduced.matches?0:Math.max(-7,Math.min(7,velocity*3));
-  b.style.transform=`translateX(calc(-50% + ${d*spacing()*(1+zoom*.5)+spread}px)) translateY(${proximity*zoom*18}px) rotateY(${-side*65*(1-proximity*.3)}deg) rotateZ(${-side*2+swing*(.5+proximity*.5)}deg) scale(${.88+proximity*.12+zoom*proximity*.12})`;
+  const d=i-position,proximity=Math.exp(-d*d*2),side=Math.tanh(d*2.1);
+  const spread=side*42*(1-zoom);
+  const swing=reduced.matches?0:Math.max(-3,Math.min(3,velocity*1.4));
+  b.style.transform=`translateX(calc(-50% + ${d*spacing()*(1+zoom*.5)+spread}px)) translateY(${proximity*zoom*18}px) rotateY(${-side*81*(1-proximity*.85)}deg) rotateZ(${-side*2+swing*(.5+proximity*.5)}deg) scale(${.88+proximity*.12+zoom*proximity*.12})`;
   b.style.opacity=1-zoom*(i===current?0:1);
   b.style.zIndex=String(20-Math.round(Math.abs(d)*3));
   b.style.pointerEvents=focused&&i!==current?'none':'auto';b.style.visibility=Math.abs(d)>4?'hidden':'visible';b.tabIndex=Math.abs(d)>4||focused&&i!==current?-1:0;
@@ -62,8 +63,8 @@ function animate(time){
  const dt=Math.min((time-lastTime)/1000||1/60,1/30);lastTime=time;
  if(reduced.matches){position=target;velocity=0;zoom=Number(focused)}
  else{
-  velocity+=(target-position)*130*dt;velocity*=Math.exp(-20*dt);position+=velocity*dt;
-  zoom+=(Number(focused)-zoom)*(1-Math.exp(-13*dt));
+  velocity+=(target-position)*95*dt;velocity*=Math.exp(-18*dt);position+=velocity*dt;
+  zoom+=(Number(focused)-zoom)*(1-Math.exp(-10*dt));
  }
  paint();
  if(Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001)frame=requestAnimationFrame(animate);
@@ -139,8 +140,8 @@ on(reduced,'change',wake);on(window,'resize',wake);render();
   const resize=new ResizeObserver(()=>wake());resize.observe(this);
 
   const stopUploads=installRackUploads(root,examples,next=>{
-   pieces=next.map(p=>({...p,canonical:p.name,en:p.name,el:p.image?p.name:translateText(p.name,'el'),enSub:p.image?'':p.category,elSub:p.image?'':translateText(p.category,'el')}));
-   current=position=target=velocity=zoom=0;focused=false;
+   pieces=next.map(p=>({...p,canonical:p.name,en:p.name,el:p.image?p.name:p.el,enSub:p.image?'':p.category,elSub:p.image?'':p.elSub}));
+   current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;
    rack.innerHTML=pieces.map((p,i)=>'<button class="garment" data-i="'+i+'">'+garment(p,i)+'</button>').join('');
    garments=[...rack.children];render();
   },()=>pieces[current]);
