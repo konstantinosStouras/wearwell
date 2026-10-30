@@ -1,0 +1,20 @@
+export default {
+  "My model & outfit previews": "Το μοντέλο μου και οι προεπισκοπήσεις συνόλων",
+  "My model & outfit previews ↓": "Το μοντέλο μου και οι προεπισκοπήσεις συνόλων ↓",
+  "Optional model settings": "Προαιρετικές ρυθμίσεις μοντέλου",
+  "1. Optional model settings": "1. Προαιρετικές ρυθμίσεις μοντέλου",
+  "1 · Profile & model settings": "1 · Προφίλ και ρυθμίσεις μοντέλου",
+  "Your saved profile measurements, appearance notes and headshots are reused here. Edit them above; there is no need to enter them again.": "Εδώ χρησιμοποιούνται οι αποθηκευμένες μετρήσεις, σημειώσεις εμφάνισης και φωτογραφίες προσώπου του προφίλ σου. Επεξεργάσου τα παραπάνω, χωρίς να τα καταχωρίσεις ξανά.",
+  "Model previews use the first 500 characters of your saved face, body & fit notes. Your full notes stay unchanged in your profile.": "Οι προεπισκοπήσεις μοντέλου χρησιμοποιούν τους πρώτους 500 χαρακτήρες των αποθηκευμένων σημειώσεων προσώπου, σώματος και εφαρμογής. Οι πλήρεις σημειώσεις παραμένουν αμετάβλητες στο προφίλ σου.",
+  "Measurements and headshots come from your saved profile above.": "Οι μετρήσεις και οι φωτογραφίες προσώπου προέρχονται από το αποθηκευμένο προφίλ σου παραπάνω.",
+  "Keep my earlier fitting-room headshots as references": "Διατήρηση των παλαιότερων φωτογραφιών προσώπου του δοκιμαστηρίου ως αναφορών",
+  "Save model settings": "Αποθήκευση ρυθμίσεων μοντέλου",
+  "Save your profile and model settings before creating a preview.": "Αποθήκευσε το προφίλ και τις ρυθμίσεις μοντέλου πριν δημιουργήσεις προεπισκόπηση.",
+  "Save your profile above first so the model uses your latest details.": "Αποθήκευσε πρώτα το προφίλ σου παραπάνω, ώστε το μοντέλο να χρησιμοποιεί τα τελευταία στοιχεία σου.",
+  "Earlier fitting-room details are shown in your profile. Review them and save your profile once.": "Τα παλαιότερα στοιχεία του δοκιμαστηρίου εμφανίζονται στο προφίλ σου. Έλεγξέ τα και αποθήκευσε το προφίλ μία φορά.",
+  "Administrator-assisted previews (optional)": "Προεπισκοπήσεις με βοήθεια διαχειριστή (προαιρετικά)",
+  "Use up to six headshots and three body photos.": "Χρησιμοποίησε έως έξι φωτογραφίες προσώπου και τρεις φωτογραφίες σώματος.",
+  "Add 1–6 recent headshots. Start with a front view; slight left and right angles are useful extras.": "Πρόσθεσε 1–6 πρόσφατες φωτογραφίες προσώπου. Ξεκίνα με μετωπική λήψη· ελαφρές αριστερές και δεξιές γωνίες είναι χρήσιμες επιπλέον.",
+  "There is not enough room to keep all earlier headshots. Remove an unused photo above, then retry.": "Δεν υπάρχει αρκετός χώρος για όλες τις παλαιότερες φωτογραφίες προσώπου. Αφαίρεσε μια φωτογραφία που δεν χρειάζεσαι παραπάνω και δοκίμασε ξανά.",
+  "Your profile changed in another tab. Refresh and save model settings again.": "Το προφίλ σου άλλαξε σε άλλη καρτέλα. Ανανέωσε και αποθήκευσε ξανά τις ρυθμίσεις μοντέλου."
+};
