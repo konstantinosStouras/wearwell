@@ -12,7 +12,8 @@
 .studio{isolation:isolate;background:radial-gradient(ellipse at 45% 30%,#f2f1e9 0%,#e6e6de 66%,#dedfd6 100%);height:500px;scroll-margin-top:76px}
 .studio::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 69% 50%,#ecde7640,transparent 18%),radial-gradient(ellipse at 21% 68%,#83877d15,transparent 30%);opacity:0;transition:opacity .8s}
 .studio.is-focused::before{opacity:1}
-.rack{z-index:1;perspective:1100px;overscroll-behavior-x:contain;touch-action:pan-y pinch-zoom}
+.studio{perspective:none}
+.rack{z-index:1;perspective:2400px;overscroll-behavior-x:contain;touch-action:pan-y pinch-zoom}
 .garment{width:280px;height:430px;top:26px;transition:none;transform-style:preserve-3d;outline-offset:0}
 .garment-turn{display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.22,.8,.22,1);pointer-events:none}
 .garment-turn.is-back{transform:rotateY(180deg)}
