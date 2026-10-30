@@ -1,6 +1,6 @@
-import {rackStyles} from './rack-styles.js?v=20261030-rack-v5';
-import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-rack-v5';
-import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v5';
+import {rackStyles} from './rack-styles.js?v=20261030-rack-v7';
+import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-rack-v7';
+import {installRackUploads} from './rack-uploads.js?v=20261030-rack-v7';
 import {getLanguage,translateText} from './i18n.js?v=20261030-rack-v2';
 
 // Isolated rack view with account-scoped local photo storage.
@@ -16,7 +16,7 @@ class WardrobeRack extends HTMLElement {
 // The demo collection is separate from the 40-piece capsule and personal uploads.
 const examples=rackExamples;
 let pieces=examples.map(p=>({...p,canonical:p.name,en:p.name,el:p.el,enSub:p.category,elSub:p.elSub}));
-const copy={en:{preview:'LOCAL PREVIEW',eyebrow:'THE CAPSULE / AN INTERACTIVE STUDY',title:'A little room for discovery.',hint:'Swipe or drag to browse. Tap a piece to explore.<br>Swipe again or tap Back to return to the rail.',studio:'FIVE PIECES. MANY POSSIBILITIES.',back:'← Back to the rail',inspect:'Take a closer look ↗',footer:'DayWear Rack — interaction prototype',note:'Illustrated capsule pieces · Drag, tap, or use ← → · Esc to return',previous:'Previous piece',next:'Next piece'},el:{preview:'ΤΟΠΙΚΗ ΠΡΟΕΠΙΣΚΟΠΗΣΗ',eyebrow:'Η ΓΚΑΡΝΤΑΡΟΜΠΑ / ΜΙΑ ΔΙΑΔΡΑΣΤΙΚΗ ΜΕΛΕΤΗ',title:'Λίγος χώρος για ανακάλυψη.',hint:'Σύρετε για να δείτε τα ρούχα. Πατήστε ένα για λεπτομέρειες.<br>Σύρετε ξανά ή πατήστε επιστροφή στην κρεμάστρα.',studio:'ΠΕΝΤΕ ΡΟΥΧΑ. ΠΟΛΛΕΣ ΔΥΝΑΤΟΤΗΤΕΣ.',back:'← Πίσω στην κρεμάστρα',inspect:'Δείτε το από κοντά ↗',footer:'DayWear Rack — διαδραστικό πρωτότυπο',note:'Εικονογραφημένα ρούχα · Σύρετε, πατήστε ή χρησιμοποιήστε ← → · Esc για επιστροφή',previous:'Προηγούμενο ρούχο',next:'Επόμενο ρούχο'}};
+const copy={en:{preview:'LOCAL PREVIEW',eyebrow:'THE CAPSULE / AN INTERACTIVE STUDY',title:'A little room for discovery.',hint:'Swipe or drag to browse. Tap any piece to open.<br>Double-tap to flip; tap beside it to return.',studio:'FIVE PIECES. MANY POSSIBILITIES.',back:'← Back to the rail',inspect:'Take a closer look ↗',footer:'DayWear Rack — interaction prototype',note:'Illustrated capsule pieces · Drag, tap, or use ← → · Esc to return',previous:'Previous piece',next:'Next piece'},el:{preview:'ΤΟΠΙΚΗ ΠΡΟΕΠΙΣΚΟΠΗΣΗ',eyebrow:'Η ΓΚΑΡΝΤΑΡΟΜΠΑ / ΜΙΑ ΔΙΑΔΡΑΣΤΙΚΗ ΜΕΛΕΤΗ',title:'Λίγος χώρος για ανακάλυψη.',hint:'Σύρετε για να δείτε τα ρούχα. Πατήστε ένα για λεπτομέρειες.<br>Διπλό πάτημα για περιστροφή· πάτημα δίπλα του για επιστροφή.',studio:'ΠΕΝΤΕ ΡΟΥΧΑ. ΠΟΛΛΕΣ ΔΥΝΑΤΟΤΗΤΕΣ.',back:'← Πίσω στην κρεμάστρα',inspect:'Δείτε το από κοντά ↗',footer:'DayWear Rack — διαδραστικό πρωτότυπο',note:'Εικονογραφημένα ρούχα · Σύρετε, πατήστε ή χρησιμοποιήστε ← → · Esc για επιστροφή',previous:'Προηγούμενο ρούχο',next:'Επόμενο ρούχο'}};
 let current=2,focused=false,lang=getLanguage()==='el'?'el':'en';
 const $=s=>root.querySelector(s),rack=$('#rack');
 
@@ -27,9 +27,9 @@ $('#dots').innerHTML='<input id="piece-range" type="range" min="0" max="'+(piece
 let garments=[...root.querySelectorAll('.garment')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let position=2,target=2,velocity=0,frame=0,lastTime=0,zoom=0;
-let down=null,dragged=false,hoverEnabled=true,wheelTimer,hoverAnchor=0,hoverX=0;
+let down=null,dragged=false,hoverEnabled=true,wheelTimer,activationIndex=null,lastTap=null,lastPointerType='mouse';
 const clamp=n=>Math.max(0,Math.min(pieces.length-1,n));
-const spacing=()=>thisHost.clientWidth<=650?76:Math.min(148,(thisHost.clientWidth-210)/6);
+const spacing=()=>thisHost.clientWidth<=650?62:Math.min(96,(thisHost.clientWidth-210)/8);
 function render(){
  pieces.forEach(p=>p.en=p.image?p.name:translateText(p.canonical,getLanguage()));
  thisHost.lang=lang;
@@ -47,7 +47,7 @@ function render(){
  $('#inspect').hidden=focused;$('#close').hidden=!focused;
  $('#return-link').hidden=!focused;$('#return-link').textContent=copy[lang].back;
  $('.studio').classList.toggle('is-focused',focused);
- $('#view-switch').hidden=!p.art;
+ $('#view-switch').hidden=!p.art||!focused;
  $('#front-view').textContent=lang==='el'?'Μπροστά':'Front';$('#back-view').textContent=lang==='el'?'Πίσω':'Back';
  $('#front-view').setAttribute('aria-pressed',!p.reversed);$('#back-view').setAttribute('aria-pressed',!!p.reversed);
  $('#colour-tags').hidden=!p.art||!focused;
@@ -58,6 +58,7 @@ function render(){
  $('#previous').ariaLabel=copy[lang].previous;$('#next').ariaLabel=copy[lang].next;
  $('#previous').disabled=current===0;$('#next').disabled=current===pieces.length-1;
  root.querySelectorAll('[data-index]').forEach((b,i)=>{b.setAttribute('aria-pressed',i===current);b.ariaLabel=pieces[i][lang]});
+ paint();
  wake();
 }
 function paint(){
@@ -65,7 +66,7 @@ function paint(){
   const d=i-position,proximity=Math.exp(-d*d*2),side=Math.tanh(d*2.1);
   if(Math.abs(d)>4){b.style.visibility='hidden';b.tabIndex=-1;return;}
   b.style.visibility='visible';
-  const spread=side*42*(1-zoom);
+  const spread=side*24*(1-zoom);
   const swing=reduced.matches?0:Math.max(-3,Math.min(3,velocity*1.4));
   b.style.transform=`translateX(calc(-50% + ${d*spacing()*(1+zoom*.5)+spread-(thisHost.clientWidth<=650?zoom*24:0)}px)) translateY(${proximity*zoom*18}px) rotateY(${-side*81*(1-proximity*.85)}deg) rotateZ(${-side*2+swing*(.5+proximity*.5)}deg) scale(${.88+proximity*.12+zoom*proximity*.12})`;
   b.style.opacity=1-zoom*(i===current?0:.80);
@@ -89,22 +90,36 @@ function wake(){if(!frame)frame=requestAnimationFrame(animate)}
 function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(target);if(next!==current){current=next;render();root.dispatchEvent(new Event('rack:selection'))}wake()}
 function step(d){hoverEnabled=false;focused=false;move(current+d);render()}
 function inspect(){hoverEnabled=false;focused=true;move(current);render();$('.studio').scrollIntoView({block:'start',behavior:reduced.matches?'auto':'smooth'});$('#close').focus({preventScroll:true})}
-function close(restoreFocus=true){focused=false;hoverEnabled=false;move(current);render();if(restoreFocus)garments[current]?.focus({preventScroll:true})}
-// Stable pointer mapping prevents moving garments from causing hover flicker.
-function hover(e){
- if(e.pointerType!=='mouse'||!hoverEnabled||focused)return;
- move(hoverAnchor+(e.clientX-hoverX)/spacing());
+function close(restoreFocus=true){focused=false;lastTap=null;hoverEnabled=false;move(current);render();if(restoreFocus)garments[current]?.focus({preventScroll:true})}
+// Transparent corners of overlapping photos must not steal taps from a nearby shirt.
+function pickAt(e){
+ const hit=e.target.closest('[data-i]');if(!hit)return null;
+ if(focused)return current;
+ const active=garments[current].getBoundingClientRect(),center=(active.left+active.right)/2;
+ const solidWidth=active.width*(pieces[current].art==='tank'?.70:.86);
+ if(Math.abs(e.clientX-center)<solidWidth/2&&e.clientY>=active.top&&e.clientY<=active.bottom)return current;
+ let choice=Number(hit.dataset.i),distance=Infinity;
+ garments.forEach((b,i)=>{
+  if(b.style.visibility==='hidden')return;
+  const r=b.getBoundingClientRect();if(e.clientY<r.top||e.clientY>r.bottom)return;
+  const gap=Math.abs(e.clientX-(r.left+r.right)/2);
+  if(gap<distance){choice=i;distance=gap;}
+ });
+ return choice;
 }
-on(rack,'pointerenter',e=>{hoverEnabled=true;hoverAnchor=target;hoverX=e.clientX});
+// Browsing is driven by drag, swipe, wheel and arrows; pointer movement alone
+// must not slide another garment beneath a click.
 on(rack,'pointerdown',e=>{
  if(e.button!==0||!e.isPrimary)return;
+ lastPointerType=e.pointerType;
+ activationIndex=pickAt(e);
  down={id:e.pointerId,x:e.clientX,y:e.clientY,start:target,lastX:e.clientX,lastTime:performance.now(),speed:0,locked:false};dragged=false;
 });
 on(rack,'pointermove',e=>{
- if(!down){hover(e);return}if(e.pointerId!==down.id)return;
+ if(!down)return;if(e.pointerId!==down.id)return;
  const dx=e.clientX-down.x,dy=e.clientY-down.y;
  if(!down.locked){
-  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8&&e.pointerType!=='mouse'){down=null;return}
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8&&e.pointerType!=='mouse'){down=null;activationIndex=null;return}
   if(Math.abs(dx)<8||Math.abs(dx)<Math.abs(dy)*1.2)return;
   down.locked=true;dragged=true;rack.setPointerCapture(e.pointerId);rack.classList.add('dragging');
   if(focused){focused=false;render()}
@@ -115,8 +130,10 @@ on(rack,'pointermove',e=>{
 function release(e,cancelled=false){
  if(!down||e.pointerId!==down.id)return;
  const state=down;down=null;rack.classList.remove('dragging');
+ if(cancelled)activationIndex=null;
  if(rack.hasPointerCapture(e.pointerId))rack.releasePointerCapture(e.pointerId);
  if(state.locked){
+  activationIndex=null;
   hoverEnabled=false;
   const momentum=cancelled||performance.now()-state.lastTime>100?0:Math.max(-1.2,Math.min(1.2,state.speed*110/spacing()));
   move(Math.round(clamp(target-momentum)));
@@ -135,9 +152,20 @@ on(rack,'wheel',e=>{
  clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>move(Math.round(target)),180);
 },{passive:false});
 on(rack,'click',e=>{
- if(dragged){dragged=false;return}
- const b=e.target.closest('[data-i]');if(!b){if(focused)close(false);return;}
- const i=Number(b.dataset.i);hoverEnabled=false;if(i===current){if(focused)close();else inspect()}else{focused=false;move(i);render()}
+ if(dragged){dragged=false;activationIndex=null;return}
+ const b=e.target.closest('[data-i]'),i=activationIndex??(b?Number(b.dataset.i):null);activationIndex=null;
+ if(i===null){if(focused)close(false);return;}
+ hoverEnabled=false;
+ if(i===current&&focused){
+  if(lastPointerType==='mouse')return;
+  const now=performance.now();
+  if(lastTap&&lastTap.index===i&&now-lastTap.time<450&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<32){showSide(!pieces[i].reversed);lastTap=null;}
+  else lastTap={index:i,time:now,x:e.clientX,y:e.clientY};
+ }else{lastTap=null;move(i);inspect()}
+});
+on(rack,'dblclick',e=>{
+ if(lastPointerType!=='mouse'||!focused||!e.target.closest('[data-i]'))return;
+ e.preventDefault();showSide(!pieces[current].reversed);
 });
 $('#previous').onclick=()=>step(-1);$('#next').onclick=()=>step(1);$('#inspect').onclick=inspect;$('#close').onclick=()=>close();$('#return-link').onclick=()=>close();
 $('#dots').onclick=e=>{if(e.target.dataset.index!==undefined){hoverEnabled=false;move(Number(e.target.dataset.index))}};
@@ -149,7 +177,7 @@ on(thisHost,'keydown',e=>{
  if(e.key==='Escape'&&focused)close();
 });
 on($('#piece-range'),'input',e=>{hoverEnabled=false;focused=false;move(Number(e.target.value));render()});
-function showSide(back){const p=pieces[current];if(!p?.art)return;p.reversed=back;hoverEnabled=false;move(current);render()}
+function showSide(back){lastTap=null;const p=pieces[current];if(!p?.art)return;p.reversed=back;hoverEnabled=false;move(current);render()}
 on($('#front-view'),'click',()=>showSide(false));on($('#back-view'),'click',()=>showSide(true));
 on($('#colour-tags'),'click',e=>{
  const button=e.target.closest('[data-tone]'),p=pieces[current];if(!button||!p?.tones)return;
