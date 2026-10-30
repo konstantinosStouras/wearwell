@@ -194,7 +194,10 @@ function release(e,cancelled=false){
 }
 on(rack,'pointerup',e=>release(e));
 on(rack,'pointercancel',e=>release(e,true));
-on(rack,'lostpointercapture',e=>release(e,true));
+// Touch starts with implicit capture on the garment button. Moving capture to
+// the rail emits a bubbling lostpointercapture from that button; this is a
+// hand-off, not a cancelled swipe. Only a loss from the rail ends our drag.
+on(rack,'lostpointercapture',e=>{if(e.target===rack)release(e,true)});
 on(rack,'pointerleave',()=>{lastHoverX=null;if(!down){hoverEnabled=true;move(Math.round(target))}});
 on(rack,'wheel',e=>{
  if(e.ctrlKey)return;
