@@ -59,3 +59,6 @@
  .hint{font-size:11px;line-height:1.6}.dots{padding-bottom:16px}
 }
 @media(prefers-reduced-motion:reduce){.garment-turn,.colour-tag,.rail,.rail-end,.studio::before{transition:none}}
+
+/* Each hanger is its own 3D object: neighbouring photo planes cannot intersect. */
+.rack{transform-style:flat}

@@ -1,4 +1,4 @@
-import {rackStyles} from './rack-styles.js?v=20261030-garments-v1';
+import {rackStyles} from './rack-styles.js?v=20261030-swing-v1';
 import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261030-garments-v1';
 import {installRackUploads} from './rack-uploads.js?v=20261030-garments-v1';
 import {getLanguage,translateText} from './i18n.js?v=20261030-garments-v1';
@@ -28,9 +28,10 @@ let garments=[...root.querySelectorAll('.garment')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let position=4,target=4,velocity=0,frame=0,lastTime=0,zoom=0;
 let reveals=pieces.map((_,i)=>Number(i===current));
+let swings=pieces.map(()=>({angle:0,speed:0}));
 let down=null,dragged=false,hoverEnabled=true,wheelTimer,activationIndex=null,lastTap=null,lastPointerType='mouse',lastHoverX=null;
 const clamp=n=>Math.max(0,Math.min(pieces.length-1,n));
-const spacing=()=>thisHost.clientWidth<=650?62:Math.min(82,Math.max(42,(thisHost.clientWidth-260)/8));
+const spacing=()=>thisHost.clientWidth<=650?52:Math.min(64,Math.max(38,(thisHost.clientWidth-340)/8));
 function render(){
  pieces.forEach(p=>p.en=p.image?p.name:translateText(p.canonical,getLanguage()));
  thisHost.lang=lang;
@@ -66,18 +67,21 @@ function paint(){
  const desktop=thisHost.clientWidth>650;
  const railCenter=desktop?(pieces.length<=9?(pieces.length-1)/2:Math.max(4,Math.min(pieces.length-5,position))):position;
  garments.forEach((b,i)=>{
-  const d=i-position,proximity=reveals[i]||0,side=Math.tanh(d*2.1);
+  const d=i-position,proximity=reveals[i]||0;
   if(Math.abs(i-railCenter)>4.5){b.style.visibility='hidden';b.tabIndex=-1;return;}
   b.style.visibility='visible';
-  const railX=(i-railCenter)*spacing()+side*(desktop?34:24);
+  // Transfer the opening with the garment's turn, closing the old gap as
+  // the next opens. Resting hangers stay closely packed on either side.
+  const opening=reveals.reduce((sum,v,j)=>sum+Math.sign(i-j)*v,0);
+  const railX=(i-railCenter)*spacing()+opening*(desktop?128:112);
   const detailX=d*spacing()*1.35-(desktop?0:24);
   const x=railX*(1-zoom)+detailX*zoom;
-  const swing=reduced.matches?0:Math.max(-1.5,Math.min(1.5,velocity*.35));
+  const swing=reduced.matches?0:(swings[i]?.angle||0)*(1-zoom);
   // Counter the off-axis perspective so clothes at either end keep a natural
   // visible side profile instead of collapsing into a one-pixel sliver.
   const restingAngle=70+(i%3)*2-Math.atan(x/2400)*180/Math.PI;
-  const tilt=((i%3)-1)*.6*(1-proximity)+swing*proximity;
-  b.style.transform=`translateX(calc(-50% + ${x}px)) translateY(${proximity*zoom*18}px) rotateY(${restingAngle*(1-proximity)}deg) rotateZ(${tilt}deg) scale(${.94+proximity*.06+zoom*proximity*.12})`;
+  const tilt=((i%3)-1)*.6*(1-proximity)+swing;
+  b.style.transform=`translateX(calc(-50% + ${x}px)) translateY(${proximity*zoom*18}px) rotateZ(${tilt}deg) rotateY(${restingAngle*(1-proximity)}deg) scale(${.94+proximity*.06+zoom*proximity*.12})`;
   b.style.opacity=1-zoom*(i===current?0:.80);
   b.style.filter=i===current?'none':'blur('+zoom*9+'px)';
   b.style.zIndex=String(20-Math.round(Math.abs(d)*3));
@@ -86,18 +90,28 @@ function paint(){
 }
 function animate(time){
  const dt=Math.min((time-lastTime)/1000||1/60,1/30);lastTime=time;
- if(reduced.matches){position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(i===current))}
+ if(reduced.matches){swings.forEach(s=>{s.angle=0;s.speed=0});position=target;velocity=0;zoom=Number(focused);reveals=pieces.map((_,i)=>Number(i===current))}
  else{
   velocity+=(target-position)*(down?.locked?220:95)*dt;velocity*=Math.exp(-(down?.locked?28:18)*dt);position+=velocity*dt;
+  swings.forEach(s=>{
+   s.speed+=(-65*s.angle-7.5*s.speed)*dt;
+   s.angle+=s.speed*dt;
+  });
   zoom+=(Number(focused)-zoom)*(1-Math.exp(-10*dt));
   reveals=reveals.map((v,i)=>v+(Number(i===current)-v)*(1-Math.exp(-12*dt)));
  }
  paint();
- if(Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(i===current))>.001))frame=requestAnimationFrame(animate);
+ if(swings.some(s=>Math.abs(s.angle)>.005||Math.abs(s.speed)>.02)||Math.abs(position-target)>.0005||Math.abs(velocity)>.003||Math.abs(zoom-Number(focused))>.001||reveals.some((v,i)=>Math.abs(v-Number(i===current))>.001))frame=requestAnimationFrame(animate);
  else{position=target;zoom=Number(focused);velocity=0;reveals=pieces.map((_,i)=>Number(i===current));paint();frame=0;lastTime=0;}
 }
 function wake(){if(!frame)frame=requestAnimationFrame(animate)}
-function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(target);if(next!==current){current=next;render();root.dispatchEvent(new Event('rack:selection'))}wake()}
+function move(n){if(!pieces.length)return;target=clamp(n);const next=Math.round(target);if(next!==current){
+ const direction=Math.sign(next-current);
+ if(!reduced.matches){
+  // A small, bounded impulse at the hook; interrupted swipes retain momentum.
+  [current,next].forEach(i=>{swings[i].speed=Math.max(-18,Math.min(18,swings[i].speed+direction*14))});
+ }
+ current=next;render();root.dispatchEvent(new Event('rack:selection'))}wake()}
 function step(d){hoverEnabled=false;focused=false;move(current+d);render()}
 function inspect(){hoverEnabled=false;focused=true;move(current);render();$('.studio').scrollIntoView({block:'start',behavior:reduced.matches?'auto':'smooth'});$('#close').focus({preventScroll:true})}
 function close(restoreFocus=true){focused=false;lastTap=null;hoverEnabled=false;move(current);render();if(restoreFocus)garments[current]?.focus({preventScroll:true})}
@@ -212,6 +226,7 @@ on(reduced,'change',wake);on(window,'resize',wake);render();
    pieces=next.map(p=>({...p,canonical:p.name,en:p.name,el:p.image?p.name:p.el,enSub:p.image?'':p.category,elSub:p.image?'':p.elSub}));
    current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;
    reveals=next.map((_,i)=>Number(i===current));
+   swings=next.map(()=>({angle:0,speed:0}));
    rack.innerHTML=pieces.map((p,i)=>'<button class="garment" data-i="'+i+'">'+garment(p,i)+'</button>').join('');
    garments=[...rack.children];render();
   },()=>pieces[current]);
