@@ -1,3 +1,4 @@
+import {femalePieces,femaleSets} from './female-catalog.js?v=20261031-womens-catalog-v1';
 export const profile = {name:'Konstantinos',height:191,weight:120,notes:'Tall, broad through the chest and shoulders, with naturally proportioned slimmer arms and a natural waist. Allow comfortable room through the chest and abdomen. Height and weight are self-reported; chest, waist and inseam need actual measurements.'};
 const rows = [
 ['White heavyweight T-shirt','Tops','white'],['Navy heavyweight T-shirt','Tops','navy'],['Forest linen camp shirt','Tops','forest'],['Ecru linen shirt','Tops','ecru'],['Blue long-sleeve Henley','Tops','blue'],['Chocolate merino polo','Tops','chocolate'],['Grey merino crewneck','Tops','grey'],['Navy merino crewneck','Tops','navy'],['Oatmeal chunky knit','Tops','oatmeal'],['Charcoal thermal top','Tops','charcoal'],['Stone cotton chinos','Bottoms','stone'],['Navy linen trousers','Bottoms','navy'],['Olive fatigue trousers','Bottoms','olive'],['Tobacco corduroy trousers','Bottoms','tobacco'],['Dark indigo straight jeans','Bottoms','indigo'],['Light straight-leg jeans','Bottoms','light blue'],['Charcoal wool trousers','Bottoms','charcoal'],['Navy tailored shorts','Bottoms','navy'],['White leather trainers','Shoes','white'],['Dark waterproof trainers','Shoes','charcoal'],['Black Chelsea boots','Shoes','black'],['Brown leather loafers','Shoes','brown'],['Black waterproof walking boots','Shoes','black'],['Navy lightweight rain shell','Layers','navy'],['Navy zip jacket','Layers','navy'],['Forest cotton overshirt','Layers','forest'],['Oxblood work jacket','Layers','oxblood'],['Olive insulated waterproof field jacket','Layers','olive'],['Navy wool overcoat','Layers','navy'],['Charcoal wool scarf','Extras','charcoal'],['Black merino beanie','Extras','black'],['Stone linen shorts','Bottoms','stone'],['Grey sweatshirt','Tops','grey'],['Black leather belt','Extras','black'],['Black technical T-shirt','Tops','black'],['Black training shorts','Bottoms','black'],['Black training shoes','Shoes','black'],['Oatmeal lounge T-shirt','Tops','oatmeal'],['Charcoal lounge joggers','Bottoms','charcoal'],['Charcoal house slippers','Shoes','charcoal']
@@ -16,3 +17,14 @@ export const looks=Object.entries(sets).flatMap(([season,items])=>items.map(([na
 export const pieceById=Object.fromEntries(pieces.map(p=>[p.id,p]));
 export const lookById=Object.fromEntries(looks.map(l=>[l.id,l]));
 export const label=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+const malePieces=pieces.map(p=>({...p})),maleLooks=looks.map(l=>({...l,pieces:[...l.pieces]}));
+let catalogGender='man';
+export const getCatalogGender=()=>catalogGender;
+export function setCatalogGender(gender){
+ const next=gender==='Woman'||gender==='woman'?'woman':'man';if(next===catalogGender)return false;catalogGender=next;
+ if(next==='man'){pieces.forEach((p,i)=>Object.assign(p,malePieces[i]));looks.forEach((l,i)=>Object.assign(l,{...maleLooks[i],pieces:[...maleLooks[i].pieces]}));return true;}
+ pieces.forEach((p,i)=>{const [name,category,colour]=femalePieces[i];Object.assign(p,{id:'W'+String(i+1).padStart(2,'0'),name,category,colour,fit:category==='Shoes'?'Confirm your shoe size and width':category==='Bottoms'?'Measure waist, hips and inseam; check garment dimensions':category==='Dresses'?'Measure bust, waist and hips; check garment dimensions':category==='Extras'?'Confirm dimensions':'Fit shoulders and bust first; check length',status:'review'});pieceById[p.id]=p;});
+ const rows=Object.entries(femaleSets).flatMap(([season,items])=>items.map(([name,ids],i)=>({id:season+'-'+(i+1),season,number:i+1,name,pieces:ids.map(n=>'W'+String(n).padStart(2,'0')),image:'assets/female/'+season+'-'+(i+1)+'.webp?v=women-v1',rain:ids.some(n=>[24,28].includes(n))&&ids.some(n=>[20,23].includes(n)),layer:ids.some(n=>n>=24&&n<=29),midlayer:ids.some(n=>[7,8,9,26,27,33].includes(n))})));
+ looks.forEach((l,i)=>Object.assign(l,rows[i]));return true;
+}

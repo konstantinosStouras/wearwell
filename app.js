@@ -1,37 +1,37 @@
-import {profileTabs,selectProfileTab} from './profile-tabs.js?v=20261031-tabs-v1';
-import {modelDetailsFields,braSizeFields} from './model-details.js?v=20261031-create-palette-v1';
-import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-save-v1';
-import './wardrobe-rack.js?v=20261031-white-rack-v2';
-import {tryOnPage,loadTryOn,setProfileSaver,validateModelSave,saveProfileModel} from './tryon.js?v=20261031-create-palette-v1';
-import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-save-v1';
-import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-save-v1';
-import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261031-save-v1';
-import {studioAdminPage,loadStudioAdmin,studioSection,loadStudio} from './model-studio.js?v=20261031-save-v1';
-import {installWeatherRefresh} from './weather-refresh.js?v=20261031-save-v1';
-import {usersPage,loadUsers} from './admin-users.js?v=20261031-save-v1';
-import {updatesPage,loadUpdates} from './updates.js?v=20261031-save-v1';
-import {welcomePage} from './welcome.js?v=20261031-save-v1';
-import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261031-save-v1';
-import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261031-save-v1';
-import {lookFeedbackControls} from './style-feedback.js?v=20261031-save-v1';
-import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261031-save-v1';
-import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261031-save-v1';
-import {photosSection,refreshPhotos,validatePhotoDraft,savePhotoDraft,finishPhotoSave} from './profile-photos.js?v=20261031-tabs-v1';
-import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261031-save-v1';
-import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261031-create-palette-v1';
-import {installMeasurementGuides} from './measurement-guides.js?v=20261031-save-v1';
-import {createPrivateCatalog} from './private-models.js?v=20261031-save-v1';
-import {feedbackPage,resetFeedback} from './feedback.js?v=20261031-save-v1';
-import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261031-save-v1';
-import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261031-save-v1';
-import {profileFields,modelNotesFields,profileSaveButton,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261031-create-palette-v1';
-import {accountStorageKey} from './auth-policy.js?v=20261031-save-v1';
-import {profile,pieces,looks,pieceById,lookById,seasons,label} from './data.js?v=20261031-save-v1';
-import {fetchWeather,recommend,condition} from './weather.js?v=20261031-save-v1';
-import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261031-save-v1';
+import {profileTabs,selectProfileTab} from './profile-tabs.js?v=20261031-womens-catalog-v1';
+import {modelDetailsFields,braSizeFields} from './model-details.js?v=20261031-womens-catalog-v1';
+import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-womens-catalog-v1';
+import './wardrobe-rack.js?v=20261031-womens-catalog-v1';
+import {tryOnPage,loadTryOn,setProfileSaver,validateModelSave,saveProfileModel} from './tryon.js?v=20261031-womens-catalog-v1';
+import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-womens-catalog-v1';
+import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-womens-catalog-v1';
+import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261031-womens-catalog-v1';
+import {studioAdminPage,loadStudioAdmin,studioSection,loadStudio,modelCall} from './model-studio.js?v=20261031-womens-catalog-v1';
+import {installWeatherRefresh} from './weather-refresh.js?v=20261031-womens-catalog-v1';
+import {usersPage,loadUsers} from './admin-users.js?v=20261031-womens-catalog-v1';
+import {updatesPage,loadUpdates} from './updates.js?v=20261031-womens-catalog-v1';
+import {welcomePage} from './welcome.js?v=20261031-womens-catalog-v1';
+import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261031-womens-catalog-v1';
+import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261031-womens-catalog-v1';
+import {lookFeedbackControls} from './style-feedback.js?v=20261031-womens-catalog-v1';
+import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261031-womens-catalog-v1';
+import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261031-womens-catalog-v1';
+import {photosSection,refreshPhotos,validatePhotoDraft,savePhotoDraft,finishPhotoSave} from './profile-photos.js?v=20261031-womens-catalog-v1';
+import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261031-womens-catalog-v1';
+import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261031-womens-catalog-v1';
+import {installMeasurementGuides} from './measurement-guides.js?v=20261031-womens-catalog-v1';
+import {createPrivateCatalog} from './private-models.js?v=20261031-womens-catalog-v1';
+import {feedbackPage,resetFeedback} from './feedback.js?v=20261031-womens-catalog-v1';
+import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-catalog-v1';
+import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261031-womens-catalog-v1';
+import {profileFields,modelNotesFields,profileSaveButton,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261031-womens-catalog-v1';
+import {accountStorageKey} from './auth-policy.js?v=20261031-womens-catalog-v1';
+import {profile,pieces,looks,pieceById,lookById,seasons,label,setCatalogGender,getCatalogGender} from './data.js?v=20261031-womens-catalog-v1';
+import {fetchWeather,recommend,condition} from './weather.js?v=20261031-womens-catalog-v1';
+import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261031-womens-catalog-v1';
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let key=accountStorageKey(null),accountUid=null,cloudStatus='idle',profileSaving=false;
-async function syncProfile(){const uid=accountUid,member=activeMemberId(),scope=contextVersion();if(!uid)return;cloudStatus='loading';if(route().split('/')[0]==='profile')renderedRoute='';render();try{const cloud=await loadCloudProfile(uid,member);if(accountUid!==uid||scope!==contextVersion())return;if(!cloud&&member!=='self')throw Error('Profile removed');if(cloud){state.name=cloud.name;state.sizes=JSON.parse(cloud.sizes);persist();notifyProfile();}cloudStatus='ready';}catch{if(accountUid!==uid||scope!==contextVersion())return;cloudStatus='error';}if(route().split('/')[0]==='profile')renderedRoute='';render();}
+async function syncProfile(){const uid=accountUid,member=activeMemberId(),scope=contextVersion();if(!uid)return;cloudStatus='loading';if(route().split('/')[0]==='profile')renderedRoute='';render();try{const cloud=await loadCloudProfile(uid,member);if(accountUid!==uid||scope!==contextVersion())return;if(!cloud&&member!=='self')throw Error('Profile removed');if(cloud){state.name=cloud.name;state.sizes=JSON.parse(cloud.sizes);persist();notifyProfile();}else if(member==='self'){try{const legacy=await modelCall('tryOnState',{member});if(accountUid!==uid||scope!==contextVersion())return;if(['man','woman'].includes(legacy.profile?.kind)){state.sizes={...state.sizes,modelDetails:{...state.sizes.modelDetails,gender:legacy.profile.kind==='woman'?'Woman':'Man'}};notifyProfile();}}catch{}}cloudStatus='ready';}catch{if(accountUid!==uid||scope!==contextVersion())return;cloudStatus='error';}if(route().split('/')[0]==='profile')renderedRoute='';render();}
 const privateCatalog=createPrivateCatalog();let modelState='default',modelError='',modelRequest=0;
 async function loadPersonalModel(){const uid=accountUid;if(isFamily()||!hasPersonalModel(uid))return;const request=++modelRequest;modelState='loading';modelError='';render();try{const loaded=await privateCatalog.load(uid,()=>getAccountToken(uid),looks.map(l=>l.id));if(request!==modelRequest||accountUid!==uid)return;if(loaded)modelState='ready';}catch(error){if(request!==modelRequest||accountUid!==uid)return;modelState='error';modelError=error.message;}render();}
 
@@ -39,7 +39,7 @@ let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch{}
 const state={name:typeof saved.name==='string'?saved.name:'Your',location:locationPreference(saved)==='travel'?saved.location:null,locationMode:locationPreference(saved),travelCities:Array.isArray(saved.travelCities)?saved.travelCities:(saved.location?[saved.location]:[]),locating:false,locationError:null,ownership:saved.ownership||{},checks:saved.checks||{},purge:Array.isArray(saved.purge)?saved.purge:[],ratings:cleanRatings(saved.ratings),pieceFeedback:cleanPieceFeedback(saved.pieceFeedback,cleanRatings(saved.ratings)),sizes:saved.sizes||{},mode:'everyday',filter:'All',search:'',season:'fall',offset:0,weather:null,weatherError:null,loading:false};
 let cities=[],weatherRequest=0,locationRequest=0,controller;
 function persist(){try{localStorage.setItem(key,JSON.stringify({name:state.name,location:state.locationMode==='travel'?state.location:null,locationMode:state.locationMode,travelCities:state.travelCities,ownership:state.ownership,checks:state.checks,purge:state.purge,sizes:state.sizes,ratings:state.ratings,pieceFeedback:state.pieceFeedback}));return true;}catch{toast('Your browser could not save changes. Export a backup in your profile.');return false;}}
-function notifyProfile(){if(accountUid)updateMemberName(state.name);if(isFamily())return;document.dispatchEvent(new CustomEvent('wardrobe:profile',{detail:{uid:accountUid,name:state.name}}));}
+function notifyProfile(){setCatalogGender(accountUid?state.sizes.modelDetails?.gender:null);if(accountUid)updateMemberName(state.name);if(isFamily())return;document.dispatchEvent(new CustomEvent('wardrobe:profile',{detail:{uid:accountUid,name:state.name}}));}
 function profileFeedback(kind,text){const message=$('#profile-status'),button=$('#profile-form button[type=submit]');if(!message||!button)return;message.textContent=text;message.dataset.saved=kind==='saved'?'true':kind==='error'?'false':'';message.closest('.profile-save').dataset.feedback=kind;button.textContent=kind==='saved'?'✓ Saved':'Save';}
 function profileEdited(e){if(!e.target.closest('#profile-form'))return;profileFeedback('dirty','Unsaved changes — select Save to keep everything.');}
 document.addEventListener('change',profileEdited);
@@ -48,7 +48,7 @@ function route(){return currentRoute()||(accountUid?'today':'home');}
 function status(id){return ['owned','buy'].includes(state.ownership[id])?state.ownership[id]:'review';}
 function statusLabel(id){return {owned:'Owned',buy:'Buy',review:'To confirm'}[status(id)];}
 function fit(p){const size=p.category==='Shoes'?state.sizes.shoe:p.category==='Bottoms'?[state.sizes.bottom,state.sizes.bottomSystem].filter(Boolean).join(' · '):['Tops','Layers'].includes(p.category)?state.sizes.top:'';return size?`${size} · ${p.fit}`:p.fit;}
-function image(l,cls='look-photo'){const src=modelImageSource(l,isFamily()?null:accountUid,privateCatalog);if(!src)return `<div class="${cls} model-placeholder" role="img" aria-label="Private model ${modelState==='error'?'unavailable':'loading'}"><span>${modelState==='error'?'Your private model is unavailable.':'Loading your private model…'}</span></div>`;return `<img class="${cls}" src="${src}" alt="${(!isFamily()&&privateCatalog.get(l.id,accountUid))?'Your approved photo-based model':'WearWell slim male catalog model'} wearing ${esc(l.name)}" loading="lazy" width="800" height="1200">`;}
+function image(l,cls='look-photo'){const src=modelImageSource(l,isFamily()?null:accountUid,privateCatalog);if(!src)return `<div class="${cls} model-placeholder" role="img" aria-label="Private model ${modelState==='error'?'unavailable':'loading'}"><span>${modelState==='error'?'Your private model is unavailable.':'Loading your private model…'}</span></div>`;return `<img class="${cls}" src="${src}" alt="${(!isFamily()&&privateCatalog.get(l.id,accountUid))?'Your approved photo-based model':(getCatalogGender()==='woman'?'Fictional female catalog model':'WearWell slim male catalog model')} wearing ${esc(l.name)}" loading="lazy" width="800" height="1200">`;}
 
 function tags(l){return `<div class="tags"><span class="tag">${{summer:'warm',fall:'mild',winter:'cold',spring:'mild',gym:'training',lounge:'at home'}[l.season]}</span>${l.rain?'<span class="tag">rain-ready</span>':''}${l.layer?'<span class="tag">layered</span>':''}</div>`;}
 function card(l){const owned=l.pieces.filter(id=>status(id)==='owned').length;return `<article class="card outfit-card"><a href="/wearwell/look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${label(l.season)} ${String(l.number).padStart(2,'0')}</span><span>${owned} / ${l.pieces.length} owned</span></div><h3>${l.name}</h3><p class="muted outfit-pieces">${l.pieces.map(id=>pieceById[id].name).join(' · ')}</p>${tags(l)}</a>${ratingControls(l,true)}</article>`;}
@@ -69,7 +69,7 @@ function today(){const title=state.location?`Today in ${esc(state.location.name)
 }
 function collection(season){const pool=looks.filter(l=>l.season===season),count=new Set(pool.flatMap(l=>l.pieces)).size;return head(`THE ${season.toUpperCase()} COLLECTION`,label(season),`<span class="muted">${String(pool.length).padStart(2,'0')} looks · ${count} shared pieces</span>`)+(pool.length===1?`<p class="intro muted">One uniform. One less decision. ${season==='gym'?'Freedom through the shoulders, a comfortable rise and stable training shoes.':'Soft cotton, a generous fit and a quiet start to the day.'}</p>`:'')+`${collectionInvitation()}<div class="grid">${pool.map(card).join('')}</div><p class="caption" style="margin-top:28px">${modelCaption(isFamily()?null:accountUid)} Clothing and sizes remain proposals until confirmed.</p>`;}
 function ownershipSelect(p){return `<select aria-label="Ownership of ${p.name}" data-own="${p.id}">${['review','owned','buy'].map(v=>`<option value="${v}" ${status(p.id)===v?'selected':''}>${{review:'To confirm',owned:'Owned',buy:'Buy'}[v]}</option>`).join('')}</select>`;}
-function piecePage(){const filtered=pieces.filter(p=>(state.filter==='All'||state.filter===p.category||state.filter.toLowerCase()===status(p.id))&&(searchKey(p.name).includes(searchKey(state.search))||searchKey(translateText(p.name)).includes(searchKey(state.search))));return head('THE COMPLETE INVENTORY','The pieces',`<span class="muted">40 pieces · ${pieces.filter(p=>status(p.id)==='owned').length} owned · ${pieces.filter(p=>status(p.id)==='review').length} to confirm</span>`)+`<div class="filter-bar">${['All','Owned','Buy','Review','Tops','Bottoms','Layers','Shoes','Extras'].map(f=>`<button data-filter="${f}" class="${state.filter===f?'active-button':''}">${f==='Review'?'To confirm':f}</button>`).join('')}<input class="search" id="piece-search" placeholder="Find a piece…" aria-label="Find a piece" value="${esc(state.search)}"></div><div class="grid">${filtered.map(p=>{const ll=looks.filter(l=>l.pieces.includes(p.id)),l=ll[0];return `<article class="card piece-card"><a href="/wearwell/look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${p.id} · ${p.category}</span><span>${statusLabel(p.id)}</span></div><h3>${p.name}</h3></a><p class="muted">${esc(fit(p))}</p><p class="caption">Shown in a full look · reused in ${ll.length} look${ll.length>1?'s':''}</p>${ownershipSelect(p)}</article>`;}).join('')}</div>${!filtered.length?'<div class="empty">No matching pieces. Try another filter or search.</div>':''}`;}
+function piecePage(){const filtered=pieces.filter(p=>(state.filter==='All'||state.filter===p.category||state.filter.toLowerCase()===status(p.id))&&(searchKey(p.name).includes(searchKey(state.search))||searchKey(translateText(p.name)).includes(searchKey(state.search))));return head('THE COMPLETE INVENTORY','The pieces',`<span class="muted">40 pieces · ${pieces.filter(p=>status(p.id)==='owned').length} owned · ${pieces.filter(p=>status(p.id)==='review').length} to confirm</span>`)+`<div class="filter-bar">${['All','Owned','Buy','Review','Tops','Bottoms','Dresses','Layers','Shoes','Extras'].map(f=>`<button data-filter="${f}" class="${state.filter===f?'active-button':''}">${f==='Review'?'To confirm':f}</button>`).join('')}<input class="search" id="piece-search" placeholder="Find a piece…" aria-label="Find a piece" value="${esc(state.search)}"></div><div class="grid">${filtered.map(p=>{const ll=looks.filter(l=>l.pieces.includes(p.id)),l=ll[0];return `<article class="card piece-card"><a href="/wearwell/look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${p.id} · ${p.category}</span><span>${statusLabel(p.id)}</span></div><h3>${p.name}</h3></a><p class="muted">${esc(fit(p))}</p><p class="caption">Shown in a full look · reused in ${ll.length} look${ll.length>1?'s':''}</p>${ownershipSelect(p)}</article>`;}).join('')}</div>${!filtered.length?'<div class="empty">No matching pieces. Try another filter or search.</div>':''}`;}
 function rotation(){const start=new Date(currentDate()+'T12:00:00');start.setDate(start.getDate()-((start.getDay()+6)%7)+state.offset*28);const pool=looks.filter(l=>l.season===state.season);const now=currentDate();const fmt=d=>`<time data-local-date="${d.getTime()}" data-date-format="short" data-i18n-skip>${new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short'}).format(d)}</time>`;let cells='';for(let i=0;i<28;i++){const d=new Date(start);d.setDate(start.getDate()+i);const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`,isToday=iso===now;let l=pool[(i+Math.floor(i/7))%7];if(isToday&&state.weather)l=recommend(state.weather,options({mode:'everyday',season:state.season})).look;cells+=`<div class="calendar-day ${isToday?'today':''}"><div class="row-between"><span>${fmt(d)}</span>${isToday?'<span>Today</span>':''}</div><a href="/wearwell/look/${l.id}">${image(l)}<span>${label(l.season)} 0${l.number}</span><strong>${l.name}</strong></a></div>`;}
  return head('A LITTLE PLANNING. EASIER MORNINGS.','The rotation',`<label>Season &nbsp; <select class="search" id="rotation-season">${seasons.map(s=>`<option ${state.season===s?'selected':''} value="${s}">${label(s)}</option>`).join('')}</select></label>`)+`<div class="calendar-controls"><button class="text-button" data-offset="-1">← Previous 4 weeks</button><span>${fmt(start)} ${start.getFullYear()}</span><button class="text-button" data-offset="1">Next 4 weeks →</button></div><div class="callout"><p>Good outfits, worth wearing again.</p><p class="caption">${state.weather?'Today’s weather may change the planned look within this selected season.':'Set your city for today’s live weather override.'} Future days are a rotation plan, not a weather forecast.</p></div><div class="calendar-scroll"><div class="calendar">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(d=>`<div class="weekday">${d}</div>`).join('')}${cells}</div></div>`;
 }
@@ -300,3 +300,6 @@ document.addEventListener('wardrobe:profile-dirty',()=>profileFeedback('dirty','
 
 document.addEventListener('wearwell:before-navigation',e=>{if(profileSaving){e.preventDefault();return;}if(document.querySelector('.profile-save[data-feedback="dirty"],.profile-save[data-feedback="error"]')&&!confirm(translateText('Discard unsaved profile changes?')))e.preventDefault();});
 window.addEventListener('beforeunload',e=>{if(document.querySelector('.profile-save[data-feedback="dirty"],.profile-save[data-feedback="error"],.profile-save[data-feedback="saving"]')){e.preventDefault();e.returnValue='';}});
+
+document.addEventListener('change',e=>{if(e.target.name==='detail_gender'&&accountUid)setCatalogGender(e.target.value);});
+document.addEventListener('wardrobe:catalog-gender',e=>{if(!accountUid||isFamily()&&currentMember()?.relationship==='child')return;if(setCatalogGender(e.detail.gender)&&route().split('/')[0]!=='profile')render();});
