@@ -1,4 +1,4 @@
-import {serviceLanguage} from './i18n.js?v=20261031-womens-modern-v3';
+import {serviceLanguage} from './i18n.js?v=20261031-inline-colours-v1';
 export function locationPreference(saved={}){
  return saved.locationMode==='travel'&&saved.location?'travel':'current';
 }

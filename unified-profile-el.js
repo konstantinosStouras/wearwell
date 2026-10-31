@@ -1,4 +1,7 @@
 export default {
+ 'Use a precise shade':'Χρήση ακριβούς απόχρωσης',
+ 'Changes use the same Save and Create my model buttons.':'Οι αλλαγές χρησιμοποιούν τα ίδια κουμπιά Αποθήκευση και Δημιουργία μοντέλου.',
+ 'Done':'Τέλος',
   "Skirts": "Φούστες",
   "Measure waist and hips; check skirt length and garment dimensions": "Μέτρησε μέση και γοφούς· έλεγξε μήκος φούστας και διαστάσεις του ρούχου",
   "Ivory fitted cotton T-shirt": "Ιβουάρ εφαρμοστό βαμβακερό T-shirt",

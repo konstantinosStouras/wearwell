@@ -1,4 +1,4 @@
-import {refreshColourPreview} from './colour-preview.js?v=20261031-womens-modern-v3';
+import {refreshColourPreview} from './colour-preview.js?v=20261031-inline-colours-v1';
 import {refreshDefaultModels} from './default-model.js?v=20261031-womens-modern-v3';
 import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-womens-modern-v3';
 import {currentRoute,navigate} from './navigation.js?v=20261031-womens-modern-v3';
