@@ -1,4 +1,6 @@
 export default {
+ 'Age group':'Ηλικιακή ομάδα',
+ 'Adult':'Ενήλικας',
  'Optional body measurements':'Προαιρετικές μετρήσεις σώματος',
   "About your model": "Σχετικά με το μοντέλο σου",
   "Gender (optional)": "Φύλο (προαιρετικό)",

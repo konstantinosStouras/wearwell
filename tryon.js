@@ -9,7 +9,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-save
 import {currentMember} from './family.js?v=20261031-save-v1';
 import {modelCall} from './model-studio.js?v=20261031-save-v1';
 import {looks} from './data.js?v=20261031-save-v1';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-details-v1';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-model-reuse-v1';
 export {tryOnPage};
 let sharedProfile=null,sharedPhotos=[];let ownedClothes=[];let state=null,busy=false,epoch=0,upload=null,units='cm';
 const host=()=>document.querySelector('#tryon-content');
@@ -31,7 +31,7 @@ document.addEventListener('click',e=>{const button=e.target.closest('button');if
 for(const event of ['wardrobe:account','wardrobe:member'])document.addEventListener(event,()=>{epoch++;state=null;sharedProfile=null;sharedPhotos=[];currentPhotoSignature='';ownedClothes=[];upload=null;host()?.replaceChildren();status('');});
 window.addEventListener('wearwell:navigate',()=>{if(!['profile','try-on'].includes(currentRoute())){epoch++;state=null;upload=null;}});
 
-function restoreDraft(){const form=document.querySelector('#profile-form');if(!form)return;let values;try{values=readDraft(sessionStorage,getAccountUser()?.uid,activeMemberId(),state?.profile?.revision);}catch{}if(!values)return;for(const key of draftFields){if(form.elements[key]&&values[key]!=null)form.elements[key].value=values[key];}units='cm';childFields(form);const note=form.querySelector('#tryon-draft-status');if(note)note.textContent='Unsaved entries restored from this tab. Save details to keep them in your account.';}
+function restoreDraft(){const form=document.querySelector('#profile-form');if(!form)return;let values;try{values=readDraft(sessionStorage,getAccountUser()?.uid,activeMemberId(),state?.profile?.revision);}catch{}if(!values)return;for(const key of draftFields){if(form.elements[key]&&values[key]!=null)form.elements[key].value=key==='kind'?(values[key]==='child'?'child':'adult'):values[key];}units='cm';childFields(form);const note=form.querySelector('#tryon-draft-status');if(note)note.textContent='Unsaved entries restored from this tab. Save details to keep them in your account.';}
 function saveDraft(event){const form=event.target.closest('#profile-form');if(!form||!draftFields.includes(event.target.name)||busy)return;const d=new FormData(form);try{writeDraft(sessionStorage,getAccountUser()?.uid,activeMemberId(),state?.profile?.revision,Object.fromEntries(draftFields.map(k=>[k,d.get(k)])));form.querySelector('#tryon-draft-status').textContent='Draft saved in this tab. Save details to keep it in your account.';}catch{form.querySelector('#tryon-draft-status').textContent='Draft storage is unavailable. Save details before refreshing.';}}
 document.addEventListener('input',saveDraft);document.addEventListener('change',saveDraft);
 
@@ -112,4 +112,4 @@ export async function saveProfileModel(data,uid,member){
  await loadTryOn({force:true});
 }
 
-document.addEventListener('change',e=>{if(e.target.name!=='detail_gender')return;const form=e.target.form,choice=form.elements.kind;if(!choice)return;choice.disabled=!!e.target.value;choice.value=currentMember()?.relationship==='child'?'child':detailKind({modelDetails:{gender:e.target.value}},'adult');childFields(form);});
+document.addEventListener('change',e=>{if(e.target.name!=='detail_gender')return;const form=e.target.form,choice=form.elements.kind;if(!choice)return;childFields(form);});

@@ -1,7 +1,7 @@
 import {rackStyles} from './rack-styles.js?v=20261031-white-rack-v2';
 import {rackArt,rackExamples,rackImage,rackHook} from './rack-art.js?v=20261031-save-v1';
 import {installRackUploads} from './rack-uploads.js?v=20261031-save-v1';
-import {getLanguage,translateText} from './i18n.js?v=20261031-model-tab-v1';
+import {getLanguage,translateText} from './i18n.js?v=20261031-model-reuse-v1';
 
 // Isolated rack view with account-scoped local photo storage.
 class WardrobeRack extends HTMLElement {
