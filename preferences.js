@@ -1,4 +1,4 @@
-import {looks} from './data.js?v=20261031-paths-v1';
+import {looks} from './data.js?v=20261031-save-v1';
 
 export const dislikeReasons = [
   ['colour', 'Wrong colour for me'],

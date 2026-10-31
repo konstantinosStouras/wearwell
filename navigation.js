@@ -29,5 +29,5 @@ document.addEventListener('click',event=>{
  if(url.origin!==location.origin||!url.pathname.startsWith(base)||url.hash||(url.search&&url.search!==location.search))return;
  const name=url.pathname.slice(base.length).replace(/\/$/,'');
  if(name.includes('.')||!name)return;
- event.preventDefault();navigate(name);
+ event.preventDefault();const request=new Event('wearwell:before-navigation',{cancelable:true});if(document.dispatchEvent(request))navigate(name);
 });
