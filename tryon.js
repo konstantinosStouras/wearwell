@@ -1,3 +1,4 @@
+import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-details-v1';
 import {currentRoute,navigate} from './navigation.js?v=20261031-save-v1';
 import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-save-v1';
 import {loadCloudProfile,getPhotos,savePhoto,saveCloudProfile} from './account-data.js?v=20261031-save-v1';
@@ -8,7 +9,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-save
 import {currentMember} from './family.js?v=20261031-save-v1';
 import {modelCall} from './model-studio.js?v=20261031-save-v1';
 import {looks} from './data.js?v=20261031-save-v1';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-save-v1';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-details-v1';
 export {tryOnPage};
 let sharedProfile=null,sharedPhotos=[];let ownedClothes=[];let state=null,busy=false,epoch=0,upload=null,units='cm';
 const host=()=>document.querySelector('#tryon-content');
@@ -36,7 +37,7 @@ document.addEventListener('input',saveDraft);document.addEventListener('change',
 
 function profileDirty(){return ['dirty','saving','error'].includes(document.querySelector('.profile-save')?.dataset.feedback);}
 function seedSharedFields(){
- updateSharedSummary();const form=document.querySelector('#profile-form');if(!form||sharedProfile?.sizes.unifiedProfile)return;
+ updateSharedSummary();const form=document.querySelector('#profile-form');if(!form)return;const gender=form.elements.detail_gender;if(gender&&!gender.value&&!sharedProfile?.sizes.modelDetails&&['man','woman'].includes(state.profile?.kind)){gender.value=state.profile.kind==='woman'?'Woman':'Man';refreshModelDetails(form);}if(sharedProfile?.sizes.unifiedProfile)return;
  let imported=false;
  for(const [k,value] of Object.entries(state.profile?.measurements||{})){const input=form.elements['measure_'+k];if(input&&!input.value&&value!=null){input.value=value;imported=true;}}
  if(!form.elements.bodyNotes.value&&state.profile?.appearance){form.elements.bodyNotes.value=state.profile.appearance;imported=true;}
@@ -50,10 +51,10 @@ async function updateSharedSummary(){
 }
 function sharedReady(){
  const form=document.querySelector('#profile-form');const d=form?new FormData(form):null;
- if(d&&!sameSettings(state?.profile,{kind:d.get('kind'),age:d.get('age'),skinTone:d.get('skinTone'),appearance:state?.profile?.appearance,measurements:state?.profile?.measurements}))return false;
+ if(d&&!sameSettings(state?.profile,{kind:detailKind(sharedProfile?.sizes,d.get('kind')||state?.profile?.kind||'adult'),age:d.get('age'),skinTone:d.get('skinTone'),appearance:state?.profile?.appearance,measurements:state?.profile?.measurements}))return false;
  return !profileDirty()&&!!state?.profile&&!!sharedProfile?.sizes.fittingPhotosUnified&&
   sharedProfile.sizes.fittingPhotoSignature===currentPhotoSignature&&
-  sameSettings(state.profile,{...state.profile,appearance:(sharedProfile.sizes.bodyNotes||'').slice(0,500),measurements:sharedMeasurements(sharedProfile.sizes)});
+  sameSettings(state.profile,{...state.profile,appearance:modelAppearance(sharedProfile.sizes),kind:currentMember()?.relationship==='child'?'child':detailKind(sharedProfile.sizes,state.profile.kind),measurements:sharedMeasurements(sharedProfile.sizes)});
 }
 async function saveSharedSettings(payload,data,uid,member){
 
@@ -71,12 +72,13 @@ async function saveSharedSettings(payload,data,uid,member){
   assertCurrent();await savePhoto(uid,id,{name,data:image,kind:'headshot'},member);assertCurrent();photos.push({id,name,data:image,kind:'headshot'});
  }
  const signature=await photoSignature(photos);assertCurrent();
- Object.assign(payload,{measurements:sharedMeasurements(sizes),appearance:(sizes.bodyNotes||'').slice(0,500),headshots:photos.filter(p=>p.kind==='headshot').map(p=>p.data)});
+ payload.kind=currentMember()?.relationship==='child'?'child':detailKind(sizes,payload.kind);
+ Object.assign(payload,{measurements:sharedMeasurements(sizes),appearance:modelAppearance(sizes),headshots:photos.filter(p=>p.kind==='headshot').map(p=>p.data)});
  if(!sameSettings(state.profile,payload)||sizes.fittingPhotoSignature!==signature){await call('tryOnSave',payload);assertCurrent();const saved=await call('tryOnState');assertCurrent();state.profile=saved.profile;}
  // Preserve the user's full notes and all size fields; the fitting room holds a private generation snapshot.
  const latest=await loadCloudProfile(uid,member);assertCurrent();
  const latestSizes=JSON.parse(latest.sizes||'{}');
- if(JSON.stringify(sharedMeasurements(latestSizes))!==JSON.stringify(sharedMeasurements(sizes))||latestSizes.bodyNotes!==sizes.bodyNotes)throw Error('Your profile changed in another tab. Refresh and save model settings again.');
+ if(JSON.stringify(sharedMeasurements(latestSizes))!==JSON.stringify(sharedMeasurements(sizes))||modelAppearance(latestSizes)!==modelAppearance(sizes))throw Error('Your profile changed in another tab. Refresh and save model settings again.');
  await saveCloudProfile(uid,{name:latest.name,sizes:{...latestSizes,fittingPhotosUnified:true,fittingPhotoSignature:signature}},member);assertCurrent();
  
 }
@@ -90,21 +92,24 @@ async function ensureCurrentSharedProfile(){
  const [cloud,photos]=await Promise.all([loadCloudProfile(uid,member),getPhotos(uid,member)]);
  const sizes=JSON.parse(cloud?.sizes||'{}'),signature=await photoSignature(photos);
  if(v!==epoch||scope!==contextVersion()||uid!==getAccountUser()?.uid)throw Error('Your profile changed. Please retry.');
- if(!sizes.fittingPhotosUnified||sizes.fittingPhotoSignature!==signature||!sameSettings(state.profile,{...state.profile,appearance:(sizes.bodyNotes||'').slice(0,500),measurements:sharedMeasurements(sizes)}))throw Error('Select Save before creating a preview.');
+ if(!sizes.fittingPhotosUnified||sizes.fittingPhotoSignature!==signature||!sameSettings(state.profile,{...state.profile,appearance:modelAppearance(sizes),kind:currentMember()?.relationship==='child'?'child':detailKind(sizes,state.profile.kind),measurements:sharedMeasurements(sizes)}))throw Error('Select Save before creating a preview.');
 }
 
 export function validateModelSave(data){
+ const kind=currentMember()?.relationship==='child'?'child':detailKind({modelDetails:readModelDetails(data)},data.get('kind')||state?.profile?.kind||'adult');data.set('kind',kind);
  if(!state||!document.querySelector('#model-settings-fields'))throw Error('Wait for model settings to load, then select Save.');
  if(busy||state.job?.status==='generating'&&state.job.until>Date.now())throw Error('Wait for the current preview to finish before saving.');
- const kind=data.get('kind'),raw=data.get('age'),age=raw?Number(raw):null;
+ const raw=data.get('age'),age=raw?Number(raw):null;
  if(!['adult','man','woman','child'].includes(kind))throw Error('Choose an adult or child model.');
  if(age!==null&&(!Number.isInteger(age)||age<1||age>120||(kind==='child'?age>17:age<18)))throw Error('Enter an adult age from 18 to 120, or choose Child for ages 1 to 17.');
  if(data.get('permission')!=='on')throw Error('Confirm that you have permission to use these details.');
  if(kind==='child'&&data.get('guardian')!=='on')throw Error('Confirm you are this child’s parent or legal guardian.');
 }
 export async function saveProfileModel(data,uid,member){
- const payload={revision:state?.profile?.revision||null,kind:data.get('kind'),age:data.get('age'),skinTone:data.get('skinTone'),unit:'cm',permission:data.get('permission')==='on',guardian:data.get('guardian')==='on'};
+ const payload={revision:state?.profile?.revision||null,kind:currentMember()?.relationship==='child'?'child':detailKind({modelDetails:readModelDetails(data)},data.get('kind')||state?.profile?.kind||'adult'),age:data.get('age'),skinTone:data.get('skinTone'),unit:'cm',permission:data.get('permission')==='on',guardian:data.get('guardian')==='on'};
  await saveSharedSettings(payload,data,uid,member);
  try{clearDraft(sessionStorage,uid,member);}catch{}
  await loadTryOn({force:true});
 }
+
+document.addEventListener('change',e=>{if(e.target.name!=='detail_gender')return;const form=e.target.form,choice=form.elements.kind;if(!choice)return;choice.disabled=!!e.target.value;choice.value=currentMember()?.relationship==='child'?'child':detailKind({modelDetails:{gender:e.target.value}},'adult');childFields(form);});

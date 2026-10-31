@@ -1,3 +1,4 @@
+import {readModelDetails,detailLines} from './model-details.js?v=20261031-details-v1';
 const childMinimum=(id,fallback)=>({height:30,weight:1,chest:15,waist:15,hips:15,shoulders:5,arm:3,inseam:5,thigh:5,neck:5,sleeve:5}[id]??fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const range=(start,end,step=1)=>Array.from({length:Math.round((end-start)/step)+1},(_,i)=>String(start+i*step));
@@ -31,7 +32,7 @@ export function profileFields(sizes={},{child=false}={}){
 export function readProfile(formData,{child=false}={}){
  const value=name=>String(formData.get(name)||'').trim();
  const size=name=>value(name)==='__custom'?value(name+'Custom'):value(name);
- const sizes={top:size('top'),bottom:size('bottom'),bottomSystem:size('bottomSystem'),shoe:size('shoe'),measurements:{},bodyNotes:value('bodyNotes').slice(0,1500),preferences:{}};
+ const sizes={modelDetails:readModelDetails(formData),top:size('top'),bottom:size('bottom'),bottomSystem:size('bottomSystem'),shoe:size('shoe'),measurements:{},bodyNotes:value('bodyNotes').slice(0,1500),preferences:{}};
  for(const key of ['city','work','weekend','style','fit','colors','avoid','budget','constraints'])sizes.preferences[key]=value('pref_'+key).slice(0,500);
  for(const [id,title,,min,max] of measurements){
   const raw=value('measure_'+id);if(!raw)continue;
@@ -41,7 +42,7 @@ export function readProfile(formData,{child=false}={}){
  return {name:value('name').slice(0,50),sizes};
 }
 export function modelBrief(name,sizes={},{family=false}={}){
- const lines=[`Model reference brief for ${name||'my wardrobe'}`];
+ const lines=[`Model reference brief for ${name||'my wardrobe'}`,...detailLines(sizes)];
  for(const [id,title,unit] of measurements){const n=sizes.measurements?.[id];if(typeof n==='number'&&Number.isFinite(n))lines.push(`${title}: ${n} ${unit}`);}
  if(sizes.top)lines.push(`Top size: ${sizes.top}`);
  if(sizes.bottom)lines.push(`Trouser size: ${sizes.bottom}${sizes.bottomSystem?' ('+sizes.bottomSystem+')':''}`);
