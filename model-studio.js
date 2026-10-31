@@ -3,7 +3,7 @@ import {providerSettings} from './provider-settings.js?v=20261031-womens-catalog
 import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-catalog-v1';
 import {database} from './account-data.js?v=20261031-womens-catalog-v1';
 import {looks} from './data.js?v=20261031-womens-catalog-v1';
-import {getLanguage,translateText} from './i18n.js?v=20261031-womens-catalog-v1';
+import {getLanguage,translateText} from './i18n.js?v=20261031-skin-palette-v1';
 import greek from './model-studio-el.js?v=20261031-womens-catalog-v1';
 export const modelText=s=>s;
 const t=modelText,esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -1,7 +1,7 @@
 import {defaultModelView} from './default-model.js?v=20261031-womens-catalog-v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const choices={gender:['Man','Woman','Non-binary','Prefer not to say'],hairLength:['Shaved / bald','Short','Medium','Long'],hairTexture:['Straight','Wavy','Curly','Coily'],hairColour:['Black','Brown','Blonde','Red','Grey','White','Other'],braSystem:['EU','UK','US','FR','IT']};
-const labels={gender:'Gender (optional)',hairLength:'Hair length',hairTexture:'Hair texture',hairColour:'Hair colour',hairShade:'Precise hair shade',braSystem:'Bra sizing system',braBand:'Bra band size',braCup:'Cup size',underbust:'Underbust (cm)'};
+const labels={gender:'Gender (optional)',hairLength:'Hair length',hairTexture:'Hair texture',hairColour:'Hair colour',hairShade:'Precise hair shade',skinShade:'Precise skin shade',braSystem:'Bra sizing system',braBand:'Bra band size',braCup:'Cup size',underbust:'Underbust (cm)'};
 function field(key,value){return `<label class="field">${labels[key]}${choices[key]?`<select name="detail_${key}"><option value="">Not specified</option>${choices[key].map(v=>`<option value="${v}"${value===v?' selected':''}>${v}</option>`).join('')}</select>`:`<input name="detail_${key}" maxlength="20" value="${esc(value)}" ${key==='underbust'?'type="number" min="30" max="250" step="0.1"':'type="text"'}>`}</label>`;}
 export function modelDetailsFields(sizes={}, {child=false}={}){
  const d=sizes.modelDetails||{};
@@ -11,14 +11,17 @@ export function braSizeFields(sizes={}, {child=false}={}){const d=sizes.modelDet
 export function readModelDetails(data){
  const result={};for(const key of Object.keys(labels)){const value=String(data.get('detail_'+key)||'').trim().slice(0,20);if(value&&(!choices[key]||choices[key].includes(value)))result[key]=value;}
  if(data.get('useHairShade')!=='on'||!/^#[0-9a-f]{6}$/i.test(result.hairShade||''))delete result.hairShade;
+ if(data.get('useSkinShade')!=='on'||!/^#[0-9a-f]{6}$/i.test(result.skinShade||''))delete result.skinShade;
  if(result.underbust&&(!Number.isFinite(Number(result.underbust))||Number(result.underbust)<30||Number(result.underbust)>250))throw Error('Please check your underbust measurement.');
  if(result.gender!=='Woman')for(const key of ['braSystem','braBand','braCup','underbust'])delete result[key];
  return result;
 }
 export function detailKind(sizes={},fallback='adult'){if(fallback==='child')return 'child';return ({Man:'man',Woman:'woman','Non-binary':'adult','Prefer not to say':'adult'})[sizes.modelDetails?.gender]||fallback;}
-export function detailLines(sizes={}){return Object.entries(sizes.modelDetails||{}).filter(([k,v])=>labels[k]&&v&&(sizes.modelDetails.gender==='Woman'||!['braSystem','braBand','braCup','underbust'].includes(k))).map(([k,v])=>`${labels[k]}${k==='hairShade'?' (use this shade over the colour name)':''}: ${v}`);}
+export function detailLines(sizes={}){return Object.entries(sizes.modelDetails||{}).filter(([k,v])=>labels[k]&&v&&(sizes.modelDetails.gender==='Woman'||!['braSystem','braBand','braCup','underbust'].includes(k))).map(([k,v])=>`${labels[k]}${k==='hairShade'?' (use this shade over the colour name)':k==='skinShade'?' (use this shade over the skin tone preset)':''}: ${v}`);}
 export function modelAppearance(sizes={}){return [...detailLines(sizes),sizes.bodyNotes||''].filter(Boolean).join('; ').slice(0,500);}
 export function refreshModelDetails(form){const host=form?.querySelector('[data-model-details]');if(!host)return;const bra=form.querySelector('[data-bra-details]');if(!bra)return;const show=host.dataset.child!=='true'&&form.elements.detail_gender.value==='Woman';bra.hidden=!show;bra.disabled=!show;}
 if(typeof document!=='undefined')document.addEventListener('change',e=>{if(e.target.name==='detail_gender')refreshModelDetails(e.target.form);});
 
 if(typeof document!=='undefined')document.addEventListener('change',e=>{if(e.target.name!=='useHairShade')return;const form=e.target.form;form.querySelector('[data-hair-palette]').hidden=!e.target.checked;form.elements.detail_hairShade.disabled=!e.target.checked;});
+
+if(typeof document!=='undefined')document.addEventListener('change',e=>{if(e.target.name!=='useSkinShade')return;const form=e.target.form;form.querySelector('[data-skin-palette]').hidden=!e.target.checked;form.elements.detail_skinShade.disabled=!e.target.checked;});

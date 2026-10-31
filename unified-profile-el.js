@@ -1,4 +1,7 @@
 export default {
+ 'Choose a precise skin shade':'Επίλεξε ακριβή απόχρωση δέρματος',
+ 'Precise skin shade':'Ακριβής απόχρωση δέρματος',
+ 'Choose any colour from the palette. This shade takes priority over the skin tone choice. Turn it off to use the existing choice or your photos.':'Επίλεξε οποιοδήποτε χρώμα από την παλέτα. Αυτή η απόχρωση υπερισχύει της επιλογής τόνου δέρματος. Απενεργοποίησέ την για να χρησιμοποιήσεις την υπάρχουσα επιλογή ή τις φωτογραφίες σου.',
   "These are ideas from the selected adult capsule. They are not a personal try-on or verified children’s clothing. Check age, size and suitability before use.": "Αυτές είναι ιδέες από την επιλεγμένη συλλογή ενηλίκων. Δεν αποτελούν προσωπική δοκιμή ή επιβεβαιωμένα παιδικά ρούχα. Έλεγξε ηλικία, μέγεθος και καταλληλότητα πριν τη χρήση.",
   "Ivory cotton T-shirt": "Ιβουάρ βαμβακερό T-shirt",
   "Navy cotton T-shirt": "Σκούρο μπλε βαμβακερό T-shirt",

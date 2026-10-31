@@ -1,7 +1,7 @@
 import {refreshDefaultModels} from './default-model.js?v=20261031-womens-catalog-v1';
-import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-womens-catalog-v1';
+import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-skin-palette-v1';
 import {currentRoute,navigate} from './navigation.js?v=20261031-womens-catalog-v1';
-import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-womens-catalog-v1';
+import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-skin-palette-v1';
 import {loadCloudProfile,getPhotos,savePhoto,saveCloudProfile} from './account-data.js?v=20261031-womens-catalog-v1';
 import {draftFields,writeDraft,readDraft,clearDraft} from './tryon-draft.js?v=20261031-womens-catalog-v1';
 import {clothingScope,readClothes,garmentImages} from './clothing-store.js?v=20261031-womens-catalog-v1';
@@ -10,7 +10,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-wome
 import {currentMember} from './family.js?v=20261031-womens-catalog-v1';
 import {modelCall} from './model-studio.js?v=20261031-womens-catalog-v1';
 import {looks} from './data.js?v=20261031-womens-catalog-v1';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-womens-catalog-v1';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-skin-palette-v1';
 export {tryOnPage};
 let profileSaver=null,preparing=false;
 export function setProfileSaver(save){profileSaver=save;}
