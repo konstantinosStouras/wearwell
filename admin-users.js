@@ -1,13 +1,14 @@
-import {createUserDirectory} from './user-directory.js?v=20261030-unified-v1';
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261030-unified-v1';
-import {getLanguage,translateText,locale} from './i18n.js?v=20261030-unified-v1';
-import {database} from './account-data.js?v=20261030-unified-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-paths-v1';
+import {createUserDirectory} from './user-directory.js?v=20261031-paths-v1';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-paths-v1';
+import {getLanguage,translateText,locale} from './i18n.js?v=20261031-paths-v1';
+import {database} from './account-data.js?v=20261031-paths-v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const words={'Registered users':'Εγγεγραμμένοι χρήστες','Name':'Όνομα','Email':'Email','Message':'Μήνυμα','Remove user':'Διαγραφή χρήστη','Loading…':'Φόρτωση…','Administrator access required.':'Απαιτείται πρόσβαση διαχειριστή.','No name provided':'Δεν έχει δοθεί όνομα','No email provided':'Δεν έχει δοθεί email','Email alerts enabled':'Ενεργές ειδοποιήσεις email','Email alerts off':'Ανενεργές ειδοποιήσεις email','Load more':'Περισσότεροι χρήστες','Retry':'Δοκιμάστε ξανά','Could not load users. Please retry.':'Δεν ήταν δυνατή η φόρτωση. Δοκιμάστε ξανά.','Subject':'Θέμα','Your message':'Το μήνυμά σας','Save private draft':'Αποθήκευση ιδιωτικού προσχεδίου','Cancel':'Ακύρωση','Saving…':'Αποθήκευση…','Draft saved. Review and send in Gmail.':'Το προσχέδιο αποθηκεύτηκε. Ελέγξτε και στείλτε το στο Gmail.','Open in Gmail':'Άνοιγμα στο Gmail','Could not complete this action. Please retry.':'Η ενέργεια δεν ολοκληρώθηκε. Δοκιμάστε ξανά.','Type the exact email to permanently remove this account.':'Πληκτρολογήστε το ακριβές email για οριστική διαγραφή αυτού του λογαριασμού.','This removes access and starts cleanup of private profile, photos, feedback and queued email.':'Αφαιρεί την πρόσβαση και ξεκινά τη διαγραφή ιδιωτικού προφίλ, φωτογραφιών, σχολίων και email προς αποστολή.','Account removed.':'Ο λογαριασμός διαγράφηκε.','Registered':'Εγγραφή','Private message drafts':'Ιδιωτικά προσχέδια μηνυμάτων','Pending update emails':'Ενημερώσεις email προς αποστολή','Awaiting your approval and Gmail sending.':'Αναμένουν την έγκρισή σας και αποστολή μέσω Gmail.','Administrator':'Διαχειριστής','This account is disabled.':'Αυτός ο λογαριασμός είναι απενεργοποιημένος.'};
 const t=s=>getLanguage()==='el'?(words[s]||s):translateText(s);
 let users=[],pageToken=null,generation=0,directoryAccount=getAccountUser()?.uid;
 const directory=createUserDirectory(token=>call('listUsers',token?{pageToken:token}:{}),()=>({uid:getAccountUser()?.uid,admin:isAccountAdmin()}));
-const current=(v,uid)=>v===generation&&uid===getAccountUser()?.uid&&isAccountAdmin()&&location.hash==='#users'&&document.querySelector('#users-list');
+const current=(v,uid)=>v===generation&&uid===getAccountUser()?.uid&&isAccountAdmin()&&currentRoute()==='users'&&document.querySelector('#users-list');
 function showDirectory(value){users=value.users;pageToken=value.pageToken;rows();}
 const status=s=>{const e=document.querySelector('#users-status');if(e)e.textContent=t(s);};
 async function call(name,data){const f=await import('https://www.gstatic.com/firebasejs/13.0.0/firebase-functions.js');return (await f.httpsCallable(f.getFunctions(undefined,'europe-west1'),name)(data)).data;}
@@ -50,7 +51,7 @@ for(const event of ['wardrobe:language','wardrobe:admin'])document.addEventListe
   if(isAccountAdmin())void directory.load().catch(()=>{});
   else{directory.clear();users=[];pageToken=null;generation++;}
  }
- if(location.hash==='#users'){document.querySelector('#main').innerHTML=usersPage();loadUsers();}
+ if(currentRoute()==='users'){document.querySelector('#main').innerHTML=usersPage();loadUsers();}
 });
 
 document.addEventListener('click',async e=>{const link=e.target.closest('[data-gmail-mail]');if(!link)return;e.preventDefault();if(!isAccountAdmin())return;const popup=window.open('about:blank','_blank');if(popup)popup.opener=null;try{const draft=await call('prepareMail',{collection:link.dataset.mailCollection,id:link.dataset.gmailMail});if(popup)popup.location.href=gmail(draft.to,draft.subject,draft.body);else{link.href=gmail(draft.to,draft.subject,draft.body);status('Draft saved. Review and send in Gmail.');}}catch{popup?.close();status('Could not complete this action. Please retry.');}});

@@ -1,9 +1,10 @@
-import {providerSettings} from './provider-settings.js?v=20261030-unified-v1';
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261030-unified-v1';
-import {database} from './account-data.js?v=20261030-unified-v1';
-import {looks} from './data.js?v=20261030-unified-v1';
-import {getLanguage,translateText} from './i18n.js?v=20261030-unified-v1';
-import greek from './model-studio-el.js?v=20261030-unified-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-paths-v1';
+import {providerSettings} from './provider-settings.js?v=20261031-paths-v1';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-paths-v1';
+import {database} from './account-data.js?v=20261031-paths-v1';
+import {looks} from './data.js?v=20261031-paths-v1';
+import {getLanguage,translateText} from './i18n.js?v=20261031-paths-v1';
+import greek from './model-studio-el.js?v=20261031-paths-v1';
 export const modelText=s=>s;
 const t=modelText,esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validImage=s=>typeof s==='string'&&s.length<=650000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(s);
@@ -42,7 +43,7 @@ document.addEventListener('submit',e=>{const f=e.target;if(!['model-request-form
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.hasAttribute('data-model-refresh'))loadStudio();if(b.hasAttribute('data-model-admin-refresh'))loadStudioAdmin();if(b.dataset.modelDecision)run('Saving…',()=>modelCall('decision',{slot:b.dataset.slot||b.dataset.look,requestId:b.dataset.request,decision:b.dataset.modelDecision}));if(b.hasAttribute('data-model-recover'))run('Saving…',()=>modelCall('recover',{uid:b.dataset.uid,slot:b.dataset.slot,requestId:b.dataset.request}));if(b.hasAttribute('data-model-generate'))run('Generating your preview…',()=>modelCall('generate',{uid:b.dataset.uid,slot:b.dataset.slot||b.dataset.look,requestId:b.dataset.request}));});
 document.addEventListener('change',e=>{const f=e.target;if(!f.hasAttribute('data-model-import')||!f.files?.[0])return;const file=f.files[0];f.value='';if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>10*1024*1024){status('Choose a valid image up to 10 MB.');return;}run('Uploading preview…',async()=>{const uid=getAccountUser()?.uid;const image=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});if(uid!==getAccountUser()?.uid)throw Error('Account changed');await modelCall('import',{uid:f.dataset.uid,slot:f.dataset.slot||f.dataset.look,requestId:f.dataset.request,image});});});
 document.addEventListener('wardrobe:account',()=>{generation++;postureChoices=[];document.querySelector('#model-previews')?.replaceChildren();document.querySelector('#model-settings')?.replaceChildren();document.querySelector('#model-queue')?.replaceChildren();});
-document.addEventListener('wardrobe:admin',()=>{if(location.hash==='#model-studio')loadStudioAdmin();});
+document.addEventListener('wardrobe:admin',()=>{if(currentRoute()==='model-studio')loadStudioAdmin();});
 
 document.addEventListener('submit',e=>{const f=e.target;if(!f.matches('form[data-provider-settings]'))return;e.preventDefault();const d=new FormData(f),apiKey=String(d.get('apiKey')||'').trim(),clientId=String(d.get('clientId')||'').trim(),clientSecret=String(d.get('clientSecret')||'').trim(),parameters={};for(const [k,v] of d){if(!['apiKey','clientId','clientSecret','model','dailyLimit'].includes(k))parameters[k]=k==='maxTokens'?Number(v):v;}for(const name of ['apiKey','clientId','clientSecret'])if(f.elements[name])f.elements[name].value='';run('Saving provider settings…',()=>modelCall('providerSettings',{provider:f.dataset.providerSettings,model:d.get('model'),dailyLimit:Number(d.get('dailyLimit')),parameters,apiKey,clientId,clientSecret}));});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-model-review-brief]');if(b)run('Reviewing brief with Claude…',()=>modelCall('reviewBrief',{uid:b.dataset.uid,slot:b.dataset.slot,requestId:b.dataset.request}));});

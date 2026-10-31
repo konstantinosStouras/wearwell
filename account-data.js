@@ -1,6 +1,6 @@
-import {profilePath} from './family-context.js?v=20261030-unified-v1';
+import {profilePath} from './family-context.js?v=20261031-paths-v1';
 // Private testing data is in Firebase. Ownership/checklists/rotation remain local.
-import {getAccountUser} from './auth.js?v=20261030-unified-v1';
+import {getAccountUser} from './auth.js?v=20261031-paths-v1';
 let services;
 export async function database(){
  if(!services)services=import('https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js').then(s=>({s,db:s.getFirestore()})).catch(e=>{services=null;throw e;});
@@ -20,7 +20,7 @@ export async function sendFeedback(payload,id){
  await batch.commit();
 }
 export async function deleteAccountFeedback(uid){
- const {clearAccountClothes}=await import('./clothing-store.js?v=20261030-unified-v1');await clearAccountClothes(uid);
+ const {clearAccountClothes}=await import('./clothing-store.js?v=20261031-paths-v1');await clearAccountClothes(uid);
  const {s,db}=await database();
  // Each batch is bounded; a failed cleanup is retried before Auth deletion.
  for(;;){

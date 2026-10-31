@@ -1,7 +1,8 @@
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261030-unified-v1';
-import {database,loadCloudProfile,getPhotos} from './account-data.js?v=20261030-unified-v1';
-import {validPhoto} from './profile-photos.js?v=20261030-unified-v1';
-import {measurements} from './profile.js?v=20261030-unified-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-paths-v1';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-paths-v1';
+import {database,loadCloudProfile,getPhotos} from './account-data.js?v=20261031-paths-v1';
+import {validPhoto} from './profile-photos.js?v=20261031-paths-v1';
+import {measurements} from './profile.js?v=20261031-paths-v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let generation=0,records=[],profiles=[],active=null;
 export function clearAdmin(){generation++;records=[];profiles=[];active=null;document.querySelector('#review-detail')?.replaceChildren();}
@@ -42,4 +43,4 @@ document.addEventListener('submit',async event=>{
  const form=event.target,data=new FormData(form),id=active,message=form.querySelector('#review-save-status'),button=form.querySelector('button');button.disabled=true;message.textContent='Saving review…';
  try{const {s,db}=await database();const update={status:String(data.get('status')),replyDraft:String(data.get('replyDraft')).trim(),reviewedAt:s.serverTimestamp()};await s.updateDoc(s.doc(db,'daywearFeedback',id),update);Object.assign(records.find(t=>t.id===id),update);message.textContent='Review saved. No email has been sent.';}catch{message.textContent='Review could not be saved. Please retry.';}finally{button.disabled=false;}
 });
-document.addEventListener('wardrobe:admin',()=>{if(location.hash==='#review')loadAdmin();});
+document.addEventListener('wardrobe:admin',()=>{if(currentRoute()==='review')loadAdmin();});

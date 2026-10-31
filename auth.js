@@ -1,7 +1,8 @@
-import {languages} from './language-policy.js?v=20261030-unified-v1';
-import {accountIdentity,accountButtonMarkup} from './account-ui.js?v=20261030-unified-v1';
-import {firebaseConfig,enabledProviders} from './firebase-config.js?v=20261030-unified-v1';
-import {passwordProblem,authMessage} from './auth-policy.js?v=20261030-unified-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-paths-v1';
+import {languages} from './language-policy.js?v=20261031-paths-v1';
+import {accountIdentity,accountButtonMarkup} from './account-ui.js?v=20261031-paths-v1';
+import {firebaseConfig,enabledProviders} from './firebase-config.js?v=20261031-paths-v1';
+import {passwordProblem,authMessage} from './auth-policy.js?v=20261031-paths-v1';
 
 const serviceLanguage=()=>languages[document.documentElement.lang]?.service||'en';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -34,7 +35,7 @@ function openSignIn(){closeMenu();view='signin';notice='';if(!modal.open)modal.s
 document.addEventListener('click',event=>{if(!wrapper.contains(event.target))closeMenu();if(event.target.closest('[data-open-signin]'))openSignIn();});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!menu.hidden)closeMenu(true);});
 wrapper.addEventListener('focusout',event=>{if(!wrapper.contains(event.relatedTarget))closeMenu();});
-menu.addEventListener('click',event=>{const target=event.target.closest('a,button');if(!target)return;closeMenu();if(target.dataset.menu==='signout'){openSignIn();run(async()=>{await sdk.signOut(auth);modal.close();location.hash='home';});}});
+menu.addEventListener('click',event=>{const target=event.target.closest('a,button');if(!target)return;closeMenu();if(target.dataset.menu==='signout'){openSignIn();run(async()=>{await sdk.signOut(auth);modal.close();navigate('home');});}});
 let profileName='',admin=false;
 export const isAccountAdmin=()=>admin;
 async function refreshAdmin(){const current=user;admin=false;if(current){try{const token=await current.getIdTokenResult();if(user?.uid===current.uid)admin=token.claims.daywearAdmin===true;}catch{}}renderAccountButton();document.dispatchEvent(new Event('wardrobe:admin'));}
@@ -43,7 +44,7 @@ function renderAccountButton(){
  trigger.innerHTML=accountButtonMarkup(user,profileName);
  trigger.classList.toggle('signed-in',!!user);trigger.setAttribute('aria-haspopup',user?'true':'dialog');
  trigger.setAttribute('aria-expanded',String(!menu.hidden));trigger.setAttribute('aria-controls',user?'account-menu':'account-modal');
- menu.innerHTML=user?`<div class="account-menu-identity"><small>Signed in as</small><strong data-i18n-skip>${esc(accountIdentity(user,profileName).name)}</strong><span data-i18n-skip>${esc(user.email)}</span></div>${admin?'<a class="account-admin-entry" href="#admin"><span>Admin area</span><span aria-hidden="true">↗</span></a>':''}<span class="account-menu-label">My personal area</span><a href="#profile">My Profile <span aria-hidden="true">↗</span></a><a href="#family">Family profiles <span aria-hidden="true">↗</span></a><a href="#whats-new">What's new <span aria-hidden="true">↗</span></a><a href="#feedback">Send feedback <span aria-hidden="true">↗</span></a><button type="button" data-menu="signout">Sign out</button>`:'';
+ menu.innerHTML=user?`<div class="account-menu-identity"><small>Signed in as</small><strong data-i18n-skip>${esc(accountIdentity(user,profileName).name)}</strong><span data-i18n-skip>${esc(user.email)}</span></div>${admin?'<a class="account-admin-entry" href="/wearwell/admin"><span>Admin</span><span aria-hidden="true">↗</span></a>':''}<span class="account-menu-label">Account</span><a href="/wearwell/profile">Profile <span aria-hidden="true">↗</span></a><a href="/wearwell/family">Family <span aria-hidden="true">↗</span></a><a href="/wearwell/news">News <span aria-hidden="true">↗</span></a><a href="/wearwell/feedback">Feedback <span aria-hidden="true">↗</span></a><button type="button" data-menu="signout">Sign out</button>`:'';
  if(!user)closeMenu();
  if(user)trigger.setAttribute('aria-label','Your account: '+accountIdentity(user,profileName).name);else trigger.removeAttribute('aria-label');
  trigger.querySelector('img')?.addEventListener('error',event=>event.target.remove(),{once:true});
@@ -118,7 +119,7 @@ modal.addEventListener('click',e=>{
  if(action==='retry-persistence'){preparePersistence();return;}
  if(['signin','register','reset'].includes(action)){view=action;notice='';render();return;}
  if(action==='show-password'){const field=modal.querySelector('[name=password]');field.type=field.type==='password'?'text':'password';el.textContent=field.type==='password'?'Show':'Hide';el.setAttribute('aria-label',field.type==='password'?'Show password':'Hide password');return;}
- if(action==='profile'){modal.close();location.hash='profile';return;}
+ if(action==='profile'){modal.close();navigate('profile');return;}
  if(el.dataset.provider){if(!persistenceReady)return;const p=provider(el.dataset.provider);auth.languageCode=serviceLanguage();run(async()=>{await sdk.signInWithPopup(auth,p);notice='';render();},'Complete sign-in in the Google window. If it did not open, allow pop-ups for this website or use email sign-in.','Opening Google…');}
  if(action==='signout')run(async()=>{await sdk.signOut(auth);notice='You’re signed out.';view='signin';render();});
  if(action==='verify')run(async()=>{await sdk.sendEmailVerification(user);message('Verification email sent. Check your inbox and spam folder.');});
@@ -162,11 +163,11 @@ document.addEventListener('submit',async event=>{
    await sdk.reauthenticateWithPopup(current,provider('google.com'));
   }else throw {code:'auth/requires-recent-login'};
   if(user?.uid!==current.uid)throw {code:'auth/requires-recent-login'};
-  const {deleteAccountFeedback}=await import('./account-data.js?v=20261030-unified-v1');
+  const {deleteAccountFeedback}=await import('./account-data.js?v=20261031-paths-v1');
   await deleteAccountFeedback(current.uid);
   await sdk.deleteUser(current);
-  try{const {clearFamilyStorage}=await import('./family-context.js?v=20261030-unified-v1');clearFamilyStorage(current.uid);localStorage.removeItem(`wardrobe.account.${current.uid}`);}catch{}
-  location.hash='home';
+  try{const {clearFamilyStorage}=await import('./family-context.js?v=20261031-paths-v1');clearFamilyStorage(current.uid);localStorage.removeItem(`wardrobe.account.${current.uid}`);}catch{}
+  navigate('home');
   notice='Your account has been deleted.';view='signin';if(!modal.open)modal.showModal();render();
  }catch(error){
   feedback.textContent=error.code?.startsWith('auth/')?authMessage(error):'Account deletion could not finish. Please retry. Some feedback may already have been removed.';

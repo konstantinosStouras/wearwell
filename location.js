@@ -1,4 +1,4 @@
-import {serviceLanguage} from './i18n.js?v=20261030-unified-v1';
+import {serviceLanguage} from './i18n.js?v=20261031-paths-v1';
 export function locationPreference(saved={}){
  return saved.locationMode==='travel'&&saved.location?'travel':'current';
 }

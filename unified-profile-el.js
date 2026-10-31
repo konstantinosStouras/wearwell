@@ -16,5 +16,14 @@ export default {
   "Use up to six headshots and three body photos.": "Χρησιμοποίησε έως έξι φωτογραφίες προσώπου και τρεις φωτογραφίες σώματος.",
   "Add 1–6 recent headshots. Start with a front view; slight left and right angles are useful extras.": "Πρόσθεσε 1–6 πρόσφατες φωτογραφίες προσώπου. Ξεκίνα με μετωπική λήψη· ελαφρές αριστερές και δεξιές γωνίες είναι χρήσιμες επιπλέον.",
   "There is not enough room to keep all earlier headshots. Remove an unused photo above, then retry.": "Δεν υπάρχει αρκετός χώρος για όλες τις παλαιότερες φωτογραφίες προσώπου. Αφαίρεσε μια φωτογραφία που δεν χρειάζεσαι παραπάνω και δοκίμασε ξανά.",
-  "Your profile changed in another tab. Refresh and save model settings again.": "Το προφίλ σου άλλαξε σε άλλη καρτέλα. Ανανέωσε και αποθήκευσε ξανά τις ρυθμίσεις μοντέλου."
+  "Your profile changed in another tab. Refresh and save model settings again.": "Το προφίλ σου άλλαξε σε άλλη καρτέλα. Ανανέωσε και αποθήκευσε ξανά τις ρυθμίσεις μοντέλου.",
+  "Profile": "Προφίλ",
+  "Family": "Οικογένεια",
+  "News": "Νέα",
+  "Feedback": "Σχόλια",
+  "Admin": "Διαχείριση",
+  "Studio": "Στούντιο",
+  "Users": "Χρήστες",
+  "Updates": "Ενημερώσεις",
+  "Account": "Λογαριασμός"
 };
