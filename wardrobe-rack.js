@@ -1,4 +1,4 @@
-import {rackStyles} from './rack-styles.js?v=20261031-white-rack-v1';
+import {rackStyles} from './rack-styles.js?v=20261031-white-rack-v2';
 import {rackArt,rackExamples,rackImage,rackHook} from './rack-art.js?v=20261031-save-v1';
 import {installRackUploads} from './rack-uploads.js?v=20261031-save-v1';
 import {getLanguage,translateText} from './i18n.js?v=20261031-details-v1';

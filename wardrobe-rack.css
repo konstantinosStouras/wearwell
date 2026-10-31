@@ -72,3 +72,6 @@
 /* Keep the wardrobe on the same white canvas as the surrounding website. */
 .studio,.details,.dots{background:#fff}
 .studio::before{background:none}
+
+/* Keep the outer phone hangers supported as the rack scrolls to its edges. */
+@media(max-width:650px){.rail{left:0;width:100%}.rail-end.left{left:0}.rail-end.right{right:0}}
