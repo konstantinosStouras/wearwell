@@ -1,4 +1,5 @@
 export default {
+ 'Optional body measurements':'Προαιρετικές μετρήσεις σώματος',
   "About your model": "Σχετικά με το μοντέλο σου",
   "Gender (optional)": "Φύλο (προαιρετικό)",
   "Man": "Άνδρας",

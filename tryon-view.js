@@ -1,4 +1,4 @@
-import {detailKind} from './model-details.js?v=20261031-details-v1';
+import {detailKind} from './model-details.js?v=20261031-model-tab-v1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const photo=(src,alt)=>src?`<img src="${esc(src)}" alt="${alt}" class="tryon-portrait">`:'';
 const tones=[['','Not specified','#eee'],['very-light','Very light','#f2d6c4'],['light','Light','#dfb493'],['medium','Medium','#c4936e'],['tan','Tan','#a8724d'],['brown','Brown','#805335'],['deep','Deep','#4a3025']];
