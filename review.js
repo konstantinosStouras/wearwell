@@ -1,8 +1,8 @@
-import {currentRoute,navigate} from './navigation.js?v=20261031-womens-catalog-v1';
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-catalog-v1';
-import {database,loadCloudProfile,getPhotos} from './account-data.js?v=20261031-womens-catalog-v1';
-import {validPhoto} from './profile-photos.js?v=20261031-womens-catalog-v1';
-import {measurements} from './profile.js?v=20261031-skin-palette-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-womens-young-v2';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-young-v2';
+import {database,loadCloudProfile,getPhotos} from './account-data.js?v=20261031-womens-young-v2';
+import {validPhoto} from './profile-photos.js?v=20261031-womens-young-v2';
+import {measurements} from './profile.js?v=20261031-womens-young-v2';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let generation=0,records=[],profiles=[],active=null;
 export function clearAdmin(){generation++;records=[];profiles=[];active=null;document.querySelector('#review-detail')?.replaceChildren();}

@@ -1,34 +1,34 @@
-import {profileTabs,selectProfileTab} from './profile-tabs.js?v=20261031-womens-catalog-v1';
-import {modelDetailsFields,braSizeFields} from './model-details.js?v=20261031-skin-palette-v1';
-import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-womens-catalog-v1';
-import './wardrobe-rack.js?v=20261031-womens-catalog-v1';
-import {tryOnPage,loadTryOn,setProfileSaver,validateModelSave,saveProfileModel} from './tryon.js?v=20261031-skin-palette-v1';
-import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-womens-catalog-v1';
-import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-womens-catalog-v1';
-import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261031-womens-catalog-v1';
-import {studioAdminPage,loadStudioAdmin,studioSection,loadStudio,modelCall} from './model-studio.js?v=20261031-womens-catalog-v1';
-import {installWeatherRefresh} from './weather-refresh.js?v=20261031-womens-catalog-v1';
-import {usersPage,loadUsers} from './admin-users.js?v=20261031-womens-catalog-v1';
-import {updatesPage,loadUpdates} from './updates.js?v=20261031-womens-catalog-v1';
-import {welcomePage} from './welcome.js?v=20261031-womens-catalog-v1';
-import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261031-womens-catalog-v1';
-import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261031-womens-catalog-v1';
-import {lookFeedbackControls} from './style-feedback.js?v=20261031-womens-catalog-v1';
-import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261031-womens-catalog-v1';
-import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261031-womens-catalog-v1';
-import {photosSection,refreshPhotos,validatePhotoDraft,savePhotoDraft,finishPhotoSave} from './profile-photos.js?v=20261031-womens-catalog-v1';
-import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261031-womens-catalog-v1';
-import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261031-skin-palette-v1';
-import {installMeasurementGuides} from './measurement-guides.js?v=20261031-womens-catalog-v1';
-import {createPrivateCatalog} from './private-models.js?v=20261031-womens-catalog-v1';
-import {feedbackPage,resetFeedback} from './feedback.js?v=20261031-womens-catalog-v1';
-import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-catalog-v1';
-import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261031-womens-catalog-v1';
-import {profileFields,modelNotesFields,profileSaveButton,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261031-skin-palette-v1';
-import {accountStorageKey} from './auth-policy.js?v=20261031-womens-catalog-v1';
-import {profile,pieces,looks,pieceById,lookById,seasons,label,setCatalogGender,getCatalogGender} from './data.js?v=20261031-womens-catalog-v1';
-import {fetchWeather,recommend,condition} from './weather.js?v=20261031-womens-catalog-v1';
-import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261031-womens-catalog-v1';
+import {profileTabs,selectProfileTab} from './profile-tabs.js?v=20261031-womens-young-v2';
+import {modelDetailsFields,braSizeFields} from './model-details.js?v=20261031-womens-young-v2';
+import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-womens-young-v2';
+import './wardrobe-rack.js?v=20261031-womens-young-v2';
+import {tryOnPage,loadTryOn,setProfileSaver,validateModelSave,saveProfileModel} from './tryon.js?v=20261031-womens-young-v2';
+import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-womens-young-v2';
+import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-womens-young-v2';
+import {resetFamily,loadFamily,familyBar,familyPage,familyNotice,familyToday,chooseMember,loadPortrait,currentMember,updateMemberName} from './family.js?v=20261031-womens-young-v2';
+import {studioAdminPage,loadStudioAdmin,studioSection,loadStudio,modelCall} from './model-studio.js?v=20261031-womens-young-v2';
+import {installWeatherRefresh} from './weather-refresh.js?v=20261031-womens-young-v2';
+import {usersPage,loadUsers} from './admin-users.js?v=20261031-womens-young-v2';
+import {updatesPage,loadUpdates} from './updates.js?v=20261031-womens-young-v2';
+import {welcomePage} from './welcome.js?v=20261031-womens-young-v2';
+import {headerWeather,currentWeatherCard} from './weather-view.js?v=20261031-womens-young-v2';
+import {cleanRatings,cleanPieceFeedback,dislikeReasons} from './preferences.js?v=20261031-womens-young-v2';
+import {lookFeedbackControls} from './style-feedback.js?v=20261031-womens-young-v2';
+import {purchasePage,installPurchase,clearPurchase} from './purchase-ui.js?v=20261031-womens-young-v2';
+import {loadCloudProfile,saveCloudProfile} from './account-data.js?v=20261031-womens-young-v2';
+import {photosSection,refreshPhotos,validatePhotoDraft,savePhotoDraft,finishPhotoSave} from './profile-photos.js?v=20261031-womens-young-v2';
+import {adminPage,loadAdmin,clearAdmin} from './review.js?v=20261031-womens-young-v2';
+import {installLanguages,getLanguage,serviceLanguage,getLanguagePreference,applyLocationLanguage,translateText,translateBrief,searchKey} from './i18n.js?v=20261031-womens-young-v2';
+import {installMeasurementGuides} from './measurement-guides.js?v=20261031-womens-young-v2';
+import {createPrivateCatalog} from './private-models.js?v=20261031-womens-young-v2';
+import {feedbackPage,resetFeedback} from './feedback.js?v=20261031-womens-young-v2';
+import {getAccountToken,getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-young-v2';
+import {hasPersonalModel,modelImageSource,modelCaption,modelFitNotes} from './model-policy.js?v=20261031-womens-young-v2';
+import {profileFields,modelNotesFields,profileSaveButton,styleFields,readProfile,saveProfile,modelBrief} from './profile.js?v=20261031-womens-young-v2';
+import {accountStorageKey} from './auth-policy.js?v=20261031-womens-young-v2';
+import {profile,pieces,looks,pieceById,lookById,seasons,label,setCatalogGender,getCatalogGender} from './data.js?v=20261031-womens-young-v2';
+import {fetchWeather,recommend,condition} from './weather.js?v=20261031-womens-young-v2';
+import {detectLocation,detectApproximateLocation,locationPreference,rememberCity,locationError} from './location.js?v=20261031-womens-young-v2';
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let key=accountStorageKey(null),accountUid=null,cloudStatus='idle',profileSaving=false;
 async function syncProfile(){const uid=accountUid,member=activeMemberId(),scope=contextVersion();if(!uid)return;cloudStatus='loading';if(route().split('/')[0]==='profile')renderedRoute='';render();try{const cloud=await loadCloudProfile(uid,member);if(accountUid!==uid||scope!==contextVersion())return;if(!cloud&&member!=='self')throw Error('Profile removed');if(cloud){state.name=cloud.name;state.sizes=JSON.parse(cloud.sizes);persist();notifyProfile();}else if(member==='self'){try{const legacy=await modelCall('tryOnState',{member});if(accountUid!==uid||scope!==contextVersion())return;if(['man','woman'].includes(legacy.profile?.kind)){state.sizes={...state.sizes,modelDetails:{...state.sizes.modelDetails,gender:legacy.profile.kind==='woman'?'Woman':'Man'}};notifyProfile();}}catch{}}cloudStatus='ready';}catch{if(accountUid!==uid||scope!==contextVersion())return;cloudStatus='error';}if(route().split('/')[0]==='profile')renderedRoute='';render();}
@@ -48,7 +48,7 @@ function route(){return currentRoute()||(accountUid?'today':'home');}
 function status(id){return ['owned','buy'].includes(state.ownership[id])?state.ownership[id]:'review';}
 function statusLabel(id){return {owned:'Owned',buy:'Buy',review:'To confirm'}[status(id)];}
 function fit(p){const size=p.category==='Shoes'?state.sizes.shoe:p.category==='Bottoms'?[state.sizes.bottom,state.sizes.bottomSystem].filter(Boolean).join(' · '):['Tops','Layers'].includes(p.category)?state.sizes.top:'';return size?`${size} · ${p.fit}`:p.fit;}
-function image(l,cls='look-photo'){const src=modelImageSource(l,isFamily()?null:accountUid,privateCatalog);if(!src)return `<div class="${cls} model-placeholder" role="img" aria-label="Private model ${modelState==='error'?'unavailable':'loading'}"><span>${modelState==='error'?'Your private model is unavailable.':'Loading your private model…'}</span></div>`;return `<img class="${cls}" src="${src}" alt="${(!isFamily()&&privateCatalog.get(l.id,accountUid))?'Your approved photo-based model':(getCatalogGender()==='woman'?'Fictional female catalog model':'WearWell slim male catalog model')} wearing ${esc(l.name)}" loading="lazy" width="800" height="1200">`;}
+function image(l,cls='look-photo'){if(accountUid&&cloudStatus==='loading')return `<div class="${cls} model-placeholder" role="status">Loading your collection…</div>`;const src=modelImageSource(l,isFamily()?null:accountUid,privateCatalog);if(!src)return `<div class="${cls} model-placeholder" role="img" aria-label="Private model ${modelState==='error'?'unavailable':'loading'}"><span>${modelState==='error'?'Your private model is unavailable.':'Loading your private model…'}</span></div>`;return `<img class="${cls}" src="${src}" alt="${(!isFamily()&&privateCatalog.get(l.id,accountUid))?'Your approved photo-based model':(getCatalogGender()==='woman'?'Fictional female catalog model':'WearWell slim male catalog model')} wearing ${esc(l.name)}" loading="lazy" width="800" height="1200">`;}
 
 function tags(l){return `<div class="tags"><span class="tag">${{summer:'warm',fall:'mild',winter:'cold',spring:'mild',gym:'training',lounge:'at home'}[l.season]}</span>${l.rain?'<span class="tag">rain-ready</span>':''}${l.layer?'<span class="tag">layered</span>':''}</div>`;}
 function card(l){const owned=l.pieces.filter(id=>status(id)==='owned').length;return `<article class="card outfit-card"><a href="/wearwell/look/${l.id}">${image(l)}<div class="row-between card-meta"><span>${label(l.season)} ${String(l.number).padStart(2,'0')}</span><span>${owned} / ${l.pieces.length} owned</span></div><h3>${l.name}</h3><p class="muted outfit-pieces">${l.pieces.map(id=>pieceById[id].name).join(' · ')}</p>${tags(l)}</a>${ratingControls(l,true)}</article>`;}
@@ -87,9 +87,10 @@ function wardrobe(){const styles=wardrobeStylesTitle();return head('MORE WAYS TO
 function render(){
 
  const r=route().split('/')[0];
+ if(r!=='profile')setCatalogGender(accountUid?state.sizes.modelDetails?.gender:null);
  // Weather/auth refreshes must not recreate unchanged catalog DOM or its rack.
  const stablePage=['home','wardrobe','pieces','shopping','purge','look',...seasons,'gym','lounge'].includes(r);
- const contentKey=stablePage?JSON.stringify([route(),accountUid,contextVersion(),modelState,modelError,state.name,state.sizes,state.ownership,state.checks,state.purge,state.ratings,state.pieceFeedback,state.filter,state.search,state.season,state.offset]):'';
+ const contentKey=stablePage?JSON.stringify([route(),accountUid,contextVersion(),cloudStatus,modelState,modelError,state.name,state.sizes,state.ownership,state.checks,state.purge,state.ratings,state.pieceFeedback,state.filter,state.search,state.season,state.offset]):'';
  const keepContent=stablePage&&renderedRoute===r&&renderedContentKey===contentKey&&$('#main').children.length;
  renderedContentKey=contentKey;
  const feedbackView=$('#main').dataset.feedbackRoute===route()&&renderedAccount===accountUid?captureFeedbackView():null;

@@ -1,4 +1,4 @@
-import {defaultModelView} from './default-model.js?v=20261031-womens-catalog-v1';
+import {defaultModelView} from './default-model.js?v=20261031-womens-young-v2';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const choices={gender:['Man','Woman','Non-binary','Prefer not to say'],hairLength:['Shaved / bald','Short','Medium','Long'],hairTexture:['Straight','Wavy','Curly','Coily'],hairColour:['Black','Brown','Blonde','Red','Grey','White','Other'],braSystem:['EU','UK','US','FR','IT']};
 const labels={gender:'Gender (optional)',hairLength:'Hair length',hairTexture:'Hair texture',hairColour:'Hair colour',hairShade:'Precise hair shade',skinShade:'Precise skin shade',braSystem:'Bra sizing system',braBand:'Bra band size',braCup:'Cup size',underbust:'Underbust (cm)'};

@@ -1,4 +1,4 @@
-import {serviceLanguage} from './i18n.js?v=20261031-skin-palette-v1';
+import {serviceLanguage} from './i18n.js?v=20261031-womens-young-v2';
 export function locationPreference(saved={}){
  return saved.locationMode==='travel'&&saved.location?'travel':'current';
 }

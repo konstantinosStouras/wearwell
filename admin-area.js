@@ -1,4 +1,4 @@
-import {routeURL} from './navigation.js?v=20261031-womens-catalog-v1';
+import {routeURL} from './navigation.js?v=20261031-womens-young-v2';
 export const adminRoutes=['admin','model-studio','users','updates-admin','review'];
 const sections=[['model-studio','Studio','Creative tools','Connect AI providers, choose models and prepare private previews.'],['users','Users','People & access','Review accounts and manage registered users.'],['updates-admin','Updates','Communications','Prepare and publish product updates.'],['review','Feedback','Quality & support','Review feedback and prepare replies.']];
 export function adminNavigation(route){return `<nav class="admin-navigation" aria-label="Admin navigation"><a href="/wearwell/admin" ${route==='admin'?'aria-current="page"':''}>Admin</a>${sections.map(([id,title])=>`<a href="${routeURL(id)}" ${route===id?'aria-current="page"':''}>${title}</a>`).join('')}</nav>`;}

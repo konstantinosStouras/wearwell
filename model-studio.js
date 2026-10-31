@@ -1,10 +1,10 @@
-import {currentRoute,navigate} from './navigation.js?v=20261031-womens-catalog-v1';
-import {providerSettings} from './provider-settings.js?v=20261031-womens-catalog-v1';
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-catalog-v1';
-import {database} from './account-data.js?v=20261031-womens-catalog-v1';
-import {looks} from './data.js?v=20261031-womens-catalog-v1';
-import {getLanguage,translateText} from './i18n.js?v=20261031-skin-palette-v1';
-import greek from './model-studio-el.js?v=20261031-womens-catalog-v1';
+import {currentRoute,navigate} from './navigation.js?v=20261031-womens-young-v2';
+import {providerSettings} from './provider-settings.js?v=20261031-womens-young-v2';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-young-v2';
+import {database} from './account-data.js?v=20261031-womens-young-v2';
+import {looks} from './data.js?v=20261031-womens-young-v2';
+import {getLanguage,translateText} from './i18n.js?v=20261031-womens-young-v2';
+import greek from './model-studio-el.js?v=20261031-womens-young-v2';
 export const modelText=s=>s;
 const t=modelText,esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validImage=s=>typeof s==='string'&&s.length<=650000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(s);
