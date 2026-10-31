@@ -1,5 +1,5 @@
-import {rackStyles} from './rack-styles.js?v=20261031-paths-v1';
-import {rackArt,rackExamples,rackImage} from './rack-art.js?v=20261031-paths-v1';
+import {rackStyles} from './rack-styles.js?v=20261031-hangers-v1';
+import {rackArt,rackExamples,rackImage,rackHook} from './rack-art.js?v=20261031-hangers-v1';
 import {installRackUploads} from './rack-uploads.js?v=20261031-paths-v1';
 import {getLanguage,translateText} from './i18n.js?v=20261031-paths-v1';
 
@@ -21,7 +21,7 @@ let current=4,focused=false,previewing=true,lang=getLanguage()==='el'?'el':'en';
 const $=s=>root.querySelector(s),rack=$('#rack');
 
 function garment(p,i){return p.image?'<img class="owned-photo" src="'+p.image+'" alt="" draggable="false">':rackArt(p,i);}
-rack.innerHTML=pieces.map((p,i)=>`<button class="garment" data-i="${i}">${garment(p,i)}</button>`).join('');
+rack.innerHTML=pieces.map((p,i)=>`<button class="garment" data-i="${i}">${garment(p,i)}</button>${p.art?rackHook.replace('class="hanger-hook"','class="hanger-hook" data-hook="'+i+'"'):''}`).join('');
 $('#dots').innerHTML='<input id="piece-range" type="range" min="0" max="'+(pieces.length-1)+'" value="0" step="1">';
 // Animate a continuous rail position independently of the selected piece.
 let garments=[...root.querySelectorAll('.garment')];
@@ -68,7 +68,7 @@ function paint(){
  const railCenter=desktop?(pieces.length<=9?(pieces.length-1)/2:Math.max(4,Math.min(pieces.length-5,position))):position;
  garments.forEach((b,i)=>{
   const d=i-position,proximity=reveals[i]||0;
-  if(Math.abs(i-railCenter)>4.5){b.style.visibility='hidden';b.tabIndex=-1;return;}
+  if(Math.abs(i-railCenter)>4.5){b.style.visibility='hidden';rack.querySelector('[data-hook="'+i+'"]')?.style.setProperty('visibility','hidden');b.tabIndex=-1;return;}
   b.style.visibility='visible';
   // Transfer the opening with the garment's turn, closing the old gap as
   // the next opens. Resting hangers stay closely packed on either side.
@@ -81,6 +81,13 @@ function paint(){
   // visible side profile instead of collapsing into a one-pixel sliver.
   const restingAngle=70+(i%3)*2-Math.atan(x/2400)*180/Math.PI;
   const tilt=((i%3)-1)*.6*(1-proximity)+swing;
+  const hook=rack.querySelector('[data-hook="'+i+'"]');
+  if(hook){
+   hook.style.visibility=b.style.visibility;
+   hook.style.transform=`translateX(calc(-50% + ${x}px)) translateY(${proximity*zoom*18}px) rotateZ(${tilt}deg) scale(${.94+proximity*.06+zoom*proximity*.12})`;
+   hook.style.opacity=1-zoom*(i===current?0:.80);
+   hook.style.zIndex=String(21-Math.round(Math.abs(d)*3));
+  }
   b.style.transform=`translateX(calc(-50% + ${x}px)) translateY(${proximity*zoom*18}px) rotateZ(${tilt}deg) rotateY(${restingAngle*(1-proximity)}deg) scale(${.94+proximity*.06+zoom*proximity*.12})`;
   b.style.opacity=1-zoom*(i===current?0:.80);
   b.style.filter=i===current?'none':'blur('+zoom*9+'px)';
@@ -259,7 +266,7 @@ on($('#front-view'),'click',()=>showSide(false));on($('#back-view'),'click',()=>
 on($('#colour-tags'),'click',e=>{
  const button=e.target.closest('[data-tone]'),p=pieces[current];if(!button||!p?.tones)return;
  p.tone=Number(button.dataset.tone);const tone=p.tones[p.tone],b=garments[current];
- b.querySelector('.front-face').src=rackImage(tone.front);b.querySelector('.back-face').src=rackImage(tone.back);
+ b.innerHTML=rackArt(p);
  hoverEnabled=false;render();$('#colour-tags').querySelector('[data-tone="'+p.tone+'"]').focus({preventScroll:true});
 });
 on(rack,'dragstart',e=>e.preventDefault());
@@ -274,8 +281,8 @@ on(reduced,'change',wake);on(window,'resize',wake);render();
    current=position=target=next.some(p=>p.art)?4:0;velocity=zoom=0;focused=false;previewing=true;
    reveals=next.map((_,i)=>Number(previewing&&i===current));
    swings=next.map(()=>({angle:0,speed:0,kick:0,delay:0}));
-   rack.innerHTML=pieces.map((p,i)=>'<button class="garment" data-i="'+i+'">'+garment(p,i)+'</button>').join('');
-   garments=[...rack.children];render();
+   rack.innerHTML=pieces.map((p,i)=>`<button class="garment" data-i="${i}">${garment(p,i)}</button>${p.art?rackHook.replace('class="hanger-hook"','class="hanger-hook" data-hook="'+i+'"'):''}`).join('');
+   garments=[...rack.querySelectorAll('.garment')];render();
   },()=>pieces[current]);
   this.cleanup=()=>{stopUploads();pieces=[];rack.replaceChildren();controller.abort();resize.disconnect();cancelAnimationFrame(frame);clearTimeout(wheelTimer)};
  }

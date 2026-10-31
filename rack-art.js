@@ -16,5 +16,11 @@ rackExamples[2].tones.push({en:'Sand',el:'Άμμος',swatch:'#c9b696',front:'ta
 export const rackImage=name=>new URL('./assets/rack/'+name+'.webp',import.meta.url).href;
 export function rackArt(piece){
  const tone=piece.tones[piece.tone||0];
- return '<span class="garment-turn"><img class="demo-photo front-face" src="'+rackImage(tone.front)+'" alt="" draggable="false" decoding="async"><img class="demo-photo back-face" src="'+rackImage(tone.back)+'" alt="" draggable="false" decoding="async"></span>';
+ // Neck positions in the original 640 × 960 photos. Hide only the photographed
+ // wire; preserve the wooden shoulders and the complete garment below them.
+ const necks={"hoodie":[102,102],"black-shirt":[131,130],"tank":[83,82],"varsity":[111,110],"blue-tee":[121,119],"jersey":[106,103],"white-tee":[119,117],"lilac":[112,109],"coral":[119,118]};
+ const [frontNeck,backNeck]=piece.art==='tank'&&piece.tone===1?[84,81]:necks[piece.art];
+ const face=(name,side,neck)=>'<img class="demo-photo '+side+'" style="--neck:'+((neck-2)/960*100)+'%" src="'+rackImage(name)+'" alt="" draggable="false" decoding="async">';
+ return '<span class="garment-turn">'+face(tone.front,'front-face',frontNeck)+face(tone.back,'back-face',backNeck)+'</span>';
 }
+export const rackHook='<svg class="hanger-hook" viewBox="0 0 40 64" aria-hidden="true"><path d="M6 19 C6 -3 34 -3 34 17 C34 30 20 30 20 42 L20 64" fill="none" stroke="#686b65" stroke-width="3.2" stroke-linecap="round"/><path d="M6 19 C6 -3 34 -3 34 17 C34 30 20 30 20 42 L20 64" fill="none" stroke="#d4d5cd" stroke-width="1.1" stroke-linecap="round"/></svg>';

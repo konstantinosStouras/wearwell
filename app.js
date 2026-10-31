@@ -1,5 +1,5 @@
 import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-paths-v1';
-import './wardrobe-rack.js?v=20261031-paths-v1';
+import './wardrobe-rack.js?v=20261031-hangers-v1';
 import {tryOnPage,loadTryOn} from './tryon.js?v=20261031-paths-v1';
 import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-paths-v1';
 import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-paths-v1';
