@@ -1,4 +1,6 @@
 export default {
+ 'Blue':'Μπλε',
+ 'Green':'Πράσινο',
  'Eye colour':'Χρώμα ματιών',
  'Choose a precise eye shade':'Επίλεξε ακριβή απόχρωση ματιών',
  'Precise eye shade':'Ακριβής απόχρωση ματιών',
