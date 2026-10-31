@@ -1,4 +1,4 @@
-import unifiedProfileGreek from './unified-profile-el.js?v=20261031-model-reuse-v1';
+import unifiedProfileGreek from './unified-profile-el.js?v=20261031-defaults-v1';
 import profileGreek from './tryon-profile-el.js?v=20261031-save-v1';
 import photoGuidance from './photo-guidance-languages.js?v=20261031-save-v1';
 import familyGreek from './family-el.js?v=20261031-save-v1';

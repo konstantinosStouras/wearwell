@@ -1,4 +1,5 @@
-import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-model-tab-v1';
+import {refreshDefaultModels} from './default-model.js?v=20261031-defaults-v1';
+import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-defaults-v1';
 import {currentRoute,navigate} from './navigation.js?v=20261031-save-v1';
 import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-model-tab-v1';
 import {loadCloudProfile,getPhotos,savePhoto,saveCloudProfile} from './account-data.js?v=20261031-save-v1';
@@ -9,7 +10,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-save
 import {currentMember} from './family.js?v=20261031-save-v1';
 import {modelCall} from './model-studio.js?v=20261031-save-v1';
 import {looks} from './data.js?v=20261031-save-v1';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-model-reuse-v1';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-defaults-v1';
 export {tryOnPage};
 let sharedProfile=null,sharedPhotos=[];let ownedClothes=[];let state=null,busy=false,epoch=0,upload=null,units='cm';
 const host=()=>document.querySelector('#tryon-content');
@@ -20,7 +21,7 @@ export async function loadTryOn({force=false}={}){
  const el=host(),uid=getAccountUser()?.uid,scope=contextVersion(),v=++epoch;if(!el)return;
  if(!uid){status('Sign in to create your private personal model.');el.innerHTML='<button data-open-signin>Sign in / Register</button>';return;}
  status('Loading your fitting room…');
- try{const [result,cloud,photos]=await Promise.all([call('tryOnState'),loadCloudProfile(uid,activeMemberId()),getPhotos(uid,activeMemberId())]);let clothes;try{clothes=await readClothes(clothingScope());}catch{clothes=null;}result.ownedItems=clothes?.items||[];result.ownedLoadError=!clothes;if(v!==epoch||uid!==getAccountUser()?.uid||scope!==contextVersion()||!el.isConnected)return;sharedProfile=cloud?{...cloud,sizes:JSON.parse(cloud.sizes||'{}')}:{name:getAccountUser()?.displayName||'Your',sizes:{}};sharedPhotos=photos;result.sharedProfile=sharedProfile.sizes;result.family=activeMemberId()!=='self';state=result;ownedClothes=result.ownedItems;units='cm';upload=null;el.innerHTML=tryOnView(state,looks,currentMember()?.name||getAccountUser()?.displayName||'Me');status('');const settings=document.querySelector('#profile-model-settings');if(settings)settings.innerHTML=modelSettingsView(state);restoreDraft();seedSharedFields();if(currentMember()?.relationship==='child'&&!state.profile){const kind=document.querySelector('#profile-form [name=kind]');kind.value='child';childFields(kind.form);} }
+ try{const [result,cloud,photos]=await Promise.all([call('tryOnState'),loadCloudProfile(uid,activeMemberId()),getPhotos(uid,activeMemberId())]);let clothes;try{clothes=await readClothes(clothingScope());}catch{clothes=null;}result.ownedItems=clothes?.items||[];result.ownedLoadError=!clothes;if(v!==epoch||uid!==getAccountUser()?.uid||scope!==contextVersion()||!el.isConnected)return;sharedProfile=cloud?{...cloud,sizes:JSON.parse(cloud.sizes||'{}')}:{name:getAccountUser()?.displayName||'Your',sizes:{}};sharedPhotos=photos;result.sharedProfile=sharedProfile.sizes;result.family=activeMemberId()!=='self';state=result;ownedClothes=result.ownedItems;units='cm';upload=null;el.innerHTML=tryOnView(state,looks,currentMember()?.name||getAccountUser()?.displayName||'Me');status('');const settings=document.querySelector('#profile-model-settings');if(settings)settings.innerHTML=modelSettingsView(state);restoreDraft();seedSharedFields();refreshDefaultModels();if(currentMember()?.relationship==='child'&&!state.profile){const kind=document.querySelector('#profile-form [name=kind]');kind.value='child';childFields(kind.form);} }
  catch(e){if(v===epoch&&el.isConnected){status(e.code?.startsWith('functions/')?e.message:'Could not load your fitting room. Please retry.');el.innerHTML='<button data-tryon-refresh>Retry</button>';}}
 }
 async function run(message,work){if(busy)return;busy=true;const el=host(),v=epoch,uid=getAccountUser()?.uid,scope=contextVersion();const controls=[...el.querySelectorAll('button,input,select,textarea')].map(n=>[n,n.disabled]);controls.forEach(([n])=>n.disabled=true);status(message);try{await work();if(v===epoch&&uid===getAccountUser()?.uid&&scope===contextVersion()&&el.isConnected)await loadTryOn();}catch(e){if(v===epoch&&uid===getAccountUser()?.uid&&scope===contextVersion()&&el.isConnected)status(e.code?.startsWith('functions/')?e.message:e.message||'The request was interrupted. Refresh before trying again.');}finally{busy=false;controls.forEach(([n,disabled])=>{if(n.isConnected)n.disabled=disabled;});}}
