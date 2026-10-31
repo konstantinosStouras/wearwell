@@ -1,10 +1,10 @@
-import {currentRoute,navigate} from './navigation.js?v=20261031-womens-young-v2';
-import {providerSettings} from './provider-settings.js?v=20261031-womens-young-v2';
-import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-young-v2';
-import {database} from './account-data.js?v=20261031-womens-young-v2';
-import {looks} from './data.js?v=20261031-womens-young-v2';
-import {getLanguage,translateText} from './i18n.js?v=20261031-colour-preview-v1';
-import greek from './model-studio-el.js?v=20261031-womens-young-v2';
+import {currentRoute,navigate} from './navigation.js?v=20261031-womens-modern-v3';
+import {providerSettings} from './provider-settings.js?v=20261031-womens-modern-v3';
+import {getAccountUser,isAccountAdmin} from './auth.js?v=20261031-womens-modern-v3';
+import {database} from './account-data.js?v=20261031-womens-modern-v3';
+import {looks} from './data.js?v=20261031-womens-modern-v3';
+import {getLanguage,translateText} from './i18n.js?v=20261031-womens-modern-v3';
+import greek from './model-studio-el.js?v=20261031-womens-modern-v3';
 export const modelText=s=>s;
 const t=modelText,esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validImage=s=>typeof s==='string'&&s.length<=650000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(s);

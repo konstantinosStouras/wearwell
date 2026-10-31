@@ -1,4 +1,4 @@
-import {looks} from './data.js?v=20261031-womens-young-v2';
+import {looks} from './data.js?v=20261031-womens-modern-v3';
 
 export const dislikeReasons = [
   ['colour', 'Wrong colour for me'],

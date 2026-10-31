@@ -1,8 +1,8 @@
-import {modelCall} from './model-studio.js?v=20261031-womens-young-v2';
-import {database,getPhotos} from './account-data.js?v=20261031-womens-young-v2';
-import {getAccountUser} from './auth.js?v=20261031-womens-young-v2';
-import {activeMemberId,setMember,isFamily,profilePath,memberStorageKey,contextVersion} from './family-context.js?v=20261031-womens-young-v2';
-import {translateText} from './i18n.js?v=20261031-colour-preview-v1';
+import {modelCall} from './model-studio.js?v=20261031-womens-modern-v3';
+import {database,getPhotos} from './account-data.js?v=20261031-womens-modern-v3';
+import {getAccountUser} from './auth.js?v=20261031-womens-modern-v3';
+import {activeMemberId,setMember,isFamily,profilePath,memberStorageKey,contextVersion} from './family-context.js?v=20261031-womens-modern-v3';
+import {translateText} from './i18n.js?v=20261031-womens-modern-v3';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const relationLabels={child:'Child',spouse:'Spouse / partner'};
 export const ageLabels={'':'Not specified',baby:'Baby / toddler',child:'Child',teen:'Teenager'};

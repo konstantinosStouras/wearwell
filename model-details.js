@@ -1,4 +1,4 @@
-import {defaultModelView} from './default-model.js?v=20261031-womens-young-v2';
+import {defaultModelView} from './default-model.js?v=20261031-womens-modern-v3';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const choices={gender:['Man','Woman','Non-binary','Prefer not to say'],hairLength:['Shaved / bald','Short','Medium','Long'],hairTexture:['Straight','Wavy','Curly','Coily'],hairColour:['Black','Brown','Blonde','Red','Grey','White','Other'],braSystem:['EU','UK','US','FR','IT']};
 choices.beardStyle=['Clean-shaven','Stubble','Short beard','Full beard','Long beard','Goatee','Moustache'];

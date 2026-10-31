@@ -3,7 +3,7 @@ export function defaultModelView(sizes={},kind='adult'){
  const selected=defaultModelKind(sizes,kind);
  if(selected==='child')return '';
  const woman=selected==='woman';
- return `<figure class="default-model-preview" data-default-model data-kind="${selected}"><img src="assets/${woman?'default-woman-young.webp':'summer-2.webp'}" alt="${woman?'Fictional female default model':'Fictional male default model'}" width="800" height="1200"><figcaption><strong>${woman?'Female default model':'Male default model'}</strong><p>This fictional default is a starting point. Save your hair details and measurements, then create your personal model and review the result.</p></figcaption></figure>`;
+ return `<figure class="default-model-preview" data-default-model data-kind="${selected}"><img src="assets/${woman?'default-woman-modern.webp':'summer-2.webp'}" alt="${woman?'Fictional female default model':'Fictional male default model'}" width="800" height="1200"><figcaption><strong>${woman?'Female default model':'Male default model'}</strong><p>This fictional default is a starting point. Save your hair details and measurements, then create your personal model and review the result.</p></figcaption></figure>`;
 }
 export function refreshDefaultModels(form=document.querySelector('#profile-form')){
  if(!form)return;

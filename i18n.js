@@ -1,13 +1,13 @@
-import unifiedProfileGreek from './unified-profile-el.js?v=20261031-colour-preview-v1';
-import profileGreek from './tryon-profile-el.js?v=20261031-womens-young-v2';
-import photoGuidance from './photo-guidance-languages.js?v=20261031-womens-young-v2';
-import familyGreek from './family-el.js?v=20261031-womens-young-v2';
-import modelGreek from './model-studio-el.js?v=20261031-womens-young-v2';
-import feedbackGreek from './style-feedback-el.js?v=20261031-womens-young-v2';
-import {greek} from './translations-el.js?v=20261031-womens-young-v2';
-import greekExtras from './translations-extra-el.js?v=20261031-womens-young-v2';
-import {translateOther} from './translation-engine.js?v=20261031-womens-young-v2';
-import {languages,languageForLocation,readLanguagePreference} from './language-policy.js?v=20261031-womens-young-v2';
+import unifiedProfileGreek from './unified-profile-el.js?v=20261031-womens-modern-v3';
+import profileGreek from './tryon-profile-el.js?v=20261031-womens-modern-v3';
+import photoGuidance from './photo-guidance-languages.js?v=20261031-womens-modern-v3';
+import familyGreek from './family-el.js?v=20261031-womens-modern-v3';
+import modelGreek from './model-studio-el.js?v=20261031-womens-modern-v3';
+import feedbackGreek from './style-feedback-el.js?v=20261031-womens-modern-v3';
+import {greek} from './translations-el.js?v=20261031-womens-modern-v3';
+import greekExtras from './translations-extra-el.js?v=20261031-womens-modern-v3';
+import {translateOther} from './translation-engine.js?v=20261031-womens-modern-v3';
+import {languages,languageForLocation,readLanguagePreference} from './language-policy.js?v=20261031-womens-modern-v3';
 Object.assign(greek,greekExtras,modelGreek,familyGreek,profileGreek,unifiedProfileGreek);
 const preferenceKey='daywear.language';
 let preference='auto';try{preference=readLanguagePreference(globalThis.localStorage);}catch{}

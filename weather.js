@@ -1,5 +1,5 @@
-import {preferenceScore} from './preferences.js?v=20261031-womens-young-v2';
-import {looks,getCatalogGender} from './data.js?v=20261031-womens-young-v2';
+import {preferenceScore} from './preferences.js?v=20261031-womens-modern-v3';
+import {looks,getCatalogGender} from './data.js?v=20261031-womens-modern-v3';
 export function seasonPool(temp,month,latitude=51){
  if(!Number.isFinite(temp))throw new Error('A valid apparent temperature is required');
  const m=latitude<0?(month+5)%12+1:month;
@@ -13,7 +13,7 @@ export function recommend(weather,{mode='everyday',month=10,latitude=51,day=0,se
  const candidates=looks.filter(l=>l.season===pool);
  if(!candidates.length)throw new Error('Unknown look pool');
  const wet=weather.precip>0||weather.dailyPrecip>=1;
- if(mode!=='everyday')return {look:candidates[0],wet,layer:weather.temp<=10?(mode==='gym'?(getCatalogGender()==='woman'?'W24':'P24'):(getCatalogGender()==='woman'?'W33':'P33')):null,reason:mode==='gym'?'Your one training uniform.':'Your one indoor lounge uniform.'};
+ if(mode!=='everyday')return {look:candidates[0],wet,layer:weather.temp<=10?(mode==='gym'?(getCatalogGender()==='woman'?'F24':'P24'):(getCatalogGender()==='woman'?'F33':'P33')):null,reason:mode==='gym'?'Your one training uniform.':'Your one indoor lounge uniform.'};
  const eligible=wet?candidates.filter(l=>l.rain):candidates;
  const score=l=>(weather.wind>=25&&l.layer?8:0)+(weather.temp>=8&&weather.temp<15&&l.midlayer?5:0)+(!wet&&!l.rain?1:0);
  const ranked=[...(eligible.length?eligible:candidates)].sort((a,b)=>score(b)-score(a));

@@ -1,6 +1,6 @@
-import {getAccountUser} from './auth.js?v=20261031-womens-young-v2';
-import {sendFeedback} from './account-data.js?v=20261031-womens-young-v2';
-import {translateText,getLanguage} from './i18n.js?v=20261031-colour-preview-v1';
+import {getAccountUser} from './auth.js?v=20261031-womens-modern-v3';
+import {sendFeedback} from './account-data.js?v=20261031-womens-modern-v3';
+import {translateText,getLanguage} from './i18n.js?v=20261031-womens-modern-v3';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let attachments=[],busy=false,uploading=false,attemptId=null,version=0;
 export function feedbackPage(){
