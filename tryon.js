@@ -1,8 +1,8 @@
 import {refreshColourPreview} from './colour-preview.js?v=20261031-inline-colours-v1';
 import {refreshDefaultModels} from './default-model.js?v=20261031-womens-modern-v3';
-import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-womens-modern-v3';
+import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-colours-only-v1';
 import {currentRoute,navigate} from './navigation.js?v=20261031-womens-modern-v3';
-import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-womens-modern-v3';
+import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-colours-only-v1';
 import {loadCloudProfile,getPhotos,savePhoto,saveCloudProfile} from './account-data.js?v=20261031-womens-modern-v3';
 import {draftFields,writeDraft,readDraft,clearDraft} from './tryon-draft.js?v=20261031-womens-modern-v3';
 import {clothingScope,readClothes,garmentImages} from './clothing-store.js?v=20261031-womens-modern-v3';
@@ -11,7 +11,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-wome
 import {currentMember} from './family.js?v=20261031-womens-modern-v3';
 import {modelCall} from './model-studio.js?v=20261031-womens-modern-v3';
 import {looks} from './data.js?v=20261031-womens-modern-v3';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-womens-modern-v3';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-colours-only-v1';
 export {tryOnPage};
 let profileSaver=null,preparing=false;
 export function setProfileSaver(save){profileSaver=save;}
