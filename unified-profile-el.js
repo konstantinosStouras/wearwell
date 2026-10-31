@@ -1,4 +1,10 @@
 export default {
+ 'Eye colour':'Χρώμα ματιών',
+ 'Choose a precise eye shade':'Επίλεξε ακριβή απόχρωση ματιών',
+ 'Precise eye shade':'Ακριβής απόχρωση ματιών',
+ 'Hazel':'Μελί',
+ 'Amber':'Κεχριμπαρί',
+ 'Leave eye colour blank to follow your reference photos.':'Άφησε το χρώμα ματιών κενό για να ακολουθεί τις φωτογραφίες αναφοράς σου.',
  'Beard style':'Στυλ γενειάδας',
  'Beard colour':'Χρώμα γενειάδας',
  'Choose a precise beard shade':'Επίλεξε ακριβή απόχρωση γενειάδας',

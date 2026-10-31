@@ -1,4 +1,4 @@
-import unifiedProfileGreek from './unified-profile-el.js?v=20261031-beard-v1';
+import unifiedProfileGreek from './unified-profile-el.js?v=20261031-eyes-v1';
 import profileGreek from './tryon-profile-el.js?v=20261031-womens-young-v2';
 import photoGuidance from './photo-guidance-languages.js?v=20261031-womens-young-v2';
 import familyGreek from './family-el.js?v=20261031-womens-young-v2';

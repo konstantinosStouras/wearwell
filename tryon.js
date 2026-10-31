@@ -1,7 +1,7 @@
 import {refreshDefaultModels} from './default-model.js?v=20261031-womens-young-v2';
-import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-beard-v1';
+import {modelAppearance,detailKind,refreshModelDetails,readModelDetails} from './model-details.js?v=20261031-eyes-v1';
 import {currentRoute,navigate} from './navigation.js?v=20261031-womens-young-v2';
-import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-beard-v1';
+import {sharedMeasurements,sameSettings,photoSignature} from './shared-profile.js?v=20261031-eyes-v1';
 import {loadCloudProfile,getPhotos,savePhoto,saveCloudProfile} from './account-data.js?v=20261031-womens-young-v2';
 import {draftFields,writeDraft,readDraft,clearDraft} from './tryon-draft.js?v=20261031-womens-young-v2';
 import {clothingScope,readClothes,garmentImages} from './clothing-store.js?v=20261031-womens-young-v2';
@@ -10,7 +10,7 @@ import {activeMemberId,contextVersion} from './family-context.js?v=20261031-wome
 import {currentMember} from './family.js?v=20261031-womens-young-v2';
 import {modelCall} from './model-studio.js?v=20261031-womens-young-v2';
 import {looks} from './data.js?v=20261031-womens-young-v2';
-import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-beard-v1';
+import {tryOnPage,tryOnView,modelSettingsView} from './tryon-view.js?v=20261031-eyes-v1';
 export {tryOnPage};
 let profileSaver=null,preparing=false;
 export function setProfileSaver(save){profileSaver=save;}
