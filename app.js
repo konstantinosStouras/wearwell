@@ -1,6 +1,6 @@
 import {modelDetailsFields} from './model-details.js?v=20261031-details-v1';
 import {currentRoute,navigate,routeURL} from './navigation.js?v=20261031-save-v1';
-import './wardrobe-rack.js?v=20261031-save-v1';
+import './wardrobe-rack.js?v=20261031-white-rack-v1';
 import {tryOnPage,loadTryOn,validateModelSave,saveProfileModel} from './tryon.js?v=20261031-details-v1';
 import {adminRoutes,adminNavigation,adminArea} from './admin-area.js?v=20261031-save-v1';
 import {activeMemberId,isFamily,memberStorageKey,contextVersion} from './family-context.js?v=20261031-save-v1';
