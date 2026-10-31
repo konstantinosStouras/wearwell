@@ -1,4 +1,8 @@
 export default {
+ 'Selected colours':'Επιλεγμένα χρώματα',
+ 'Hair':'Μαλλιά','Skin':'Δέρμα','Beard':'Γενειάδα','Eyes':'Μάτια',
+ 'Custom shade':'Προσαρμοσμένη απόχρωση','From your photos':'Από τις φωτογραφίες σου',
+ 'Updates as you edit. Named colours are approximate; custom shades use your palette selection.':'Ενημερώνεται καθώς κάνεις αλλαγές. Τα ονομαστικά χρώματα είναι ενδεικτικά· οι προσαρμοσμένες αποχρώσεις χρησιμοποιούν την επιλογή σου από την παλέτα.',
  'Blue':'Μπλε',
  'Green':'Πράσινο',
  'Eye colour':'Χρώμα ματιών',
