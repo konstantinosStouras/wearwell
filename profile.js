@@ -1,4 +1,4 @@
-import {readModelDetails,detailLines} from './model-details.js?v=20261101-appearance-v1';
+import {readModelDetails,detailLines} from './model-details.js?v=20261101-gender-age-v1';
 const childMinimum=(id,fallback)=>({height:30,weight:1,chest:15,waist:15,hips:15,shoulders:5,arm:3,inseam:5,thigh:5,neck:5,sleeve:5}[id]??fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const range=(start,end,step=1)=>Array.from({length:Math.round((end-start)/step)+1},(_,i)=>String(start+i*step));
