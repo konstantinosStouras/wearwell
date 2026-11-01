@@ -1,7 +1,7 @@
 import {rackStyles} from './rack-styles.js?v=20261031-womens-modern-v3';
 import {rackArt,rackExamples,rackImage,rackHook} from './rack-art.js?v=20261031-womens-modern-v3';
 import {installRackUploads} from './rack-uploads.js?v=20261031-womens-modern-v3';
-import {getLanguage,translateText} from './i18n.js?v=20261031-inline-colours-v1';
+import {getLanguage,translateText} from './i18n.js?v=20261101-appearance-v1';
 
 // Isolated rack view with account-scoped local photo storage.
 class WardrobeRack extends HTMLElement {

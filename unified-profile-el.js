@@ -1,4 +1,5 @@
 export default {
+ 'Appearance preview':'Προεπισκόπηση εμφάνισης',
  'Use a precise shade':'Χρήση ακριβούς απόχρωσης',
  'Changes use the same Save and Create my model buttons.':'Οι αλλαγές χρησιμοποιούν τα ίδια κουμπιά Αποθήκευση και Δημιουργία μοντέλου.',
  'Done':'Τέλος',
